@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BackLockListComponent } from './back-lock-list.component';
+import { BackLockListComponent } from './bro-lock-list.component';
 
 describe('BackLockListComponent', () => {
   let component: BackLockListComponent;

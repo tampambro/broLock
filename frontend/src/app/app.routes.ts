@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { BackLockListComponent } from './back-lock-list/back-lock-list.component';
+import { BroLockListComponent } from './bro-lock-list/bro-lock-list.component';
 
 export const routes: Routes = [
-  { path: 'back-lock-list', component: BackLockListComponent },
+  { path: 'bro-lock-list', component: BroLockListComponent },
 ];
