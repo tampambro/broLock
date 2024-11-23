@@ -23,7 +23,12 @@
       "ES2022",
       "dom"
     ],
-    "strictPropertyInitialization": true
+    "strictPropertyInitialization": true,
+    "paths": {
+      "@srcTypes/*": ["./src/types/*"],
+      "@mock/*": ["./mock/*"],
+      "@icon-components/*": ["./src/app/icon-components/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
