@@ -1,11 +1,14 @@
 @use "node_modules/normalize.css/normalize.css"
+@use "sass/themes/dark-theme.sass"
 @use "sass/themes/light-theme.sass"
 @use "sass/fonts.sass"
 
 :root
-  --background-color: #434343
-  --text-color: #dfdfdf
+  --elem-border-radius: 6px
+  --btn-border-radius: 3px
+
   font-family: "RobotoRegular"
+  font-size: 14px
   box-sizing: border-box
 
 *, ::before, :after
@@ -13,3 +16,12 @@
 
 html, body
   min-height: 100vh
+
+h1
+  font-family: "RobotoMedium"
+
+button
+  cursor: pointer
+  background: var(--btn-color)
+  border: none
+  border-radius: var(--btn-border-radius)

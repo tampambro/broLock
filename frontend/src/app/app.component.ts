@@ -10,13 +10,13 @@ import { THEME_ENUM } from '../types/enum';
   styleUrl: './app.component.sass',
 })
 export class AppComponent {
-  themeMode: THEME_ENUM = THEME_ENUM.DARCK;
+  themeMode: THEME_ENUM = THEME_ENUM.DARK;
 
   swicthTheme(): void {
-    if (this.themeMode === THEME_ENUM.DARCK) {
+    if (this.themeMode === THEME_ENUM.DARK) {
       this.themeMode = THEME_ENUM.LIGHT;
     } else if (this.themeMode === THEME_ENUM.LIGHT) {
-      this.themeMode = THEME_ENUM.DARCK;
+      this.themeMode = THEME_ENUM.DARK;
     }
   }
 }
