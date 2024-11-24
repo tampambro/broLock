@@ -8,9 +8,8 @@ describe('BackLockListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BackLockListComponent]
-    })
-    .compileComponents();
+      imports: [BackLockListComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BackLockListComponent);
     component = fixture.componentInstance;
