@@ -6,7 +6,7 @@
 // import { BroListItem } from '@srcTypes/BroListItem';
 
 // @Component({
-//   selector: 'app-bro-lock-list',
+//   selector: 'bro-lock-list',
 //   standalone: true,
 //   imports: [GripVerticalIconComponent, MinusIconComponent, PlusIconComponent],
 //   templateUrl: './bro-lock-list.component.html',

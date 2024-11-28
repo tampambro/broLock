@@ -1,11 +1,14 @@
 @use "node_modules/normalize.css/normalize.css"
-@use "sass/themes/dark-theme.sass"
-@use "sass/themes/light-theme.sass"
-@use "sass/fonts.sass"
+@use "themes/dark-theme"
+@use "themes/light-theme"
+@use "fonts"
+@use "bro-form"
 
 :root
   --elem-border-radius: 6px
   --btn-border-radius: 3px
+  --input-border-radius: 3px
+  --standard-padding: .5em 1em
 
   font-family: "RobotoRegular"
   font-size: 14px
@@ -13,6 +16,7 @@
 
 *, ::before, :after
   box-sizing: border-box
+  outline: none
 
 html, body
   min-height: 100vh
@@ -22,6 +26,8 @@ h1
 
 button
   cursor: pointer
-  background: var(--btn-color)
+  background: var(--btn-background-color)
   border: none
   border-radius: var(--btn-border-radius)
+  color: var(--btn-color)
+  padding: .4em
