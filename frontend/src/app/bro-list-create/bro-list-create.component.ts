@@ -3,7 +3,7 @@ import { GripVerticalIconComponent } from '@icon-components/grip-vertical-icon/g
 import { MinusIconComponent } from '@icon-components/minus-icon/minus-icon.component';
 import { PlusIconComponent } from '@icon-components/plus-icon/plus-icon.component';
 import { BroListMock } from '@mock/bro-list.mock';
-import { BroListItem } from '@srcTypes/BroListItem';
+import { BroListItemDto } from '@dto/bro-list-item.dto';
 
 @Component({
   selector: 'bro-list-create',
@@ -13,5 +13,5 @@ import { BroListItem } from '@srcTypes/BroListItem';
   styleUrl: './bro-list-create.component.sass',
 })
 export class BroListCreateComponent {
-  broList: BroListItem[] = BroListMock;
+  broList: BroListItemDto[] = BroListMock;
 }

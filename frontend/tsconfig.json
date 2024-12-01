@@ -23,11 +23,12 @@
       "ES2022",
       "dom"
     ],
-    "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
     "paths": {
-      "@srcTypes/*": ["./src/types/*"],
+      "@bro-src-types/*": ["./src/types/*"],
       "@mock/*": ["./mock/*"],
-      "@icon-components/*": ["./src/app/icon-components/*"]
+      "@icon-components/*": ["./src/app/icon-components/*"],
+      "@dto/*": ["../dto/*"]
     }
   },
   "angularCompilerOptions": {
