@@ -1,5 +1,5 @@
 import { Component, Input, output } from '@angular/core';
-import { THEME_ENUM } from '@srcTypes/enum';
+import { THEME_ENUM } from '@bro-src-types/enum';
 
 @Component({
   selector: 'bro-header',
