@@ -28,7 +28,8 @@
       "@bro-src-types/*": ["./src/types/*"],
       "@mock/*": ["./mock/*"],
       "@icon-components/*": ["./src/app/icon-components/*"],
-      "@dto/*": ["../dto/*"]
+      "@dto/*": ["../dto/*"],
+      "@env": ["./src/environments/environment.ts"]
     }
   },
   "angularCompilerOptions": {

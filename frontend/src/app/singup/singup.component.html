@@ -1,4 +1,4 @@
-<form class="bro-form">
+<form class="bro-form" [formGroup]="singupForm" (submit)="createUser()">
   <div>
     <h1 class="bro-form__title">
       Create account for broLock
@@ -12,7 +12,8 @@
           </p>
 
           <input class="bro-form__label__input"
-            type="text" />
+            type="text"
+            formControlName="name" />
         </label>
 
         <label class="bro-form__label">
@@ -21,7 +22,8 @@
           </p>
 
           <input class="bro-form__label__input"
-            type="email"/>
+            type="email"
+            formControlName="email" />
         </label>
 
         <label class="bro-form__label">
@@ -30,12 +32,13 @@
           </p>
 
           <input class="bro-form__label__input"
-            type="password" />
+            type="password"
+            formControlName="password" />
         </label>
       </div>
 
       <div class="bro-form__img-wrap">
-        <img class="bro-form__img" src="/Lain-singun.gif" />
+        <img class="bro-form__img" src="/gif/Lain-singun.gif" />
       </div>
     </div>
 
