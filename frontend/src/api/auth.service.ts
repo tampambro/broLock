@@ -10,8 +10,6 @@ export class AuthService {
   private http = inject(HttpClient);
 
   createUser(params: CreateUserDto): Observable<boolean> {
-    console.log(this.baseUrl);
-
     return this.http.post<boolean>(`${this.baseUrl}/auth/singup`, params);
   }
 }
