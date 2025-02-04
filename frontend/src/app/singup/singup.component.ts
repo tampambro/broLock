@@ -22,15 +22,14 @@ export class SingupComponent {
   });
 
   createUser(): void {
-    // if (!this.singupForm.valid) {
-    //   return;
-    // }
+    if (!this.singupForm.valid) {
+      return;
+    }
 
     this.authSrv.createUser(this.singupForm.getRawValue()).subscribe({
       next: res => {
         if (res) {
-          console.log(res);
-          console.log('ok');
+          // Здесь надо отправить на страничку с ожиданием подтверждения почты
         }
       },
     });
