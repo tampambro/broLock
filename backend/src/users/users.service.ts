@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
@@ -12,6 +16,10 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  async findUser(userId: number): Promise<User | null> {
+    return this.userRepository.findOneBy({ id: userId });
+  }
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user = new User();
     user.name = createUserDto.name;
@@ -19,5 +27,19 @@ export class UsersService {
     user.password = await encrypt(createUserDto.password);
 
     return this.userRepository.save(user);
+  }
+
+  async sendEmailConfirm(userId: number) {
+    const user = await this.findUser(userId);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (user.isMailConfirm) {
+      throw new UnprocessableEntityException('Email already confirm');
+    }
+
+    // const otp
   }
 }
