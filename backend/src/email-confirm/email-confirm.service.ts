@@ -13,13 +13,13 @@ export class EmailConfirmService {
 
   constructor(
     @InjectRepository(EmailConfirm)
-    private tokenRepository: Repository<EmailConfirm>,
+    private emailConfirmRepository: Repository<EmailConfirm>,
   ) {}
 
   async createEmailConfirmOtp(userId: number): Promise<string> {
     const createTime = new Date();
 
-    const recentToken = await this.tokenRepository.findOne({
+    const recentToken = await this.emailConfirmRepository.findOne({
       where: {
         user: { id: userId },
         createdAt: MoreThan(
@@ -38,14 +38,14 @@ export class EmailConfirmService {
 
     const otp = generateOtp();
     const hashedToken = await bcrypt.hash(otp, this.saltRounds);
-    const confirmEntity = this.tokenRepository.create({
+    const confirmEntity = this.emailConfirmRepository.create({
       user: { id: userId },
       token: hashedToken,
       expiresAt: new Date(
         createTime.getTime() + this.tokenExpireationMin * 60 * 1000,
       ),
     });
-    await this.tokenRepository.save(confirmEntity);
+    await this.emailConfirmRepository.save(confirmEntity);
 
     return otp;
   }

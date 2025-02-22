@@ -20,8 +20,9 @@ export class UsersService {
     private emailSrv: EmailService,
   ) {}
 
-  async findUser(userId: number): Promise<User | null> {
-    return this.userRepository.findOneBy({ id: userId });
+  async findOne(user: number | string): Promise<User | null> {
+    const findParam = typeof user === 'number' ? { id: user } : { name: user };
+    return this.userRepository.findOneBy(findParam);
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -34,7 +35,7 @@ export class UsersService {
   }
 
   async sendEmailConfirm(userId: number) {
-    const user = await this.findUser(userId);
+    const user = await this.findOne(userId);
 
     if (!user) {
       throw new NotFoundException('User not found');
