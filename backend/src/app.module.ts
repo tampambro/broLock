@@ -7,14 +7,14 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { EmailModule } from './email/email.module';
+import { EmailConfirmModule } from './email-confirm/email-confirm.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    AuthModule,
-    UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -25,6 +25,10 @@ import { ConfigModule } from '@nestjs/config';
       synchronize: true,
       autoLoadEntities: true,
     }),
+    AuthModule,
+    UsersModule,
+    EmailModule,
+    EmailConfirmModule,
   ],
   controllers: [AppController, AuthController, UsersController],
   providers: [AppService],

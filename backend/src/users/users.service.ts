@@ -8,12 +8,16 @@ import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '@dto/create-user.dto';
 import { encrypt } from './user-password.helper';
+import { EmailConfirmService } from 'src/email-confirm/email-confirm.service';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private emailConfirmSrv: EmailConfirmService,
+    private emailSrv: EmailService,
   ) {}
 
   async findUser(userId: number): Promise<User | null> {
@@ -40,6 +44,12 @@ export class UsersService {
       throw new UnprocessableEntityException('Email already confirm');
     }
 
-    // const otp
+    const otp = await this.emailConfirmSrv.createEmailConfirmOtp(userId);
+
+    this.emailSrv.sendEmail({
+      subject: 'BroLock — account confirm',
+      recipients: [{ name: user.name, address: user.email }],
+      html: this.emailSrv.confirmEmailTemplate(user.name, otp),
+    });
   }
 }

@@ -41,4 +41,10 @@ export class EmailService {
       return null;
     }
   }
+
+  confirmEmailTemplate(userName: string, otp: string): string {
+    return `
+      <p>Hi ${userName}!</p><p>Please, confirm your bro account by this <strong>CODE: ${otp}</strong>.</p>
+    `;
+  }
 }

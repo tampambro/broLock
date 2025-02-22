@@ -1,8 +1,8 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
-import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
+import { generateOtp } from '@helpers/generate-otp';
 import { EmailConfirm } from './email-confirm.entity';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class EmailConfirmService {
       );
     }
 
-    const otp = this.generateOtp();
+    const otp = generateOtp();
     const hashedToken = await bcrypt.hash(otp, this.saltRounds);
     const confirmEntity = this.tokenRepository.create({
       user: { id: userId },
@@ -48,11 +48,5 @@ export class EmailConfirmService {
     await this.tokenRepository.save(confirmEntity);
 
     return otp;
-  }
-
-  private generateOtp(size: number = 6): string {
-    const max = Math.pow(10, size);
-    const randomNumber = crypto.randomInt(0, max);
-    return randomNumber.toString().padStart(size, '0');
   }
 }
