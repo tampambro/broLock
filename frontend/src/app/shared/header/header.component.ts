@@ -1,8 +1,14 @@
-import { Component, Input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  output,
+} from '@angular/core';
 import { THEME_ENUM } from '@bro-src-types/enum';
 
 @Component({
   selector: 'bro-header',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [],
   templateUrl: './header.component.html',

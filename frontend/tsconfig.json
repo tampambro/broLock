@@ -27,7 +27,7 @@
     "paths": {
       "@bro-src-types/*": ["./src/types/*"],
       "@mock/*": ["./mock/*"],
-      "@icon-components/*": ["./src/app/icon-components/*"],
+      "@icon-components/*": ["./src/app/shared/icon-components/*"],
       "@dto/*": ["../dto/*"],
       "@env": ["./src/environments/environment.ts"]
     }

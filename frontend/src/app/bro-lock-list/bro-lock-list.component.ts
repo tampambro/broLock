@@ -7,6 +7,7 @@
 
 // @Component({
 //   selector: 'bro-lock-list',
+//   changeDetection: ChangeDetectionStrategy.OnPush,
 //   standalone: true,
 //   imports: [GripVerticalIconComponent, MinusIconComponent, PlusIconComponent],
 //   templateUrl: './bro-lock-list.component.html',
