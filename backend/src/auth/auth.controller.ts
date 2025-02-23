@@ -11,7 +11,7 @@ import { LoginRequestDto } from '@dto/login-request.dto';
 import { CommonAddResponseDto } from '@dto/common-add-response.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
-import { AuthGuard } from 'src/common/guards/auth.guard';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -20,7 +20,7 @@ export class AuthController {
     private authSrv: AuthService,
   ) {}
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('guard-test')
   test() {
     return 'Guard at the post';
