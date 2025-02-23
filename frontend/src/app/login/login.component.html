@@ -1,15 +1,16 @@
-<form class="bro-form">
+<form class="bro-form" [formGroup]="loginForm" (submit)="login()">
   <h1 class="bro-form__title">
     BroLock Login
   </h1>
 
   <label class="bro-form__label">
     <p class="bro-form__label__text">
-      Email
+      Name
     </p>
 
     <input class="bro-form__label__input"
-      type="email"/>
+      formControlName="name"
+      type="text" />
   </label>
 
   <label class="bro-form__label">
@@ -18,11 +19,12 @@
     </p>
 
     <input class="bro-form__label__input"
+      formControlName="password"
       type="password" />
   </label>
 
   <div class="bro-form__btn-wrap">
-    <button class="btn-primary">
+    <button class="btn-primary" type="submit">
       Login
     </button>
   </div>

@@ -1,19 +1,24 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../api/auth.service';
+import { AuthApiService } from '../../api/auth-api.service';
+import { Router } from '@angular/router';
+import { SsrCookieService } from 'ngx-cookie-service-ssr';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'singup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [ReactiveFormsModule],
-  providers: [AuthService],
+  providers: [AuthApiService],
   templateUrl: './singup.component.html',
   styleUrl: './singup.component.sass',
 })
 export class SingupComponent {
-  private authSrv = inject(AuthService);
+  private authApiSrv = inject(AuthApiService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private cookieSrv = inject(SsrCookieService);
 
   singupForm = this.fb.nonNullable.group({
     name: ['', Validators.required],
@@ -26,13 +31,24 @@ export class SingupComponent {
       return;
     }
 
-    this.authSrv.createUser(this.singupForm.getRawValue()).subscribe({
-      next: res => {
-        if (res) {
-          /* Тут план такой, наверное. Типа мы юзера регаем. И чекаем, статус почты.
-          Если он не подтверждён, то кидаем на email-cinfirm */
-        }
-      },
-    });
+    const authParams = this.singupForm.getRawValue();
+
+    this.authApiSrv
+      .createUser(authParams)
+      .pipe(
+        switchMap(() => {
+          return this.authApiSrv.createCodeEmailConfirm(authParams.name);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.cookieSrv.set('userName', authParams.name, {
+            secure: true,
+            sameSite: 'Strict',
+          });
+
+          this.router.navigate(['/email-confirm']);
+        },
+      });
   }
 }

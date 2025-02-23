@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthController } from './auth/auth.controller';
-import { UsersController } from './users/users.controller';
+import { UserController } from './user/user.controller';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { EmailModule } from './email/email.module';
@@ -26,11 +26,11 @@ import { EmailConfirmModule } from './email-confirm/email-confirm.module';
       autoLoadEntities: true,
     }),
     AuthModule,
-    UsersModule,
+    UserModule,
     EmailModule,
     EmailConfirmModule,
   ],
-  controllers: [AppController, AuthController, UsersController],
+  controllers: [AppController, AuthController, UserController],
   providers: [AppService],
 })
 export class AppModule {}

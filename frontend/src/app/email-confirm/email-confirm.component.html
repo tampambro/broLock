@@ -1,7 +1,7 @@
 <main>
   <p class="hint">Bro, <span class="hint__main-part">check your <strong>email</strong></span>! We sent you code. Input it here for confirm your email.</p>
 
-  <form class="bro-form">
+  <form class="bro-form" [formGroup]="confirmForm">
     <div>
       <h1 class="bro-form__title">
         Email confirm
@@ -9,6 +9,16 @@
 
       <div class="bro-form__inner-wrap">
         <div class="bro-form__inputs">
+          <label class="bro-form__label">
+            <p class="bro-form__label__text">
+              Name
+            </p>
+
+            <input class="bro-form__label__input"
+              type="text"
+              formControlName="name" />
+          </label>
+
           <label class="bro-form__label">
             <p class="bro-form__label__text">
               Confirmation Code

@@ -1,26 +1,30 @@
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { LoginResponseDto } from '@dto/login-response.dto';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { matchPassword } from 'src/users/user-password.helper';
-import { UsersService } from 'src/users/users.service';
+import { matchPassword } from 'src/user/user-password.helper';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersSrv: UsersService,
+    private usersSrv: UserService,
     private jwtSrv: JwtService,
   ) {}
 
-  async singIn(login: LoginRequestDto): Promise<LoginResponseDto> {
+  async login(login: LoginRequestDto): Promise<LoginResponseDto> {
     const user = await this.usersSrv.findOne(login.name);
-    // if (await matchPassword(user?.password, login.pass)) {
-    //   throw new UnauthorizedException();
-    // }
 
-    // TEST MODE
-    if (user?.password === login.pass) {
+    if (!(await matchPassword(user?.password, login.password))) {
       throw new UnauthorizedException();
+    }
+
+    if (!user.isMailConfirm) {
+      throw new ForbiddenException();
     }
 
     const payload = { sub: user.id, username: user.name };

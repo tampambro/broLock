@@ -9,14 +9,14 @@ import {
 import { CreateUserDto } from '@dto/create-user.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { CommonAddResponseDto } from '@dto/common-add-response.dto';
-import { UsersService } from 'src/users/users.service';
+import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private usersService: UsersService,
+    private userService: UserService,
     private authSrv: AuthService,
   ) {}
 
@@ -31,13 +31,13 @@ export class AuthController {
   async singup(
     @Body() createUserDto: CreateUserDto,
   ): Promise<CommonAddResponseDto> {
-    const newUser = await this.usersService.create(createUserDto);
+    const newUser = await this.userService.create(createUserDto);
     return { id: newUser.id };
   }
 
   @HttpCode(200)
   @Post('login')
   singIn(@Body() login: LoginRequestDto) {
-    return this.authSrv.singIn(login);
+    return this.authSrv.login(login);
   }
 }
