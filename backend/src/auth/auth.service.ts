@@ -14,14 +14,21 @@ export class AuthService {
 
   async singIn(login: LoginRequestDto): Promise<LoginResponseDto> {
     const user = await this.usersSrv.findOne(login.name);
-    if (await matchPassword(user?.password, login.pass)) {
+    // if (await matchPassword(user?.password, login.pass)) {
+    //   throw new UnauthorizedException();
+    // }
+
+    // TEST MODE
+    if (user?.password === login.pass) {
       throw new UnauthorizedException();
     }
 
     const payload = { sub: user.id, username: user.name };
 
     return {
-      accessToken: await this.jwtSrv.signAsync(payload),
+      access_token: await this.jwtSrv.signAsync(payload, {
+        secret: process.env.JWT_KEY,
+      }),
     };
   }
 }

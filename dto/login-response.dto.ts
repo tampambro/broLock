@@ -1,3 +1,4 @@
 export class LoginResponseDto {
-  accessToken: string;
+  // Snake style because in request header it lowercase
+  access_token: string;
 }

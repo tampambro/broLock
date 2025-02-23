@@ -1,9 +1,17 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserDto } from '@dto/create-user.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { CommonAddResponseDto } from '@dto/common-add-response.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -11,6 +19,12 @@ export class AuthController {
     private usersService: UsersService,
     private authSrv: AuthService,
   ) {}
+
+  @UseGuards(AuthGuard)
+  @Get('guard-test')
+  test() {
+    return 'Guard at the post';
+  }
 
   @HttpCode(201)
   @Post('singup')
