@@ -1,16 +1,16 @@
 import { Controller, Post } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
 
-@Controller('users')
-export class UsersController {
-  constructor(private usersService: UsersService) {}
+@Controller('user')
+export class UserController {
+  constructor(private userService: UserService) {}
 
   @Post('email-confirm')
   async generateEmailConfirm(
-    userId: number,
+    userName: string,
   ): Promise<CommonSuccessResponceDto> {
-    await this.usersService.sendEmailConfirm(userId);
+    await this.userService.sendEmailConfirm(userName);
 
     return { status: 'ok' };
   }

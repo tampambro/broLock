@@ -12,7 +12,7 @@ import { EmailConfirmService } from 'src/email-confirm/email-confirm.service';
 import { EmailService } from 'src/email/email.service';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -34,8 +34,8 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  async sendEmailConfirm(userId: number) {
-    const user = await this.findOne(userId);
+  async sendEmailConfirm(userName: string) {
+    const user = await this.findOne(userName);
 
     if (!user) {
       throw new NotFoundException('User not found');
@@ -45,7 +45,7 @@ export class UsersService {
       throw new UnprocessableEntityException('Email already confirm');
     }
 
-    const otp = await this.emailConfirmSrv.createEmailConfirmOtp(userId);
+    const otp = await this.emailConfirmSrv.createEmailConfirmOtp(user.id);
 
     this.emailSrv.sendEmail({
       subject: 'BroLock — account confirm',
