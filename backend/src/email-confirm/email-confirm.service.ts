@@ -1,9 +1,15 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Injectable,
+  UnprocessableEntityException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { generateOtp } from '@helpers/generate-otp';
 import { EmailConfirm } from './email-confirm.entity';
+import { UserService } from 'src/user/user.service';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class EmailConfirmService {
@@ -14,9 +20,11 @@ export class EmailConfirmService {
   constructor(
     @InjectRepository(EmailConfirm)
     private emailConfirmRepository: Repository<EmailConfirm>,
+    private userSrv: UserService,
+    private emailSrv: EmailService,
   ) {}
 
-  async createEmailConfirmOtp(userId: number): Promise<string> {
+  private async createEmailConfirmOtp(userId: number): Promise<string> {
     const createTime = new Date();
 
     const recentToken = await this.emailConfirmRepository.findOne({
@@ -48,5 +56,39 @@ export class EmailConfirmService {
     await this.emailConfirmRepository.save(confirmEntity);
 
     return otp;
+  }
+
+  async sendEmailConfirm(userName: string) {
+    const user = await this.userSrv.findOne(userName);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (user.isMailConfirm) {
+      throw new UnprocessableEntityException('Email already confirm');
+    }
+
+    const otp = await this.createEmailConfirmOtp(user.id);
+
+    this.emailSrv.sendEmail({
+      subject: 'BroLock — account confirm',
+      recipients: [{ name: user.name, address: user.email }],
+      html: this.emailSrv.confirmEmailTemplate(user.name, otp),
+    });
+  }
+
+  async checkEmailConfirm(userName: string): Promise<boolean> {
+    const user = await this.userSrv.findOne(userName);
+
+    if (!user || user.isMailConfirm) {
+      return false;
+    }
+
+    const emailConfirm = await this.emailConfirmRepository.findOneBy({ user });
+
+    console.log(emailConfirm);
+
+    return true;
   }
 }

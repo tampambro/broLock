@@ -42,12 +42,7 @@ export class SingupComponent {
       )
       .subscribe({
         next: () => {
-          this.cookieSrv.set('userName', authParams.name, {
-            secure: true,
-            sameSite: 'Strict',
-          });
-
-          this.router.navigate(['/email-confirm']);
+          this.router.navigate(['/email-confirm', authParams.name]);
         },
       });
   }

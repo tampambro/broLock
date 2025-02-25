@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthApiService } from '@api/auth-api.service';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
@@ -17,15 +18,23 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
   templateUrl: './email-confirm.component.html',
   styleUrl: './email-confirm.component.sass',
 })
-export class EmailConfirmComponent {
+export class EmailConfirmComponent implements OnInit {
   private authSrv = inject(AuthApiService);
   private cookieSrv = inject(SsrCookieService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  private readonly userName = this.route.snapshot.paramMap.get('userName');
 
   confirmForm = new FormGroup({
-    name: new FormControl(
-      this.cookieSrv.get('userName') ?? '',
-      Validators.required,
-    ),
     code: new FormControl('', Validators.required),
   });
+
+  ngOnInit(): void {
+    if (!this.userName) {
+      this.router.navigate(['/']);
+    } else {
+
+    }
+  }
 }

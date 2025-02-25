@@ -30,7 +30,7 @@ export class AuthApiService {
     userName: string,
   ): Observable<CommonSuccessResponceDto> {
     return this.http.post<CommonSuccessResponceDto>(
-      `${this.baseUrl}/user/email-confirm`,
+      `${this.baseUrl}/email-confirm`,
       userName,
     );
   }

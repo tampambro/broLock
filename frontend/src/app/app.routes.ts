@@ -7,6 +7,6 @@ import { EmailConfirmComponent } from '@modules/email-confirm/email-confirm.comp
 export const routes: Routes = [
   { path: 'singup', component: SingupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'email-confirm', component: EmailConfirmComponent },
+  { path: 'email-confirm/:userName', component: EmailConfirmComponent },
   { path: 'bro-lock-list/create', component: BroListCreateComponent },
 ];
