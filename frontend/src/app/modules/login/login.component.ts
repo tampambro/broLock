@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AuthApiService } from '../../api/auth-api.service';
+import { AuthApiService } from '@api/auth-api.service';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';

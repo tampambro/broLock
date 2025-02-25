@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthApiService } from '../../api/auth-api.service';
+import { AuthApiService } from '@api/auth-api.service';
 import { Router } from '@angular/router';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { switchMap } from 'rxjs';

@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { BASE_API_URL } from '../constants/tokens';
+import { BASE_API_URL } from '@const/tokens';
 import { environment } from '@env';
 
 export const appConfig: ApplicationConfig = {

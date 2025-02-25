@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthApiService } from '../../api/auth-api.service';
+import { AuthApiService } from '@api/auth-api.service';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
 @Component({

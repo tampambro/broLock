@@ -25,11 +25,15 @@
     ],
     "strictPropertyInitialization": false,
     "paths": {
-      "@bro-src-types/*": ["./src/types/*"],
+      "@bro-src-types/*": ["./src/app/shared/types/*"],
       "@mock/*": ["./mock/*"],
-      "@icon-components/*": ["./src/app/shared/icon-components/*"],
+      "@icon-components/*": ["./src/app/shared/components/icon-components/*"],
       "@dto/*": ["../dto/*"],
-      "@env": ["./src/environments/environment.ts"]
+      "@env": ["./src/environments/environment.ts"],
+      "@const/*": ["./src/app/shared/constants/*"],
+      "@api/*": ["./src/app/shared/api/*"],
+      "@components/*": ["./src/app/shared/components/*"],
+      "@modules/*": ["./src/app/modules/*"],
     }
   },
   "angularCompilerOptions": {

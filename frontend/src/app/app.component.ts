@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { THEME_ENUM } from '../types/enum';
-import { HeaderComponent } from './shared/header/header.component';
+import { THEME_ENUM } from '@bro-src-types/enum';
+import { HeaderComponent } from '@components/header/header.component';
 
 @Component({
   selector: 'app-root',

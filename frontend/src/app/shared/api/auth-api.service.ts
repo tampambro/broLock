@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { CreateUserDto } from '@dto/create-user.dto';
 import { HttpClient } from '@angular/common/http';
-import { BASE_API_URL } from '../constants/tokens';
+import { BASE_API_URL } from '@const/tokens';
 import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { LoginResponseDto } from '@dto/login-response.dto';
