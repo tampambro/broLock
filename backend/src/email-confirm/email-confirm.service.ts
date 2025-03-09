@@ -10,6 +10,7 @@ import { generateOtp } from '@helpers/generate-otp';
 import { EmailConfirm } from './email-confirm.entity';
 import { UserService } from 'src/user/user.service';
 import { EmailService } from 'src/email/email.service';
+import { ValidateEmailDto } from '@dto/validate-email.dto';
 
 @Injectable()
 export class EmailConfirmService {
@@ -78,7 +79,8 @@ export class EmailConfirmService {
     });
   }
 
-  async checkEmailConfirm(userName: string): Promise<boolean> {
+  async validateEmail(params: ValidateEmailDto): Promise<boolean> {
+    const { userName, otp } = params;
     const user = await this.userSrv.findOne(userName);
 
     if (!user || user.isMailConfirm) {
@@ -86,8 +88,16 @@ export class EmailConfirmService {
     }
 
     const emailConfirm = await this.emailConfirmRepository.findOneBy({ user });
+    const isEmailConfirmValid =
+      emailConfirm &&
+      (await bcrypt.compare(otp, emailConfirm.token)) &&
+      new Date().getTime() < new Date(emailConfirm.expiresAt).getTime();
 
-    console.log(emailConfirm);
+    if (!isEmailConfirmValid) {
+      return false;
+    }
+
+    await this.emailConfirmRepository.remove(emailConfirm);
 
     return true;
   }

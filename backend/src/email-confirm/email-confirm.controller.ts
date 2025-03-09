@@ -1,5 +1,6 @@
 import { BadRequestException, Controller, Post } from '@nestjs/common';
 import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
+import { ValidateEmailDto } from '@dto/validate-email.dto';
 import { EmailConfirmService } from './email-confirm.service';
 
 @Controller('email-confirm')
@@ -15,9 +16,11 @@ export class EmailConfirmController {
     return { status: 'ok' };
   }
 
-  @Post('check')
-  async checkEmailConfirm(userName: string): Promise<CommonSuccessResponceDto> {
-    const result = await this.emailConfirmSrv.checkEmailConfirm(userName);
+  @Post('validate')
+  async validateEmail(
+    params: ValidateEmailDto,
+  ): Promise<CommonSuccessResponceDto> {
+    const result = await this.emailConfirmSrv.validateEmail(params);
 
     if (!result) {
       throw new BadRequestException();
