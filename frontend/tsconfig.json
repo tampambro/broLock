@@ -34,6 +34,7 @@
       "@api/*": ["./src/app/shared/api/*"],
       "@components/*": ["./src/app/shared/components/*"],
       "@modules/*": ["./src/app/modules/*"],
+      "@helpers/*": ["./src/app/shared/helpers/*"],
     }
   },
   "angularCompilerOptions": {

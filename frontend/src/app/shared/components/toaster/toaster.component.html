@@ -1,0 +1,7 @@
+@for (toast of toasterSrv.livingToasts; track toast) {
+  <div class="toaster"
+    [class]="toast.eventType"
+    @inserRemove>
+    <div class="toaster__inner" [innerHTML]="toast.text"></div>
+  </div>
+}

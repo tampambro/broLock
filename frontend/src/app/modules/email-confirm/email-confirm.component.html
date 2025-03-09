@@ -1,7 +1,7 @@
 <main>
   <p class="hint">Bro, <span class="hint__main-part">check your <strong>email</strong></span>! We sent you code. Input it here for confirm your email.</p>
 
-  <form class="bro-form" [formGroup]="confirmForm">
+  <form class="bro-form" [formGroup]="confirmForm" (submit)="validateEmail()">
     <div>
       <h1 class="bro-form__title">
         Email confirm
@@ -28,6 +28,10 @@
       <div class="bro-form__btn-wrap">
         <button type="submit">
           Confirm
+        </button>
+
+        <button type="button" (click)="sendNewEmail()">
+          Send new email
         </button>
       </div>
     </div>

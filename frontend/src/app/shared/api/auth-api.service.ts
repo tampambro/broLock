@@ -6,6 +6,7 @@ import { BASE_API_URL } from '@const/tokens';
 import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { LoginResponseDto } from '@dto/login-response.dto';
+import { ValidateEmailDto } from '@dto/validate-email.dto';
 
 @Injectable()
 export class AuthApiService {
@@ -32,6 +33,15 @@ export class AuthApiService {
     return this.http.post<CommonSuccessResponceDto>(
       `${this.baseUrl}/email-confirm`,
       userName,
+    );
+  }
+
+  validateEmail(
+    params: ValidateEmailDto,
+  ): Observable<CommonSuccessResponceDto> {
+    return this.http.post<CommonSuccessResponceDto>(
+      `${this.baseUrl}/email-confirm/validate`,
+      params,
     );
   }
 }

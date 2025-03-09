@@ -5,6 +5,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { BASE_API_URL } from '@const/tokens';
 import { environment } from '@env';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
       provide: BASE_API_URL,
       useValue: environment.apiUrl,
     },
+    provideAnimations(),
   ],
 };
