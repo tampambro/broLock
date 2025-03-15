@@ -5,7 +5,7 @@ import { LoginComponent } from '@modules/login/login.component';
 import { EmailConfirmComponent } from '@modules/email-confirm/email-confirm.component';
 
 export const routes: Routes = [
-  { path: 'singup', component: SignupComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'email-confirm/:userName', component: EmailConfirmComponent },
   { path: 'bro-lock-list/create', component: BroListCreateComponent },
