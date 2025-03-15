@@ -1,10 +1,6 @@
-import {
-  Injectable,
-  UnprocessableEntityException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MoreThan, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { generateOtp } from '@helpers/generate-otp';
 import { EmailConfirm } from './email-confirm.entity';
@@ -14,8 +10,8 @@ import { ValidateEmailDto } from '@dto/validate-email.dto';
 
 @Injectable()
 export class EmailConfirmService {
-  private readonly minRequestIntervalMin = 1;
-  private readonly tokenExpireationMin = 15;
+  private readonly minRequestIntervalMin = 5;
+  private readonly tokenExpireationMin = 60;
   private readonly saltRounds = 10;
 
   constructor(
@@ -31,18 +27,20 @@ export class EmailConfirmService {
     const recentToken = await this.emailConfirmRepository.findOne({
       where: {
         user: { id: userId },
-        createdAt: MoreThan(
-          new Date(
-            createTime.getTime() - this.minRequestIntervalMin * 60 * 1000,
-          ),
-        ),
       },
     });
 
     if (recentToken) {
-      throw new UnprocessableEntityException(
-        'Please wait before requesting a new token',
-      );
+      const isTime =
+        new Date().getTime() >
+        recentToken.createdAt.getTime() +
+          this.minRequestIntervalMin * 60 * 1000;
+
+      if (isTime) {
+        await this.emailConfirmRepository.remove(recentToken);
+      } else {
+        throw new BadRequestException('It is not time yet');
+      }
     }
 
     const otp = generateOtp();
@@ -63,11 +61,11 @@ export class EmailConfirmService {
     const user = await this.userSrv.findOne(userName);
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new BadRequestException();
     }
 
     if (user.isMailConfirm) {
-      throw new UnprocessableEntityException('Email already confirm');
+      throw new BadRequestException();
     }
 
     const otp = await this.createEmailConfirmOtp(user.id);
@@ -88,6 +86,7 @@ export class EmailConfirmService {
     }
 
     const emailConfirm = await this.emailConfirmRepository.findOneBy({ user });
+
     const isEmailConfirmValid =
       emailConfirm &&
       (await bcrypt.compare(otp, emailConfirm.token)) &&

@@ -14,6 +14,7 @@ export class UserService {
 
   async findOne(user: number | string): Promise<User | null> {
     const findParam = typeof user === 'number' ? { id: user } : { name: user };
+
     return this.userRepository.findOneBy(findParam);
   }
 

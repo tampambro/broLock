@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
 import { ValidateEmailDto } from '@dto/validate-email.dto';
 import { EmailConfirmService } from './email-confirm.service';
@@ -18,7 +18,7 @@ export class EmailConfirmController {
 
   @Post('validate')
   async validateEmail(
-    params: ValidateEmailDto,
+    @Body() params: ValidateEmailDto,
   ): Promise<CommonSuccessResponceDto> {
     const result = await this.emailConfirmSrv.validateEmail(params);
 

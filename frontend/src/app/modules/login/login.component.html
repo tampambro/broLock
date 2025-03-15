@@ -1,31 +1,42 @@
 <form class="bro-form" [formGroup]="loginForm" (submit)="login()">
-  <h1 class="bro-form__title">
-    BroLock Login
-  </h1>
+  <div>
+    <h1 class="bro-form__title">
+      BroLock Login
+    </h1>
 
-  <label class="bro-form__label">
-    <p class="bro-form__label__text">
-      Name
-    </p>
+    <div class="bro-form__inner-wrap">
+      <div class="bro-form__inputs">
+        <label class="bro-form__label">
+          <p class="bro-form__label__text">
+            Name
+          </p>
 
-    <input class="bro-form__label__input"
-      formControlName="name"
-      type="text" />
-  </label>
+          <input class="bro-form__label__input"
+            formControlName="name"
+            type="text" />
+        </label>
 
-  <label class="bro-form__label">
-    <p class="bro-form__label__text">
-      Password
-    </p>
+        <label class="bro-form__label">
+          <p class="bro-form__label__text">
+            Password
+          </p>
 
-    <input class="bro-form__label__input"
-      formControlName="password"
-      type="password" />
-  </label>
+          <input class="bro-form__label__input"
+            formControlName="password"
+            type="password" />
+        </label>
+      </div>
 
-  <div class="bro-form__btn-wrap">
-    <button class="btn-primary" type="submit">
-      Login
-    </button>
+      <div class="bro-form__img-wrap">
+        <img class="bro-form__img" src="/gif/Yuki-login.gif" />
+      </div>
+    </div>
+
+
+    <div class="bro-form__btn-wrap">
+      <button class="btn-primary" type="submit">
+        Login
+      </button>
+    </div>
   </div>
 </form>
