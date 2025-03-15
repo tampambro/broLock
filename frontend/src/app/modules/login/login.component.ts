@@ -8,7 +8,6 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'login',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [ReactiveFormsModule],
   providers: [AuthApiService],
   templateUrl: './login.component.html',

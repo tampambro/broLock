@@ -5,7 +5,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'plus-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [FaIconComponent],
   templateUrl: './plus-icon.component.html',
   styleUrl: './plus-icon.component.sass',

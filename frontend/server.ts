@@ -1,10 +1,9 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { CommonEngine } from '@angular/ssr';
+import { CommonEngine } from '@angular/ssr/node';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
-import { REQUEST as SSR_REQUEST } from 'ngx-cookie-service-ssr';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -41,7 +40,7 @@ export function app(): express.Express {
         publicPath: browserDistFolder,
         providers: [
           { provide: APP_BASE_HREF, useValue: baseUrl },
-          { provide: SSR_REQUEST, useValue: req },
+          { provide: 'REQUEST', useValue: req },
           { provide: 'RESPONSE', useValue: res },
         ],
       })

@@ -15,7 +15,6 @@ import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 @Component({
   selector: 'email-confirm',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [ReactiveFormsModule],
   providers: [AuthApiService],
   templateUrl: './email-confirm.component.html',

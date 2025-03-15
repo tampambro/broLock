@@ -5,7 +5,6 @@ import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'grip-vertical-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [FaIconComponent],
   templateUrl: './grip-vertical-icon.component.html',
   styleUrl: './grip-vertical-icon.component.sass',

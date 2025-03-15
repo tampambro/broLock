@@ -6,7 +6,6 @@ import { ToasterComponent } from '@components/toaster/toaster.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet, HeaderComponent, ToasterComponent],
   templateUrl: './app.component.html',

@@ -13,7 +13,6 @@ import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
 
 @Component({
   selector: 'toaster',
-  standalone: true,
   imports: [JsonPipe],
   templateUrl: './toaster.component.html',
   styleUrl: './toaster.component.sass',

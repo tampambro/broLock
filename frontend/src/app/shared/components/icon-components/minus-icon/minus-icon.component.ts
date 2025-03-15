@@ -5,7 +5,6 @@ import { faMinus } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'minus-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [FaIconComponent],
   templateUrl: './minus-icon.component.html',
   styleUrl: './minus-icon.component.sass',

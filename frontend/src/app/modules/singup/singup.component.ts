@@ -8,7 +8,6 @@ import { switchMap } from 'rxjs';
 @Component({
   selector: 'singup',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [ReactiveFormsModule],
   providers: [AuthApiService],
   templateUrl: './singup.component.html',

@@ -9,7 +9,6 @@ import { THEME_ENUM } from '@bro-src-types/enum';
 @Component({
   selector: 'bro-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [],
   templateUrl: './header.component.html',
   styleUrl: './header.component.sass',

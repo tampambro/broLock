@@ -8,7 +8,6 @@ import { BroListItemDto } from '@dto/bro-list-item.dto';
 @Component({
   selector: 'bro-list-create',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [GripVerticalIconComponent, MinusIconComponent, PlusIconComponent],
   templateUrl: './bro-list-create.component.html',
   styleUrl: './bro-list-create.component.sass',
