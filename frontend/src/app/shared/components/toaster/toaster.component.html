@@ -2,6 +2,7 @@
   <div class="toaster"
     [class]="toast.eventType"
     @inserRemove>
+    <close-icon (closeEvent)="toasterSrv.closeToast(toast)"></close-icon>
     <div class="toaster__inner" [innerHTML]="toast.text"></div>
   </div>
 }

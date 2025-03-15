@@ -7,13 +7,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { ToasterService } from './toaster.service';
-import { JsonPipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
+import { CloseIconComponent } from '@icon-components/close-icon/close-icon.component';
 
 @Component({
   selector: 'toaster',
-  imports: [JsonPipe],
+  imports: [CloseIconComponent],
   templateUrl: './toaster.component.html',
   styleUrl: './toaster.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,

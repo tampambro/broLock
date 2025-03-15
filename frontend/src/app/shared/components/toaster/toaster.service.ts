@@ -21,13 +21,16 @@ export class ToasterService {
     this.toasterChangeEmitter.emit();
 
     timer(this.TIMER).subscribe({
-      next: () => {
-        const dyingToastIndex = this.livingToasts.findIndex(
-          item => item === toast,
-        );
-        this._livingToasts.splice(dyingToastIndex, 1);
-        this.toasterChangeEmitter.emit();
-      },
+      next: () => this.closeToast(toast),
     });
+  }
+
+  closeToast(toast: ToasterMessage): void {
+    const dyingToastIndex = this.livingToasts.findIndex(item => item === toast);
+
+    if (dyingToastIndex !== undefined) {
+      this._livingToasts.splice(dyingToastIndex, 1);
+      this.toasterChangeEmitter.emit();
+    }
   }
 }
