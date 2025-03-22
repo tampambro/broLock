@@ -4,11 +4,22 @@
   max-width: 42em
   padding: var(--standard-padding)
   &__label
+    display: block
+    position: relative
     &__input
       background: var(--input-background-color)
       border: none
       border-radius: var(--input-border-radius)
       color: var(--input-color)
       padding: .4em 0 .4em .4em
+      min-width: 13.3em
+      height: 2em
+      &.ng-touched.ng-dirty.ng-invalid
+        border: 1px solid var(--danger-color)
   &__btn-wrap
     margin: 1em 0
+  &__err
+    position: absolute
+    font-size: 0.6em
+    top: 2.2em
+    color: var(--danger-color)

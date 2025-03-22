@@ -4,6 +4,8 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { markAsDirtyAndTouched } from '@helpers/form-helpers';
+import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
 
 @Component({
   selector: 'login',
@@ -12,6 +14,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
   providers: [AuthApiService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.sass',
+  animations: [insertRemoveAnimation],
 })
 export class LoginComponent {
   private authApiSrv = inject(AuthApiService);
@@ -25,6 +28,11 @@ export class LoginComponent {
   });
 
   login() {
+    if (!this.loginForm.valid) {
+      markAsDirtyAndTouched(this.loginForm);
+      return;
+    }
+
     const params = this.loginForm.getRawValue();
 
     return this.authApiSrv.loginUser(params).subscribe({

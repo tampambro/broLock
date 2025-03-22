@@ -11,6 +11,14 @@
             Name
           </p>
 
+          @if (
+            loginForm.controls.name.dirty &&
+            loginForm.controls.name.touched &&
+            loginForm.controls.name.hasError('required')
+          ) {
+            <div class="bro-form__err" @inserRemove>Required field</div>
+          }
+
           <input class="bro-form__label__input"
             formControlName="name"
             type="text" />
@@ -21,9 +29,18 @@
             Password
           </p>
 
+          @if (
+            loginForm.controls.password.dirty &&
+            loginForm.controls.password.touched &&
+            loginForm.controls.password.hasError('required')
+          ) {
+            <div class="bro-form__err" @inserRemove>Required field</div>
+          }
+
           <input class="bro-form__label__input"
             formControlName="password"
             type="password" />
+
         </label>
       </div>
 
