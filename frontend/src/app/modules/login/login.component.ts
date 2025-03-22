@@ -11,7 +11,6 @@ import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
   selector: 'login',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule],
-  providers: [AuthApiService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.sass',
   animations: [insertRemoveAnimation],

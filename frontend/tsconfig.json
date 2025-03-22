@@ -35,6 +35,7 @@
       "@components/*": ["./src/app/shared/components/*"],
       "@modules/*": ["./src/app/modules/*"],
       "@helpers/*": ["./src/app/shared/helpers/*"],
+      "@guards/*": ["./src/app/shared/guards/*"],
     }
   },
   "angularCompilerOptions": {

@@ -21,8 +21,14 @@ export class EmailConfirm {
   token: string;
 
   @Column()
+  linkHash: string;
+
+  @Column()
   expiresAt: Date;
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column()
+  email: string;
 }

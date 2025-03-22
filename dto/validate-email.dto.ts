@@ -1,4 +1,4 @@
 export class ValidateEmailDto {
-  userName: string;
+  linkHash: string;
   otp: string;
 }

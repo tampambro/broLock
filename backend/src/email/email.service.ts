@@ -42,9 +42,13 @@ export class EmailService {
     }
   }
 
-  confirmEmailTemplate(userName: string, otp: string): string {
+  confirmEmailTemplate(
+    userName: string,
+    otp: string,
+    hashLink: string,
+  ): string {
     return `
-      <p>Hi ${userName}!</p><p>Please, confirm your bro account by this <strong>CODE: ${otp}</strong>.</p>
+      <p>Hi ${userName}!</p><p>Please, confirm your bro account. <br /> Your <strong>link</strong>: <a>${hashLink}</a> <br /> Your <strong>CODE: ${otp}</strong>.</p>
     `;
   }
 }

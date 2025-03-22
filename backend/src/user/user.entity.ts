@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { EmailConfirm } from 'src/email-confirm/email-confirm.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -16,4 +17,7 @@ export class User {
 
   @Column({ default: false })
   isMailConfirm: boolean;
+
+  @OneToOne(() => EmailConfirm, emailConfirm => emailConfirm.user)
+  emailConfirm: EmailConfirm;
 }

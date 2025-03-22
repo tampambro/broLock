@@ -8,7 +8,6 @@ import { switchMap } from 'rxjs';
   selector: 'signup',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule],
-  providers: [AuthApiService],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.sass',
 })

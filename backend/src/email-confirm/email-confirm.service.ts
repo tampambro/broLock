@@ -11,7 +11,7 @@ import { ValidateEmailDto } from '@dto/validate-email.dto';
 @Injectable()
 export class EmailConfirmService {
   private readonly minRequestIntervalMin = 5;
-  private readonly tokenExpireationMin = 60;
+  private readonly tokenExpireationMin = 10;
   private readonly saltRounds = 10;
 
   constructor(
@@ -21,43 +21,37 @@ export class EmailConfirmService {
     private emailSrv: EmailService,
   ) {}
 
-  private async createEmailConfirmOtp(userId: number): Promise<string> {
-    const createTime = new Date();
-
-    const recentToken = await this.emailConfirmRepository.findOne({
+  private async createEmailConfirmOtp(
+    userId: number,
+  ): Promise<{ otp: string; linkHash: string }> {
+    let emailConfirmItem = await this.emailConfirmRepository.findOne({
       where: {
         user: { id: userId },
       },
     });
 
-    if (recentToken) {
-      const isTime =
-        new Date().getTime() >
-        recentToken.createdAt.getTime() +
-          this.minRequestIntervalMin * 60 * 1000;
-
-      if (isTime) {
-        await this.emailConfirmRepository.remove(recentToken);
-      } else {
-        throw new BadRequestException('It is not time yet');
-      }
+    if (emailConfirmItem) {
+      throw new BadRequestException();
+    } else {
+      emailConfirmItem = this.emailConfirmRepository.create({
+        user: { id: userId },
+        token: await bcrypt.hash(generateOtp(), this.saltRounds),
+        linkHash: await bcrypt.hash(generateOtp(9), this.saltRounds),
+        expiresAt: new Date(
+          new Date().getTime() + this.tokenExpireationMin * 60 * 1000,
+        ),
+        email: emailConfirmItem.email,
+      });
+      await this.emailConfirmRepository.save(emailConfirmItem);
     }
 
-    const otp = generateOtp();
-    const hashedToken = await bcrypt.hash(otp, this.saltRounds);
-    const confirmEntity = this.emailConfirmRepository.create({
-      user: { id: userId },
-      token: hashedToken,
-      expiresAt: new Date(
-        createTime.getTime() + this.tokenExpireationMin * 60 * 1000,
-      ),
-    });
-    await this.emailConfirmRepository.save(confirmEntity);
-
-    return otp;
+    return {
+      otp: emailConfirmItem.token,
+      linkHash: emailConfirmItem.linkHash,
+    };
   }
 
-  async sendEmailConfirm(userName: string) {
+  async sendEmailConfirm(userName: string): Promise<string> {
     const user = await this.userSrv.findOne(userName);
 
     if (!user) {
@@ -68,24 +62,68 @@ export class EmailConfirmService {
       throw new BadRequestException();
     }
 
-    const otp = await this.createEmailConfirmOtp(user.id);
+    const { otp, linkHash } = await this.createEmailConfirmOtp(user.id);
 
     this.emailSrv.sendEmail({
       subject: 'BroLock — account confirm',
       recipients: [{ name: user.name, address: user.email }],
-      html: this.emailSrv.confirmEmailTemplate(user.name, otp),
+      html: this.emailSrv.confirmEmailTemplate(user.name, otp, linkHash),
     });
+
+    return linkHash;
   }
 
-  async validateEmail(params: ValidateEmailDto): Promise<boolean> {
-    const { userName, otp } = params;
-    const user = await this.userSrv.findOne(userName);
+  async sendNewEmailConfirm(linkHash: string): Promise<string> {
+    const emailConfirmItem = await this.emailConfirmRepository.findOneBy({
+      linkHash,
+    });
 
-    if (!user || user.isMailConfirm) {
-      return false;
+    if (!emailConfirmItem) {
+      throw new BadRequestException();
     }
 
-    const emailConfirm = await this.emailConfirmRepository.findOneBy({ user });
+    const isTime =
+      new Date().getTime() >
+      emailConfirmItem.createdAt.getTime() +
+        this.minRequestIntervalMin * 60 * 1000;
+
+    if (!isTime) {
+      throw new BadRequestException('It is not time yet');
+    }
+
+    emailConfirmItem.expiresAt = new Date(
+      new Date().getTime() + this.tokenExpireationMin * 60 * 1000,
+    );
+    emailConfirmItem.token = await bcrypt.hash(generateOtp(), this.saltRounds);
+    emailConfirmItem.linkHash = await bcrypt.hash(
+      generateOtp(9),
+      this.saltRounds,
+    );
+
+    await this.emailConfirmRepository.save(emailConfirmItem);
+
+    this.emailSrv.sendEmail({
+      subject: 'BroLock — account confirm',
+      recipients: [{ name: 'Bro', address: emailConfirmItem.email }],
+      html: this.emailSrv.confirmEmailTemplate(
+        'Bro',
+        emailConfirmItem.token,
+        emailConfirmItem.linkHash,
+      ),
+    });
+
+    return emailConfirmItem.linkHash;
+  }
+
+  async validateEmail(params: ValidateEmailDto): Promise<void> {
+    const { otp, linkHash } = params;
+    const emailConfirm = await this.emailConfirmRepository.findOneBy({
+      linkHash,
+    });
+
+    if (!emailConfirm) {
+      throw new BadRequestException();
+    }
 
     const isEmailConfirmValid =
       emailConfirm &&
@@ -93,11 +131,19 @@ export class EmailConfirmService {
       new Date().getTime() < new Date(emailConfirm.expiresAt).getTime();
 
     if (!isEmailConfirmValid) {
-      return false;
+      throw new BadRequestException();
     }
 
     await this.emailConfirmRepository.remove(emailConfirm);
+  }
 
-    return true;
+  async checkEmailConfirmItem(linkHash: string): Promise<void> {
+    const emailConfirm = await this.emailConfirmRepository.findOneBy({
+      linkHash,
+    });
+
+    if (!emailConfirm) {
+      throw new BadRequestException();
+    }
   }
 }

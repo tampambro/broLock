@@ -18,7 +18,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'email-confirm',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule],
-  providers: [AuthApiService],
   templateUrl: './email-confirm.component.html',
   styleUrl: './email-confirm.component.sass',
 })
@@ -30,15 +29,15 @@ export class EmailConfirmComponent implements OnInit {
   private toasterSrv = inject(ToasterService);
   private destroyRef = inject(DestroyRef);
 
-  private readonly userName: string =
-    this.route.snapshot.paramMap.get('userName') ?? '';
+  private readonly linkHash: string =
+    this.route.snapshot.paramMap.get('linkHash') ?? '';
 
   confirmForm = this.fb.nonNullable.group({
     code: ['', Validators.required],
   });
 
   ngOnInit(): void {
-    if (!this.userName) {
+    if (!this.linkHash) {
       this.router.navigate(['/']);
     }
   }
@@ -51,7 +50,7 @@ export class EmailConfirmComponent implements OnInit {
 
     this.authSrv
       .validateEmail({
-        userName: this.userName,
+        linkHash: this.linkHash,
         otp: this.confirmForm.controls.code.value,
       })
       .subscribe({
@@ -75,7 +74,7 @@ export class EmailConfirmComponent implements OnInit {
 
   sendNewEmail(): void {
     this.authSrv
-      .createCodeEmailConfirm(this.userName)
+      .createCodeEmailConfirm(this.linkHash)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
