@@ -28,8 +28,7 @@ export class EmailConfirmComponent {
   private toasterSrv = inject(ToasterService);
   private destroyRef = inject(DestroyRef);
 
-  private readonly linkHash: string =
-    this.route.snapshot.paramMap.get('linkHash') ?? '';
+  private linkHash: string = this.route.snapshot.paramMap.get('linkHash') ?? '';
 
   confirmForm = this.fb.nonNullable.group({
     code: ['', Validators.required],
@@ -70,11 +69,13 @@ export class EmailConfirmComponent {
       .createNewCodeEmailConfirm(this.linkHash)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => {
+        next: response => {
           this.toasterSrv.addToast({
             eventType: TOASTER_EVENT_ENUM.SUCCESS,
             text: 'Email have been sent',
           });
+          this.linkHash = response.linkHash;
+          this.router.navigate(['email-confirm', response.linkHash]);
         },
         error: (err: HttpErrorResponse) => {
           console.log(err.error);
@@ -82,7 +83,7 @@ export class EmailConfirmComponent {
           if (err.error.message === 'It is not time yet') {
             this.toasterSrv.addToast({
               eventType: TOASTER_EVENT_ENUM.DANGER,
-              text: "You can make a try every 5 minutes. But it's not time yet, bro.",
+              text: "You can make a try every 3 minutes. But it's not time yet, bro.",
             });
           }
         },

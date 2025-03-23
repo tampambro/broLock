@@ -48,7 +48,7 @@ export class EmailService {
     hashLink: string,
   ): string {
     return `
-      <p>Hi ${userName}!</p><p>Please, confirm your bro account. <br /> Your <strong>link</strong>: <a>${hashLink}</a> <br /> Your <strong>CODE: ${otp}</strong>.</p>
+      <p>Hi ${userName}!</p><p>Please, confirm your bro account. <br /> Your <strong>link</strong>: <a href="${process.env.MAIL_CONFIRM_LINK}${hashLink}">${process.env.MAIL_CONFIRM_LINK}</a> <br /> Your <strong>CODE: ${otp}</strong>.</p>
     `;
   }
 }

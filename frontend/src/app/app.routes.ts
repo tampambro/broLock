@@ -15,6 +15,7 @@ export const routes: Routes = [
     path: 'email-confirm/:linkHash',
     component: EmailConfirmComponent,
     canActivate: [emailConfirmGuard],
+    pathMatch: 'full',
   },
   { path: 'bro-lock-list/create', component: BroListCreateComponent },
   { path: '**', component: NotFoundComponent },

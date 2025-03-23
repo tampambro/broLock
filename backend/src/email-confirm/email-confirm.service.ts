@@ -8,10 +8,11 @@ import { UserService } from 'src/user/user.service';
 import { EmailService } from 'src/email/email.service';
 import { ValidateEmailDto } from '@dto/validate-email.dto';
 import { User } from 'src/user/user.entity';
+import { getRendomString } from '@helpers/generate-random-string';
 
 @Injectable()
 export class EmailConfirmService {
-  private readonly minRequestIntervalMin = 5;
+  private readonly minRequestIntervalMin = 3;
   private readonly tokenExpireationMin = 10;
   private readonly saltRounds = 10;
 
@@ -26,11 +27,12 @@ export class EmailConfirmService {
     userId: number,
     email: string,
   ): Promise<{ otp: string; linkHash: string }> {
+    const otp = generateOtp();
     const emailConfirmItem = this.emailConfirmRepository.create({
       email,
       user: { id: userId },
-      token: await bcrypt.hash(generateOtp(), this.saltRounds),
-      linkHash: await bcrypt.hash(generateOtp(4), this.saltRounds),
+      token: await bcrypt.hash(otp, this.saltRounds),
+      linkHash: getRendomString(),
       expiresAt: new Date(
         new Date().getTime() + this.tokenExpireationMin * 60 * 1000,
       ),
@@ -38,7 +40,7 @@ export class EmailConfirmService {
     await this.emailConfirmRepository.save(emailConfirmItem);
 
     return {
-      otp: emailConfirmItem.token,
+      otp,
       linkHash: emailConfirmItem.linkHash,
     };
   }
@@ -86,21 +88,19 @@ export class EmailConfirmService {
 
     const isTime =
       new Date().getTime() >
-      emailConfirmItem.createdAt.getTime() +
-        this.minRequestIntervalMin * 60 * 1000;
+      new Date(emailConfirmItem.expiresAt).getTime() -
+        (this.tokenExpireationMin - this.minRequestIntervalMin) * 60 * 1000;
 
     if (!isTime) {
       throw new BadRequestException('It is not time yet');
     }
+    const otp = generateOtp();
 
+    emailConfirmItem.token = await bcrypt.hash(otp, this.saltRounds);
     emailConfirmItem.expiresAt = new Date(
       new Date().getTime() + this.tokenExpireationMin * 60 * 1000,
     );
-    emailConfirmItem.token = await bcrypt.hash(generateOtp(), this.saltRounds);
-    emailConfirmItem.linkHash = await bcrypt.hash(
-      generateOtp(4),
-      this.saltRounds,
-    );
+    emailConfirmItem.linkHash = getRendomString();
 
     await this.emailConfirmRepository.save(emailConfirmItem);
 
@@ -109,7 +109,7 @@ export class EmailConfirmService {
       recipients: [{ name: 'Bro', address: emailConfirmItem.email }],
       html: this.emailSrv.confirmEmailTemplate(
         'Bro',
-        emailConfirmItem.token,
+        otp,
         emailConfirmItem.linkHash,
       ),
     });

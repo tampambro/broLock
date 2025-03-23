@@ -33,11 +33,11 @@ export class AuthApiService {
   }
 
   createNewCodeEmailConfirm(
-    userName: string,
+    linkHash: string,
   ): Observable<GenerateEmailConfirmResponseDto> {
     return this.http.post<GenerateEmailConfirmResponseDto>(
       `${this.baseUrl}/email-confirm/new-confirm`,
-      userName,
+      { linkHash },
     );
   }
 
@@ -46,7 +46,7 @@ export class AuthApiService {
   ): Observable<CommonSuccessResponceDto> {
     return this.http.post<CommonSuccessResponceDto>(
       `${this.baseUrl}/email-confirm`,
-      linkHash,
+      { linkHash },
     );
   }
 
