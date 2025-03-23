@@ -4,6 +4,7 @@ import { CreateUserDto } from '@dto/create-user.dto';
 import { HttpClient } from '@angular/common/http';
 import { BASE_API_URL } from '@const/tokens';
 import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
+import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { LoginResponseDto } from '@dto/login-response.dto';
 import { ValidateEmailDto } from '@dto/validate-email.dto';
@@ -15,8 +16,10 @@ export class AuthApiService {
   private readonly baseUrl = inject(BASE_API_URL);
   private http = inject(HttpClient);
 
-  createUser(params: CreateUserDto): Observable<CommonSuccessResponceDto> {
-    return this.http.post<CommonSuccessResponceDto>(
+  createUser(
+    params: CreateUserDto,
+  ): Observable<GenerateEmailConfirmResponseDto> {
+    return this.http.post<GenerateEmailConfirmResponseDto>(
       `${this.baseUrl}/auth/singup`,
       params,
     );
@@ -29,11 +32,11 @@ export class AuthApiService {
     );
   }
 
-  createCodeEmailConfirm(
+  createNewCodeEmailConfirm(
     userName: string,
-  ): Observable<CommonSuccessResponceDto> {
-    return this.http.post<CommonSuccessResponceDto>(
-      `${this.baseUrl}/email-confirm`,
+  ): Observable<GenerateEmailConfirmResponseDto> {
+    return this.http.post<GenerateEmailConfirmResponseDto>(
+      `${this.baseUrl}/email-confirm/new-confirm`,
       userName,
     );
   }
@@ -42,7 +45,7 @@ export class AuthApiService {
     linkHash: string,
   ): Observable<CommonSuccessResponceDto> {
     return this.http.post<CommonSuccessResponceDto>(
-      `${this.baseUrl}/new-confirm`,
+      `${this.baseUrl}/email-confirm`,
       linkHash,
     );
   }

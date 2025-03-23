@@ -7,6 +7,7 @@ import { EmailConfirm } from './email-confirm.entity';
 import { UserService } from 'src/user/user.service';
 import { EmailService } from 'src/email/email.service';
 import { ValidateEmailDto } from '@dto/validate-email.dto';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class EmailConfirmService {
@@ -23,27 +24,18 @@ export class EmailConfirmService {
 
   private async createEmailConfirmOtp(
     userId: number,
+    email: string,
   ): Promise<{ otp: string; linkHash: string }> {
-    let emailConfirmItem = await this.emailConfirmRepository.findOne({
-      where: {
-        user: { id: userId },
-      },
+    const emailConfirmItem = this.emailConfirmRepository.create({
+      email,
+      user: { id: userId },
+      token: await bcrypt.hash(generateOtp(), this.saltRounds),
+      linkHash: await bcrypt.hash(generateOtp(4), this.saltRounds),
+      expiresAt: new Date(
+        new Date().getTime() + this.tokenExpireationMin * 60 * 1000,
+      ),
     });
-
-    if (emailConfirmItem) {
-      throw new BadRequestException();
-    } else {
-      emailConfirmItem = this.emailConfirmRepository.create({
-        user: { id: userId },
-        token: await bcrypt.hash(generateOtp(), this.saltRounds),
-        linkHash: await bcrypt.hash(generateOtp(9), this.saltRounds),
-        expiresAt: new Date(
-          new Date().getTime() + this.tokenExpireationMin * 60 * 1000,
-        ),
-        email: emailConfirmItem.email,
-      });
-      await this.emailConfirmRepository.save(emailConfirmItem);
-    }
+    await this.emailConfirmRepository.save(emailConfirmItem);
 
     return {
       otp: emailConfirmItem.token,
@@ -51,8 +43,15 @@ export class EmailConfirmService {
     };
   }
 
-  async sendEmailConfirm(userName: string): Promise<string> {
-    const user = await this.userSrv.findOne(userName);
+  async sendEmailConfirm(userId: number): Promise<string> {
+    let user: User;
+
+    try {
+      user = await this.userSrv.findOne(userId);
+    } catch (err) {
+      console.error(err);
+      throw new BadRequestException();
+    }
 
     if (!user) {
       throw new BadRequestException();
@@ -62,7 +61,10 @@ export class EmailConfirmService {
       throw new BadRequestException();
     }
 
-    const { otp, linkHash } = await this.createEmailConfirmOtp(user.id);
+    const { otp, linkHash } = await this.createEmailConfirmOtp(
+      user.id,
+      user.email,
+    );
 
     this.emailSrv.sendEmail({
       subject: 'BroLock — account confirm',
@@ -96,7 +98,7 @@ export class EmailConfirmService {
     );
     emailConfirmItem.token = await bcrypt.hash(generateOtp(), this.saltRounds);
     emailConfirmItem.linkHash = await bcrypt.hash(
-      generateOtp(9),
+      generateOtp(4),
       this.saltRounds,
     );
 

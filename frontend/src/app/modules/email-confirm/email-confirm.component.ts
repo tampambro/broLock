@@ -3,7 +3,6 @@ import {
   Component,
   DestroyRef,
   inject,
-  OnInit,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,7 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './email-confirm.component.html',
   styleUrl: './email-confirm.component.sass',
 })
-export class EmailConfirmComponent implements OnInit {
+export class EmailConfirmComponent {
   private authSrv = inject(AuthApiService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -35,12 +34,6 @@ export class EmailConfirmComponent implements OnInit {
   confirmForm = this.fb.nonNullable.group({
     code: ['', Validators.required],
   });
-
-  ngOnInit(): void {
-    if (!this.linkHash) {
-      this.router.navigate(['/']);
-    }
-  }
 
   validateEmail(): void {
     if (!this.confirmForm.valid) {
@@ -74,7 +67,7 @@ export class EmailConfirmComponent implements OnInit {
 
   sendNewEmail(): void {
     this.authSrv
-      .createCodeEmailConfirm(this.linkHash)
+      .createNewCodeEmailConfirm(this.linkHash)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

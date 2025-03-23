@@ -1,7 +1,7 @@
 <form class="bro-form" [formGroup]="singupForm" (submit)="createUser()">
   <div>
     <h1 class="bro-form__title">
-      Create broLock account
+      Create BroLock account
     </h1>
 
     <div class="bro-form__inner-wrap">
@@ -10,6 +10,14 @@
           <p class="bro-form__label__text">
             Name
           </p>
+
+          @if (
+            singupForm.controls.name.dirty &&
+            singupForm.controls.name.touched &&
+            singupForm.controls.name.hasError('required')
+          ) {
+            <div class="bro-form__err" @inserRemove>Required field</div>
+          }
 
           <input class="bro-form__label__input"
             type="text"
@@ -21,6 +29,14 @@
             Email
           </p>
 
+          @if (
+            singupForm.controls.email.dirty &&
+            singupForm.controls.email.touched &&
+            singupForm.controls.email.hasError('required')
+          ) {
+            <div class="bro-form__err" @inserRemove>Required field</div>
+          }
+
           <input class="bro-form__label__input"
             type="email"
             formControlName="email" />
@@ -30,6 +46,14 @@
           <p class="bro-form__label__text">
             Password
           </p>
+
+          @if (
+            singupForm.controls.password.dirty &&
+            singupForm.controls.password.touched &&
+            singupForm.controls.password.hasError('required')
+          ) {
+            <div class="bro-form__err" @inserRemove>Required field</div>
+          }
 
           <input class="bro-form__label__input"
             type="password"

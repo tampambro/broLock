@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
-import { GenerateEmailConfirmDto } from '@dto/generate-email-confirm.dto';
+import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
 import { ValidateEmailDto } from '@dto/validate-email.dto';
 import { EmailConfirmService } from './email-confirm.service';
 
@@ -8,7 +8,7 @@ import { EmailConfirmService } from './email-confirm.service';
 export class EmailConfirmController {
   constructor(private emailConfirmSrv: EmailConfirmService) {}
 
-  @Get()
+  @Post()
   async checkEmailConfirmItem(
     linkHash: string,
   ): Promise<CommonSuccessResponceDto> {
@@ -17,20 +17,12 @@ export class EmailConfirmController {
     return { status: 'ok' };
   }
 
-  @Post()
-  async generateEmailConfirm(
-    userName: string,
-  ): Promise<GenerateEmailConfirmDto> {
-    const linkHash = await this.emailConfirmSrv.sendEmailConfirm(userName);
-
-    return { linkHash };
-  }
-
   @Post('new-confirm')
   async generateNewEmailConfirm(
     linkHash: string,
-  ): Promise<GenerateEmailConfirmDto> {
-    const newLinkHash = await this.emailConfirmSrv.sendEmailConfirm(linkHash);
+  ): Promise<GenerateEmailConfirmResponseDto> {
+    const newLinkHash =
+      await this.emailConfirmSrv.sendNewEmailConfirm(linkHash);
 
     return { linkHash: newLinkHash };
   }

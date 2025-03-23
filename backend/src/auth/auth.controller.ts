@@ -8,17 +8,13 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from '@dto/create-user.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
-import { CommonAddResponseDto } from '@dto/common-add-response.dto';
-import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private userService: UserService,
-    private authSrv: AuthService,
-  ) {}
+  constructor(private authSrv: AuthService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('guard-test')
@@ -30,9 +26,8 @@ export class AuthController {
   @Post('singup')
   async singup(
     @Body() createUserDto: CreateUserDto,
-  ): Promise<CommonAddResponseDto> {
-    const newUser = await this.userService.create(createUserDto);
-    return { id: newUser.id };
+  ): Promise<GenerateEmailConfirmResponseDto> {
+    return await this.authSrv.signin(createUserDto);
   }
 
   @HttpCode(200)

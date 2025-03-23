@@ -5,10 +5,12 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
+import { EmailConfirmModule } from 'src/email-confirm/email-confirm.module';
 
 @Module({
   imports: [
     UserModule,
+    EmailConfirmModule,
     PassportModule,
     JwtModule.register({
       global: true,

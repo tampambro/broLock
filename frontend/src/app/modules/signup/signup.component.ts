@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthApiService } from '@api/auth-api.service';
 import { Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { markAsDirtyAndTouched } from '@helpers/form-helpers';
+import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
 
 @Component({
   selector: 'signup',
@@ -10,6 +11,7 @@ import { switchMap } from 'rxjs';
   imports: [ReactiveFormsModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.sass',
+  animations: [insertRemoveAnimation],
 })
 export class SignupComponent {
   private authApiSrv = inject(AuthApiService);
@@ -24,22 +26,16 @@ export class SignupComponent {
 
   createUser(): void {
     if (!this.singupForm.valid) {
+      markAsDirtyAndTouched(this.singupForm);
       return;
     }
 
     const authParams = this.singupForm.getRawValue();
 
-    this.authApiSrv
-      .createUser(authParams)
-      .pipe(
-        switchMap(() => {
-          return this.authApiSrv.createCodeEmailConfirm(authParams.name);
-        }),
-      )
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/email-confirm', authParams.name]);
-        },
-      });
+    this.authApiSrv.createUser(authParams).subscribe({
+      next: response => {
+        this.router.navigate(['/email-confirm', response.linkHash]);
+      },
+    });
   }
 }
