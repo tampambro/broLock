@@ -5,6 +5,7 @@ import { LoginComponent } from '@modules/login/login.component';
 import { EmailConfirmComponent } from '@modules/email-confirm/email-confirm.component';
 import { WelcomePageComponent } from '@modules/welcome-page/welcome-page.component';
 import { emailConfirmGuard } from '@guards/email-confirm.guard';
+import { NotFoundComponent } from '@modules/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
@@ -16,4 +17,5 @@ export const routes: Routes = [
     canActivate: [emailConfirmGuard],
   },
   { path: 'bro-lock-list/create', component: BroListCreateComponent },
+  { path: '**', component: NotFoundComponent },
 ];
