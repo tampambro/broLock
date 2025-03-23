@@ -24,13 +24,13 @@ export class EmailConfirmService {
   ) {}
 
   private async createEmailConfirmOtp(
-    userId: number,
-    email: string,
+    user: User,
   ): Promise<{ otp: string; linkHash: string }> {
     const otp = generateOtp();
+
     const emailConfirmItem = this.emailConfirmRepository.create({
-      email,
-      user: { id: userId },
+      user,
+      email: user.email,
       token: await bcrypt.hash(otp, this.saltRounds),
       linkHash: getRendomString(),
       expiresAt: new Date(
@@ -63,10 +63,7 @@ export class EmailConfirmService {
       throw new BadRequestException();
     }
 
-    const { otp, linkHash } = await this.createEmailConfirmOtp(
-      user.id,
-      user.email,
-    );
+    const { otp, linkHash } = await this.createEmailConfirmOtp(user);
 
     this.emailSrv.sendEmail({
       subject: 'BroLock — account confirm',
@@ -136,6 +133,13 @@ export class EmailConfirmService {
       throw new BadRequestException();
     }
 
+    // console.log(emailConfirm.user);
+
+    // const user = await this.userSrv.findOne(
+    //   emailConfirm.user as unknown as number,
+    // );
+
+    // console.log(user);
     await this.emailConfirmRepository.remove(emailConfirm);
   }
 

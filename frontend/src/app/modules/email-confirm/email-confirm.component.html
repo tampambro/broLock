@@ -14,6 +14,14 @@
               Confirmation Code
             </p>
 
+            @if (
+              confirmForm.controls.code.dirty &&
+              confirmForm.controls.code.touched &&
+              confirmForm.controls.code.hasError('required')
+            ) {
+              <div class="bro-form__err" @inserRemove>Required field</div>
+            }
+
             <input class="bro-form__label__input"
               type="text"
               formControlName="code" />

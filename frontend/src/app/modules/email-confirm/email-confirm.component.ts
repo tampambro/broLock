@@ -12,6 +12,7 @@ import { ToasterService } from '@components/toaster/toaster.service';
 import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
+import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
 
 @Component({
   selector: 'email-confirm',
@@ -19,6 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   imports: [ReactiveFormsModule],
   templateUrl: './email-confirm.component.html',
   styleUrl: './email-confirm.component.sass',
+  animations: [insertRemoveAnimation],
 })
 export class EmailConfirmComponent {
   private authSrv = inject(AuthApiService);
