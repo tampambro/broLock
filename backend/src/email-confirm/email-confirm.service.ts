@@ -29,7 +29,6 @@ export class EmailConfirmService {
     const otp = generateOtp();
 
     const emailConfirmItem = this.emailConfirmRepository.create({
-      user,
       email: user.email,
       token: await bcrypt.hash(otp, this.saltRounds),
       linkHash: getRendomString(),
@@ -37,7 +36,10 @@ export class EmailConfirmService {
         new Date().getTime() + this.tokenExpireationMin * 60 * 1000,
       ),
     });
+    user.emailConfirm = emailConfirmItem;
+
     await this.emailConfirmRepository.save(emailConfirmItem);
+    await this.userSrv.save(user);
 
     return {
       otp,
@@ -133,14 +135,14 @@ export class EmailConfirmService {
       throw new BadRequestException();
     }
 
-    // console.log(emailConfirm.user);
+    const user = await this.userSrv.findOneByEmailConfirm(emailConfirm);
 
-    // const user = await this.userSrv.findOne(
-    //   emailConfirm.user as unknown as number,
-    // );
+    if (!user) {
+      throw new BadRequestException();
+    }
 
-    // console.log(user);
-    await this.emailConfirmRepository.remove(emailConfirm);
+    user.isMailConfirm = true;
+    this.userSrv.save(user);
   }
 
   async checkEmailConfirmItem(linkHash: string): Promise<void> {

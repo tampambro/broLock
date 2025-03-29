@@ -4,6 +4,7 @@ import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '@dto/create-user.dto';
 import { encrypt } from './user-password.helper';
+import { EmailConfirm } from 'src/email-confirm/email-confirm.entity';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,14 @@ export class UserService {
     return this.userRepository.findOneBy(findParam);
   }
 
+  async findOneByEmailConfirm(
+    emailConfirm: EmailConfirm,
+  ): Promise<User | null> {
+    return await this.userRepository.findOneBy({
+      emailConfirm: { id: emailConfirm.id },
+    });
+  }
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user = new User();
     user.name = createUserDto.name;
@@ -25,5 +34,9 @@ export class UserService {
     user.password = await encrypt(createUserDto.password);
 
     return this.userRepository.save(user);
+  }
+
+  async save(user: User): Promise<void> {
+    this.userRepository.save(user);
   }
 }

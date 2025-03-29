@@ -27,7 +27,7 @@ export class AuthController {
   async singup(
     @Body() createUserDto: CreateUserDto,
   ): Promise<GenerateEmailConfirmResponseDto> {
-    return await this.authSrv.signin(createUserDto);
+    return await this.authSrv.signup(createUserDto);
   }
 
   @HttpCode(200)

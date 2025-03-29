@@ -40,7 +40,7 @@ export class AuthService {
     };
   }
 
-  async signin(
+  async signup(
     params: CreateUserDto,
   ): Promise<GenerateEmailConfirmResponseDto> {
     const user = await this.usersSrv.create(params);

@@ -1,10 +1,7 @@
-import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -12,10 +9,6 @@ import {
 export class EmailConfirm {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @OneToOne(() => User)
-  @JoinColumn()
-  user: User;
 
   @Column()
   token: string;
