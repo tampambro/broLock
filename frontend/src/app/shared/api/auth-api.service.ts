@@ -58,4 +58,11 @@ export class AuthApiService {
       params,
     );
   }
+
+  // Delete
+  backGuardTest(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/auth/guard-test`, {
+      responseType: 'text',
+    });
+  }
 }

@@ -4,8 +4,8 @@
   </a>
 
     <div class="header-nav__auth-part">
-      @if (authSrv.isLogin()) {
-        <a class="btn header-nav__auth" routerLink="/signup" routerLinkActive="off">
+      @if (authSrv.isLogin) {
+        <a class="btn header-nav__auth" role="button">
           Log out
         </a>
       } @else {
@@ -19,11 +19,11 @@
     </div>
 
   <button class="theme-btn" type="button" (click)="emitTheme()" title="switch theme">
-    @if (currentTheme === THEME_ENUM.DARK) {
+    @if (currentTheme() === THEME_ENUM.DARK) {
       <fa-icon [icon]="faMoon"></fa-icon>
     }
 
-    @if (currentTheme === THEME_ENUM.LIGHT) {
+    @if (currentTheme() === THEME_ENUM.LIGHT) {
       <fa-icon [icon]="faSun"></fa-icon>
     }
   </button>

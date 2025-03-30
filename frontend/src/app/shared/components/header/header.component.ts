@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  DestroyRef,
   inject,
-  Input,
+  input,
   output,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -11,6 +13,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCloudMoon } from '@fortawesome/free-solid-svg-icons';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../services/auth.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'bro-header',
@@ -20,6 +23,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './header.component.sass',
 })
 export class HeaderComponent {
+  private destroyRef = inject(DestroyRef);
+  private cd = inject(ChangeDetectorRef);
   authSrv = inject(AuthService);
 
   readonly THEME_ENUM = THEME_ENUM;
@@ -27,9 +32,17 @@ export class HeaderComponent {
   faMoon = faCloudMoon;
   faSun = faSun;
 
+  currentTheme = input<THEME_ENUM>();
+
   toggleTheme = output<void>();
 
-  @Input() currentTheme?: THEME_ENUM;
+  ngOnInit(): void {
+    this.authSrv.logoutEvent
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => this.cd.detectChanges(),
+      });
+  }
 
   emitTheme(): void {
     this.toggleTheme.emit();
