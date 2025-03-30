@@ -3,14 +3,20 @@
     <img src="/logo/logo_min.jpg" alt="logo" />
   </a>
 
-  <div class="header-nav__auth-part">
-    <a class="btn header-nav__auth" routerLink="/signup" routerLinkActive="off">
-      Sign up
-    </a>
-    <a class="btn header-nav__auth" routerLink="/login" routerLinkActive="off">
-      Log in
-    </a>
-  </div>
+    <div class="header-nav__auth-part">
+      @if (authSrv.isLogin()) {
+        <a class="btn header-nav__auth" routerLink="/signup" routerLinkActive="off">
+          Log out
+        </a>
+      } @else {
+        <a class="btn header-nav__auth" routerLink="/signup" routerLinkActive="off">
+          Sign up
+        </a>
+        <a class="btn header-nav__auth" routerLink="/login" routerLinkActive="off">
+          Log in
+        </a>
+      }
+    </div>
 
   <button class="theme-btn" type="button" (click)="emitTheme()" title="switch theme">
     @if (currentTheme === THEME_ENUM.DARK) {

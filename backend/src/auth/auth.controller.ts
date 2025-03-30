@@ -23,7 +23,7 @@ export class AuthController {
   }
 
   @HttpCode(201)
-  @Post('singup')
+  @Post('signup')
   async singup(
     @Body() createUserDto: CreateUserDto,
   ): Promise<GenerateEmailConfirmResponseDto> {

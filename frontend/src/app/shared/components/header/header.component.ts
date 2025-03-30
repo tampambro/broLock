@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   Input,
   output,
 } from '@angular/core';
@@ -9,6 +10,7 @@ import { THEME_ENUM } from '@bro-src-types/enum';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCloudMoon } from '@fortawesome/free-solid-svg-icons';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'bro-header',
@@ -18,6 +20,8 @@ import { faSun } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './header.component.sass',
 })
 export class HeaderComponent {
+  authSrv = inject(AuthService);
+
   readonly THEME_ENUM = THEME_ENUM;
 
   faMoon = faCloudMoon;

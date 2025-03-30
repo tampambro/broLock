@@ -37,6 +37,8 @@ export class AuthService {
       access_token: await this.jwtSrv.signAsync(payload, {
         secret: process.env.JWT_KEY,
       }),
+      userName: user.name,
+      userId: user.id,
     };
   }
 

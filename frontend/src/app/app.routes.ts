@@ -7,6 +7,7 @@ import { WelcomePageComponent } from '@modules/welcome-page/welcome-page.compone
 import { emailConfirmGuard } from '@guards/email-confirm.guard';
 import { NotFoundComponent } from '@modules/not-found/not-found.component';
 import { ProfileComponent } from '@modules/profile/profile.component';
+import { authGuard } from '@guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
@@ -19,6 +20,6 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   { path: 'bro-lock-list/create', component: BroListCreateComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: '**', component: NotFoundComponent },
 ];

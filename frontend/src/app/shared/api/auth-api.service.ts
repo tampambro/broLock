@@ -20,7 +20,7 @@ export class AuthApiService {
     params: CreateUserDto,
   ): Observable<GenerateEmailConfirmResponseDto> {
     return this.http.post<GenerateEmailConfirmResponseDto>(
-      `${this.baseUrl}/auth/singup`,
+      `${this.baseUrl}/auth/signup`,
       params,
     );
   }

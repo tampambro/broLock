@@ -36,14 +36,20 @@ export class LoginComponent {
 
     return this.authApiSrv.loginUser(params).subscribe({
       next: res => {
-        this.cookieSrv.set('userName', params.name, {
-          secure: true,
-          sameSite: 'Strict',
-        });
         this.cookieSrv.set('access_token', res.access_token, {
           secure: true,
           sameSite: 'Strict',
         });
+        this.cookieSrv.set('userName', params.name, {
+          secure: true,
+          sameSite: 'Strict',
+        });
+        this.cookieSrv.set('userId', res.userId.toString(), {
+          secure: true,
+          sameSite: 'Strict',
+        });
+
+        this.router.navigate(['/profile']);
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 403) {
