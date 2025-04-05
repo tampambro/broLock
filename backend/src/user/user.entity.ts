@@ -24,6 +24,9 @@ export class User {
   @Column({ default: false })
   isMailConfirm: boolean;
 
+  @Column({ nullable: true })
+  refreshToken: string;
+
   @OneToOne(() => EmailConfirm)
   @JoinColumn()
   emailConfirm: EmailConfirm;

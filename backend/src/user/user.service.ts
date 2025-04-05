@@ -39,4 +39,17 @@ export class UserService {
   async save(user: User): Promise<void> {
     this.userRepository.save(user);
   }
+
+  async sasveRefreshToken(user: User, token: string | null): Promise<void> {
+    user.refreshToken = token;
+    await this.save(user);
+  }
+
+  async invalidateRefreshToken(userId: number): Promise<void> {
+    const user = await this.findOne(userId);
+    if (user) {
+      user.refreshToken = null;
+      await this.userRepository.save(user);
+    }
+  }
 }

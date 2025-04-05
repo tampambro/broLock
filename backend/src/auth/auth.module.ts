@@ -13,9 +13,7 @@ import { EmailConfirmModule } from 'src/email-confirm/email-confirm.module';
     EmailConfirmModule,
     PassportModule,
     JwtModule.register({
-      global: true,
-      secret: process.env.JWT_KEY,
-      signOptions: { expiresIn: '60d' },
+      signOptions: { expiresIn: '30m' },
     }),
   ],
   exports: [AuthService],
