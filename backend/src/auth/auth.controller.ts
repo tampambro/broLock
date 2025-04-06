@@ -21,9 +21,9 @@ export class AuthController {
   constructor(private authSrv: AuthService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('guard-test')
-  test() {
-    return 'Guard at the post';
+  @Get('check-auth')
+  authCheck() {
+    return 'ok';
   }
 
   @HttpCode(201)

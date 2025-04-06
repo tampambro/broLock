@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { EmailConfirmModule } from 'src/email-confirm/email-confirm.module';
+import { RedisModule } from 'src/redis/redis.module';
 
 @Module({
   imports: [
@@ -13,8 +14,9 @@ import { EmailConfirmModule } from 'src/email-confirm/email-confirm.module';
     EmailConfirmModule,
     PassportModule,
     JwtModule.register({
-      signOptions: { expiresIn: '30m' },
+      signOptions: { expiresIn: '15m' },
     }),
+    RedisModule,
   ],
   exports: [AuthService],
   providers: [AuthService, JwtStrategy],

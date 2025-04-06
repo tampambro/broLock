@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AuthApiService } from '@api/auth-api.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'profile',
@@ -8,10 +7,4 @@ import { AuthApiService } from '@api/auth-api.service';
   styleUrl: './profile.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileComponent {
-  private authSrv = inject(AuthApiService);
-
-  backGuardTest(): void {
-    this.authSrv.backGuardTest().subscribe();
-  }
-}
+export class ProfileComponent {}

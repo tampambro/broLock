@@ -59,9 +59,11 @@ export class AuthApiService {
     );
   }
 
-  // Delete
-  backGuardTest(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/auth/guard-test`, {
+  // By this endpoint we do first auth check in angular auth.guard on server.
+  checkAuth(): Observable<any> {
+    console.log('request');
+
+    return this.http.get(`${this.baseUrl}/auth/check-auth`, {
       responseType: 'text',
     });
   }
