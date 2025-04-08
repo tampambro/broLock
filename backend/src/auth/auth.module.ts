@@ -13,9 +13,7 @@ import { RedisModule } from 'src/redis/redis.module';
     UserModule,
     EmailConfirmModule,
     PassportModule,
-    JwtModule.register({
-      signOptions: { expiresIn: '15m' },
-    }),
+    JwtModule.register({}),
     RedisModule,
   ],
   exports: [AuthService],

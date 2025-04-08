@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { markAsDirtyAndTouched } from '@helpers/form-helpers';
 import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
+import { ToasterService } from '@components/toaster/toaster.service';
+import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 
 @Component({
   selector: 'login',
@@ -20,6 +22,7 @@ export class LoginComponent {
   private cookieSrv = inject(SsrCookieService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+  private toasterSrv = inject(ToasterService);
 
   loginForm = this.fb.nonNullable.group({
     name: ['', Validators.required],
@@ -40,6 +43,10 @@ export class LoginComponent {
           secure: true,
           sameSite: 'Strict',
         });
+        this.cookieSrv.set('refresh_token', res.refresh_token, {
+          secure: true,
+          sameSite: 'Strict',
+        });
         this.cookieSrv.set('userName', params.name, {
           secure: true,
           sameSite: 'Strict',
@@ -54,6 +61,11 @@ export class LoginComponent {
       error: (err: HttpErrorResponse) => {
         if (err.status === 403) {
           this.router.navigate(['/email-confirm']);
+        } else {
+          this.toasterSrv.addToast({
+            eventType: TOASTER_EVENT_ENUM.DANGER,
+            text: 'Wrong name or password',
+          });
         }
       },
     });

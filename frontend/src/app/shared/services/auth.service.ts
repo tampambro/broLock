@@ -1,5 +1,8 @@
 import { EventEmitter, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthApiService } from '@api/auth-api.service';
+import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
+import { ToasterService } from '@components/toaster/toaster.service';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
 @Injectable({
@@ -8,6 +11,8 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
 export class AuthService {
   private cookieSrv = inject(SsrCookieService);
   private router = inject(Router);
+  private authApiSrv = inject(AuthApiService);
+  private toasterSrv = inject(ToasterService);
 
   logoutEvent = new EventEmitter<void>();
 
@@ -16,9 +21,20 @@ export class AuthService {
   }
 
   logout(): void {
-    this.cookieSrv.deleteAll();
+    const userId = +this.cookieSrv.get('userId');
+    if (+this.cookieSrv.get('userId')) {
+      this.authApiSrv.logout(userId).subscribe({
+        next: () => {
+          this.toasterSrv.addToast({
+            eventType: TOASTER_EVENT_ENUM.SUCCESS,
+            text: 'またね！ (See you soon)',
+          });
+        },
+      });
+    }
+
     this.router.navigate(['/login']);
     this.logoutEvent.emit();
-    // TODO Если есть токен авторизации, его надо на беке удолять
+    this.cookieSrv.deleteAll();
   }
 }

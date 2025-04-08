@@ -5,7 +5,7 @@
 
     <div class="header-nav__auth-part">
       @if (authSrv.isLogin) {
-        <a class="btn header-nav__auth" role="button">
+        <a class="btn header-nav__auth" role="button" (click)="authSrv.logout()">
           Log out
         </a>
       } @else {

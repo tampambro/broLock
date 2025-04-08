@@ -7,6 +7,7 @@ import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
 import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { LoginResponseDto } from '@dto/login-response.dto';
+import { LogoutRequestDto } from '@dto/logout-request.dto';
 import { ValidateEmailDto } from '@dto/validate-email.dto';
 
 @Injectable({
@@ -61,10 +62,16 @@ export class AuthApiService {
 
   // By this endpoint we do first auth check in angular auth.guard on server.
   checkAuth(): Observable<any> {
-    console.log('request');
-
     return this.http.get(`${this.baseUrl}/auth/check-auth`, {
       responseType: 'text',
     });
+  }
+
+  logout(userId: number): Observable<CommonSuccessResponceDto> {
+    const params: LogoutRequestDto = { userId };
+    return this.http.post<CommonSuccessResponceDto>(
+      `${this.baseUrl}/auth/logout`,
+      params,
+    );
   }
 }
