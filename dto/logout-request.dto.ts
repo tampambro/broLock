@@ -1,3 +1,3 @@
 export class LogoutRequestDto {
-  userId: number;
+  refreshToken: string;
 }

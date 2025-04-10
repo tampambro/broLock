@@ -47,10 +47,6 @@ export class LoginComponent {
           secure: true,
           sameSite: 'Strict',
         });
-        this.cookieSrv.set('userName', params.name, {
-          secure: true,
-          sameSite: 'Strict',
-        });
         this.cookieSrv.set('userId', res.userId.toString(), {
           secure: true,
           sameSite: 'Strict',

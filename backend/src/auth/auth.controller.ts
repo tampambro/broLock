@@ -1,30 +1,17 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from '@dto/create-user.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
-import { LogoutRequestDto } from '@dto/logout-request.dto';
 import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
 import { RefreshTokenRequestDto } from '@dto/refresh-token-request.dto';
 import { RefreshTokenResponseDto } from '@dto/refresh-token-response.dto';
+import { LogoutRequestDto } from '@dto/logout-request.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authSrv: AuthService) {}
-
-  @UseGuards(JwtAuthGuard)
-  @Get('check-auth')
-  authCheck() {
-    return 'ok';
-  }
 
   @HttpCode(201)
   @Post('signup')
@@ -44,9 +31,9 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   async logout(
-    @Body() logoutParams: LogoutRequestDto,
+    @Body() params: LogoutRequestDto,
   ): Promise<CommonSuccessResponceDto> {
-    await this.authSrv.logout(logoutParams.userId);
+    await this.authSrv.logout(params.refreshToken);
 
     return { status: 'ok' };
   }
@@ -56,6 +43,6 @@ export class AuthController {
   async refreshToken(
     @Body() refreshTokenParams: RefreshTokenRequestDto,
   ): Promise<RefreshTokenResponseDto> {
-    return await this.authSrv.refreshTokens(refreshTokenParams.refreshToken);
+    return await this.authSrv.refreshToken(refreshTokenParams.refreshToken);
   }
 }

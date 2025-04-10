@@ -15,6 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: any): Promise<any> {
     const refreshToken = await this.redisSrv.getUserRefreshToken(payload.sub);
+
     if (!refreshToken) {
       throw new UnauthorizedException();
     }

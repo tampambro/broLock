@@ -7,8 +7,10 @@ import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
 import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { LoginResponseDto } from '@dto/login-response.dto';
-import { LogoutRequestDto } from '@dto/logout-request.dto';
 import { ValidateEmailDto } from '@dto/validate-email.dto';
+import { RefreshTokenRequestDto } from '@dto/refresh-token-request.dto';
+import { RefreshTokenResponseDto } from '@dto/refresh-token-response.dto';
+import { LogoutRequestDto } from '@dto/logout-request.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -60,17 +62,18 @@ export class AuthApiService {
     );
   }
 
-  // By this endpoint we do first auth check in angular auth.guard on server.
-  checkAuth(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/auth/check-auth`, {
-      responseType: 'text',
-    });
-  }
-
-  logout(userId: number): Observable<CommonSuccessResponceDto> {
-    const params: LogoutRequestDto = { userId };
+  logout(params: LogoutRequestDto): Observable<CommonSuccessResponceDto> {
     return this.http.post<CommonSuccessResponceDto>(
       `${this.baseUrl}/auth/logout`,
+      params,
+    );
+  }
+
+  refreshToken(
+    params: RefreshTokenRequestDto,
+  ): Observable<RefreshTokenResponseDto> {
+    return this.http.post<RefreshTokenResponseDto>(
+      `${this.baseUrl}/auth/refresh`,
       params,
     );
   }

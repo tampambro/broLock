@@ -40,7 +40,7 @@ export class AuthService {
 
     const payload = { sub: user.id, username: user.name };
     const accessToken = this.generateAccessToken(payload);
-    const refreshToken = this.generateAccessToken(payload);
+    const refreshToken = this.generateRefreshToken(payload);
 
     await this.redisSrv.setRefreshToken(
       user.id,
@@ -52,7 +52,6 @@ export class AuthService {
     return {
       access_token: accessToken,
       refresh_token: refreshToken,
-      userName: user.name,
       userId: user.id,
     };
   }
@@ -67,22 +66,25 @@ export class AuthService {
     return { linkHash };
   }
 
-  async refreshTokens(refreshToken: string) {
-    const decoded = this.jwtSrv.verify(refreshToken, {
+  private decodeRefreshToken(token: string): any {
+    return this.jwtSrv.verify(token, {
       secret: process.env.JWT_REFRESH_KEY,
     });
+  }
 
-    // Получается если, мы апу перезапустим, то нужно будет из базы достать все непросроченные токены и руками запихать их в redis, чтобы всем юзерам не пришлось перелогиниваться.
+  async refreshToken(refreshToken: string) {
+    const decoded = this.decodeRefreshToken(refreshToken);
+
     const redisStoredToken = await this.redisSrv.getUserRefreshToken(
       decoded.sub,
     );
 
     if (!redisStoredToken) {
-      throw new BadRequestException();
-    }
+      // User do not use account long time. His refresh_token died.
+      if (decoded.sub) {
+        this.logout(decoded.sub);
+      }
 
-    if (redisStoredToken !== refreshToken) {
-      this.logout(decoded.sub);
       throw new BadRequestException();
     }
 
@@ -108,10 +110,15 @@ export class AuthService {
     };
   }
 
-  async logout(userId: number) {
-    if (await this.redisSrv.getUserRefreshToken(userId)) {
-      await this.redisSrv.deleteRefreshToken(userId);
-      await this.usersSrv.invalidateRefreshToken(userId);
+  async logout(refreshToken: string) {
+    const decoded = this.decodeRefreshToken(refreshToken);
+
+    const redisStoredToken = await this.redisSrv.getUserRefreshToken(
+      decoded.sub,
+    );
+    if (redisStoredToken) {
+      await this.redisSrv.deleteRefreshToken(decoded.sub);
+      await this.usersSrv.invalidateRefreshToken(decoded.sub);
     } else {
       throw new BadRequestException();
     }
