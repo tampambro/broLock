@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '@dto/create-user.dto';
 import { encrypt } from './user-password.helper';
 import { EmailConfirm } from 'src/email-confirm/email-confirm.entity';
+import { UserInfoRequestDto } from '@dto/user-info-request.dto';
+import { UserInfoResponseDto } from '@dto/user-info-response.dto';
 
 @Injectable()
 export class UserService {
@@ -53,5 +55,17 @@ export class UserService {
     }
   }
 
-  async getUserInfo() {}
+  async getUserInfo(params: UserInfoRequestDto): Promise<UserInfoResponseDto> {
+    const user = await this.findOne(params.userId);
+
+    if (!user) {
+      throw new BadRequestException();
+    }
+
+    return {
+      userName: user.name,
+      avatar: user.avatar,
+      userPhrase: user.userPhrase,
+    };
+  }
 }

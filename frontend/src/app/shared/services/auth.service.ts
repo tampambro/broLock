@@ -1,11 +1,14 @@
-import { EventEmitter, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthApiService } from '@api/auth-api.service';
 import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 import { ToasterService } from '@components/toaster/toaster.service';
+import { LoginRequestDto } from '@dto/login-request.dto';
+import { LoginResponseDto } from '@dto/login-response.dto';
 import { RefreshTokenResponseDto } from '@dto/refresh-token-response.dto';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +18,33 @@ export class AuthService {
   private router = inject(Router);
   private authApiSrv = inject(AuthApiService);
   private toasterSrv = inject(ToasterService);
+  private userSrv = inject(UserService);
 
-  logoutEvent = new EventEmitter<void>();
+  private _isLogin$ = new BehaviorSubject<boolean>(this.isClientLogin);
 
-  get isLogin(): boolean {
+  get isLogin() {
+    return this._isLogin$;
+  }
+
+  private get isClientLogin(): boolean {
     return !!(
-      this.cookieSrv.get('access_token') || this.cookieSrv.get('refresh_token')
+      this.cookieSrv.get('access_token') ||
+      this.cookieSrv.get('refresh_token') ||
+      this.cookieSrv.get('userId')
+    );
+  }
+
+  login(params: LoginRequestDto): Observable<LoginResponseDto> {
+    return this.authApiSrv.login(params).pipe(
+      tap(res => {
+        this.cookieSetToken(res.access_token, res.refresh_token);
+        this.cookieSrv.set('userId', res.userId.toString(), {
+          secure: true,
+          sameSite: 'Strict',
+        });
+
+        this._isLogin$.next(true);
+      }),
     );
   }
 
@@ -38,13 +62,19 @@ export class AuthService {
     }
 
     this.router.navigate(['/login']);
-    this.logoutEvent.emit();
+    this._isLogin$.next(false);
     this.cookieSrv.deleteAll();
+    this.userSrv.setUserInfo(null);
   }
 
   refreshToken(): Observable<RefreshTokenResponseDto> {
     return this.authApiSrv.refreshToken({
       refreshToken: this.cookieSrv.get('refresh_token'),
     });
+  }
+
+  cookieSetToken(access_token: string, refresh_token: string): void {
+    this.cookieSrv.set('access_token', access_token);
+    this.cookieSrv.set('refresh_token', refresh_token);
   }
 }

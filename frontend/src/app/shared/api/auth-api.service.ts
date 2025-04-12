@@ -28,7 +28,7 @@ export class AuthApiService {
     );
   }
 
-  loginUser(params: LoginRequestDto): Observable<LoginResponseDto> {
+  login(params: LoginRequestDto): Observable<LoginResponseDto> {
     return this.http.post<LoginResponseDto>(
       `${this.baseUrl}/auth/login`,
       params,

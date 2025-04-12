@@ -12,11 +12,11 @@ export const unauthorizedInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401 && isPlatformBrowser(platformId)) {
         return authSrv.refreshToken().pipe(
-          switchMap(response => {
+          switchMap(res => {
+            authSrv.cookieSetToken(res.access_token, res.refresh_token);
             const reqWithNewToken = req.clone({
-              headers: req.headers.set('access_token', response.access_token),
+              headers: req.headers.set('access_token', res.access_token),
             });
-            console.log('i am retry');
 
             return next(reqWithNewToken);
           }),

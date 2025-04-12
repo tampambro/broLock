@@ -29,6 +29,7 @@ h1
   font-family: "RobotoMedium"
 
 button, a.btn
+  height: 2em
   cursor: pointer
   background: var(--btn-background-color)
   border: none
@@ -41,3 +42,15 @@ button, a.btn
     background: var(--btn-background-color-hover)
   &:active
     background: var(--btn-background-color-active)
+
+a
+  color: var(--link-text-color)
+  &.shy
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+    &:active
+      color: var(--btn-background-color-active)
+
+figure
+  margin: 0

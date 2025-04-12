@@ -5,17 +5,28 @@
 .header-nav
   display: flex
   gap: var(--standard-gap)
-  height: 2em
+  height: 4em
   .logo-icon
     display: block
     height: 100%
     img
       height: 100%
-  .theme-btn
-    margin-left: auto
   &__auth-part
+    margin-left: auto
     display: flex
     gap: var(--standard-gap)
   &__auth
     &.off
       display: none
+
+.user-info
+  flex-direction: row
+  height: 100%
+  &__content
+    display: flex
+    flex-direction: column
+    gap: var(--standard-gap)
+    &__name
+      margin-top: 0
+    &__phrase
+      color: var(--shy-text-color)

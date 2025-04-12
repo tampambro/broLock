@@ -3,20 +3,34 @@
     <img src="/logo/logo_min.jpg" alt="logo" />
   </a>
 
-    <div class="header-nav__auth-part">
-      @if (authSrv.isLogin) {
-        <a class="btn header-nav__auth" role="button" (click)="authSrv.logout()">
-          Log out
+  @if (userInfo) {
+    <figure class="user-info">
+      <img class="user-info__ava" [src]="userInfo.avatar ?? '/broLock_waifu/default-ava.jpg'" alt="user avatar" />
+      <figcaption class="user-info__content">
+        <a class="user-info__content__name shy" href="">
+          {{ userInfo.userName }}
         </a>
-      } @else {
-        <a class="btn header-nav__auth" routerLink="/signup" routerLinkActive="off">
-          Sign up
+        <a class="user-info__content__phrase shy" href="">
+          {{ userInfo.userPhrase ?? 'add your bro-phrase'}}
         </a>
-        <a class="btn header-nav__auth" routerLink="/login" routerLinkActive="off">
-          Log in
-        </a>
-      }
-    </div>
+      </figcaption>
+    </figure>
+  }
+
+  <div class="header-nav__auth-part">
+    @if (authSrv.isLogin | async) {
+      <a class="btn header-nav__auth" role="button" (click)="authSrv.logout()">
+        Log out
+      </a>
+    } @else {
+      <a class="btn header-nav__auth" routerLink="/signup" routerLinkActive="off">
+        Sign up
+      </a>
+      <a class="btn header-nav__auth" routerLink="/login" routerLinkActive="off">
+        Log in
+      </a>
+    }
+  </div>
 
   <button class="theme-btn" type="button" (click)="emitTheme()" title="switch theme">
     @if (currentTheme() === THEME_ENUM.DARK) {

@@ -30,4 +30,12 @@ export class User {
   @OneToOne(() => EmailConfirm)
   @JoinColumn()
   emailConfirm: EmailConfirm;
+
+  // @OneToOne(() => Profile)
+
+  @Column({ nullable: true })
+  avatar: string;
+
+  @Column({ nullable: true, length: 255 })
+  userPhrase: string;
 }
