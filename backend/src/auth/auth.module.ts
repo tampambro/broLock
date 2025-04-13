@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { EmailConfirmModule } from 'src/email-confirm/email-confirm.module';
 import { RedisModule } from 'src/redis/redis.module';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { RedisModule } from 'src/redis/redis.module';
     PassportModule,
     JwtModule.register({}),
     RedisModule,
+    EmailModule,
   ],
   exports: [AuthService],
   providers: [AuthService, JwtStrategy],
