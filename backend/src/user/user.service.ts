@@ -21,6 +21,10 @@ export class UserService {
     return this.userRepository.findOneBy(findParam);
   }
 
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findOne({ where: { email } });
+  }
+
   async findOneByEmailConfirm(
     emailConfirm: EmailConfirm,
   ): Promise<User | null> {
@@ -42,7 +46,7 @@ export class UserService {
     this.userRepository.save(user);
   }
 
-  async sasveRefreshToken(user: User, token: string | null): Promise<void> {
+  async saveRefreshToken(user: User, token: string | null): Promise<void> {
     user.refreshToken = token;
     await this.save(user);
   }

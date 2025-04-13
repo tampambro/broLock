@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createTransport, SendMailOptions, Transporter } from 'nodemailer';
 import { SendEmailDto } from './send-email.dto';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class EmailService {
@@ -19,7 +20,9 @@ export class EmailService {
     });
   }
 
-  async sendEmail(data: SendEmailDto): Promise<{ success: boolean } | null> {
+  private async sendEmail(
+    data: SendEmailDto,
+  ): Promise<{ success: boolean } | null> {
     const { sender, recipients, subject, html, text } = data;
 
     const mailOptions: SendMailOptions = {
@@ -42,13 +45,54 @@ export class EmailService {
     }
   }
 
-  confirmEmailTemplate(
+  async sendEmailConfirm(
+    user: User,
+    otp: string,
+    linkHash: string,
+  ): Promise<void> {
+    await this.sendEmail({
+      subject: 'BroLock — account confirm',
+      recipients: [{ name: user.name, address: user.email }],
+      html: this.confirmEmailTemplate(user.name, otp, linkHash),
+    });
+  }
+
+  async sendNewEmailConfirm(
+    otp: string,
+    email: string,
+    linkHash: string,
+  ): Promise<void> {
+    await this.sendEmail({
+      subject: 'BroLock — account confirm',
+      recipients: [{ name: 'Bro', address: email }],
+      html: this.confirmEmailTemplate('Bro', otp, linkHash),
+    });
+  }
+
+  async sendPasswordReset(user: User): Promise<void> {
+    await this.sendEmail({
+      subject: 'BroLock — reset password',
+      recipients: [{ name: user.name, address: user.email }],
+      html: this.passwordResetEmailTemplate(user.name, user.resetPasswordToken),
+    });
+  }
+
+  private confirmEmailTemplate(
     userName: string,
     otp: string,
     hashLink: string,
   ): string {
     return `
       <p>Hi ${userName}!</p><p>Please, confirm your bro account. <br /> Your <strong>link</strong>: <a href="${process.env.MAIL_CONFIRM_LINK}${hashLink}">${process.env.MAIL_CONFIRM_LINK}</a> <br /> Your <strong>CODE: ${otp}</strong>.</p>
+    `;
+  }
+
+  private passwordResetEmailTemplate(
+    userName: string,
+    hashLink: string,
+  ): string {
+    return `
+      <p>Hi ${userName}!</p><p>Here your link for reset password: <a href="${process.env.MAIL_RESET_PASSWORD}${hashLink}"</p><p>Keep your password strong, your spirit keep calm)))</p>
     `;
   }
 }

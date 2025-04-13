@@ -67,11 +67,7 @@ export class EmailConfirmService {
 
     const { otp, linkHash } = await this.createEmailConfirmOtp(user);
 
-    this.emailSrv.sendEmail({
-      subject: 'BroLock — account confirm',
-      recipients: [{ name: user.name, address: user.email }],
-      html: this.emailSrv.confirmEmailTemplate(user.name, otp, linkHash),
-    });
+    await this.emailSrv.sendEmailConfirm(user, otp, linkHash);
 
     return linkHash;
   }
@@ -103,15 +99,11 @@ export class EmailConfirmService {
 
     await this.emailConfirmRepository.save(emailConfirmItem);
 
-    this.emailSrv.sendEmail({
-      subject: 'BroLock — account confirm',
-      recipients: [{ name: 'Bro', address: emailConfirmItem.email }],
-      html: this.emailSrv.confirmEmailTemplate(
-        'Bro',
-        otp,
-        emailConfirmItem.linkHash,
-      ),
-    });
+    await this.emailSrv.sendNewEmailConfirm(
+      otp,
+      emailConfirmItem.email,
+      emailConfirmItem.linkHash,
+    );
 
     return emailConfirmItem.linkHash;
   }

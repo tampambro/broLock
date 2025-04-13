@@ -21,6 +21,12 @@ export class User {
   @Column({ length: 255 })
   password: string;
 
+  @Column({ nullable: true })
+  resetPasswordToken: string;
+
+  @Column({ nullable: true })
+  resetPasswordExpires: Date;
+
   @Column({ default: false })
   isMailConfirm: boolean;
 

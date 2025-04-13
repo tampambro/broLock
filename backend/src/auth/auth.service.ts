@@ -1,4 +1,5 @@
 import { CreateUserDto } from '@dto/create-user.dto';
+import { ForgotPasswordRequestDto } from '@dto/forgot-password-request.dto';
 import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { LoginResponseDto } from '@dto/login-response.dto';
@@ -6,8 +7,10 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EmailConfirmService } from 'src/email-confirm/email-confirm.service';
 import { RedisService } from 'src/redis/redis.service';
-import { matchPassword } from 'src/user/user-password.helper';
+import { encrypt, matchPassword } from 'src/user/user-password.helper';
 import { UserService } from 'src/user/user.service';
+import * as bcrypt from 'bcrypt';
+import { EmailService } from 'src/email/email.service';
 
 interface Payload {
   sub: number;
@@ -16,15 +19,18 @@ interface Payload {
 
 @Injectable()
 export class AuthService {
-  readonly TOKEN_REFRESH_EXPIRATION = 7 * 24 * 60 * 60;
   readonly ACCESS_TOKEN_EXPIRATION = '15m';
+  readonly REDIS_TOKEN_REFRESH_EXPIRATION = 30 * 24 * 60 * 60;
   readonly REFRESH_TOKEN_EXPIRATION = '30d';
+  readonly TOKEN_RESET_PASSWORD_EXPIRATION = '1h';
+  readonly TOKEN_RESET_PASSWORD_EXPIRATION_DB = 1 * 60 * 60 * 1000;
 
   constructor(
     private usersSrv: UserService,
     private emailConfirmSrv: EmailConfirmService,
     private jwtSrv: JwtService,
     private redisSrv: RedisService,
+    private emailSrv: EmailService,
   ) {}
 
   async login(login: LoginRequestDto): Promise<LoginResponseDto> {
@@ -44,10 +50,10 @@ export class AuthService {
 
     await this.redisSrv.setRefreshToken(
       user.id,
-      this.TOKEN_REFRESH_EXPIRATION,
+      this.REDIS_TOKEN_REFRESH_EXPIRATION,
       refreshToken,
     );
-    await this.usersSrv.sasveRefreshToken(user, refreshToken);
+    await this.usersSrv.saveRefreshToken(user, refreshToken);
 
     return {
       access_token: accessToken,
@@ -99,10 +105,10 @@ export class AuthService {
 
     await this.redisSrv.setRefreshToken(
       user.id,
-      this.TOKEN_REFRESH_EXPIRATION,
+      this.REDIS_TOKEN_REFRESH_EXPIRATION,
       newRefreshToken,
     );
-    await this.usersSrv.sasveRefreshToken(user, newRefreshToken);
+    await this.usersSrv.saveRefreshToken(user, newRefreshToken);
 
     return {
       access_token: newAccessToken,
@@ -136,5 +142,50 @@ export class AuthService {
       secret: process.env.JWT_REFRESH_KEY,
       expiresIn: this.REFRESH_TOKEN_EXPIRATION,
     });
+  }
+
+  async sendPasswordResetEmail(
+    params: ForgotPasswordRequestDto,
+  ): Promise<void> {
+    const user = await this.usersSrv.findByEmail(params.email);
+
+    if (!user) {
+      return;
+    }
+
+    const payload = { sub: user.id, email: user.email };
+    const token = this.jwtSrv.sign(payload, {
+      expiresIn: this.TOKEN_RESET_PASSWORD_EXPIRATION,
+    });
+
+    user.resetPasswordToken = await bcrypt.hash(token, 10);
+    user.resetPasswordExpires = new Date(
+      Date.now() + this.TOKEN_RESET_PASSWORD_EXPIRATION,
+    );
+    await this.usersSrv.save(user);
+
+    await this.emailSrv.sendPasswordReset(user);
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const payload = this.jwtSrv.verify(token);
+    const user = await this.usersSrv.findOne(payload.sub);
+
+    if (
+      !user ||
+      !user.resetPasswordToken ||
+      new Date(user.resetPasswordExpires).getTime() < Date.now()
+    ) {
+      throw new BadRequestException('Reset password error');
+    }
+
+    const isValidToken = await bcrypt.compare(token, user.resetPasswordToken);
+    if (!isValidToken) {
+      throw new BadRequestException('Reset password token error');
+    }
+
+    user.password = await encrypt(newPassword);
+    user.resetPasswordToken = null;
+    await this.usersSrv.save(user);
   }
 }
