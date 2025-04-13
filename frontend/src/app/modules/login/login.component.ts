@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { markAsDirtyAndTouched } from '@helpers/form-helpers';
 import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
@@ -12,7 +12,7 @@ import { AuthService } from '@services/auth.service';
 @Component({
   selector: 'login',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.sass',
   animations: [insertRemoveAnimation],
