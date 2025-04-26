@@ -11,6 +11,8 @@ import { ValidateEmailDto } from '@dto/validate-email.dto';
 import { RefreshTokenRequestDto } from '@dto/refresh-token-request.dto';
 import { RefreshTokenResponseDto } from '@dto/refresh-token-response.dto';
 import { LogoutRequestDto } from '@dto/logout-request.dto';
+import { ForgotPasswordRequestDto } from '@dto/forgot-password-request.dto';
+import { ResetPasswordRequestDto } from '@dto/reset-password-request.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -74,6 +76,25 @@ export class AuthApiService {
   ): Observable<RefreshTokenResponseDto> {
     return this.http.post<RefreshTokenResponseDto>(
       `${this.baseUrl}/auth/refresh`,
+      params,
+    );
+  }
+
+  sendEmailForgotPassword(
+    params: ForgotPasswordRequestDto,
+  ): Observable<CommonSuccessResponceDto> {
+    return this.http.post<CommonSuccessResponceDto>(
+      `${this.baseUrl}/auth/forgot-password`,
+      params,
+    );
+  }
+
+  resetPassword(
+    linkToken: string,
+    params: ResetPasswordRequestDto,
+  ): Observable<CommonSuccessResponceDto> {
+    return this.http.post<CommonSuccessResponceDto>(
+      `${this.baseUrl}/auth/reset-password/${linkToken}`,
       params,
     );
   }

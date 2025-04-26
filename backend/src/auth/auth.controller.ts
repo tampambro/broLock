@@ -57,12 +57,12 @@ export class AuthController {
   }
 
   @HttpCode(200)
-  @Post('reset-password/:token')
+  @Post('reset-password/:linkToken')
   async resetPassword(
-    @Param('token') token: string,
+    @Param('linkToken') linkToken: string,
     @Body() params: ResetPasswordRequestDto,
   ): Promise<CommonSuccessResponceDto> {
-    await this.authSrv.resetPassword(token, params.password);
+    await this.authSrv.resetPassword(linkToken, params.password);
 
     return { status: 'ok' };
   }

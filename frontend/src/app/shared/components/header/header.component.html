@@ -34,11 +34,11 @@
 
   <button class="theme-btn" type="button" (click)="emitTheme()" title="switch theme">
     @if (currentTheme() === THEME_ENUM.DARK) {
-      <fa-icon [icon]="faMoon"></fa-icon>
+      <fa-icon [icon]="faMoon" />
     }
 
     @if (currentTheme() === THEME_ENUM.LIGHT) {
-      <fa-icon [icon]="faSun"></fa-icon>
+      <fa-icon [icon]="faSun" />
     }
   </button>
 </nav>

@@ -7,37 +7,43 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AuthApiService } from '@api/auth-api.service';
-import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 import { ButtonSpinnerComponent } from '@components/button-spinner/button-spinner.component';
-import { ToasterService } from '@components/toaster/toaster.service';
 import { markAsDirtyAndTouched } from '@helpers/form-helpers';
-import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
+import { passwordMatchValidator } from '@helpers/password-match-validator';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'forgot-password',
+  selector: 'reset-password',
   imports: [ReactiveFormsModule, ButtonSpinnerComponent],
-  templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.sass',
+  templateUrl: './reset-password.component.html',
+  styleUrl: './reset-password.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [insertRemoveAnimation],
 })
-export class ForgotPasswordComponent {
+export class ResetPasswordComponent {
   private fb = inject(FormBuilder);
-  private authApiSrv = inject(AuthApiService);
   private cd = inject(ChangeDetectorRef);
+  private authApiSrv = inject(AuthApiService);
+  private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
-  private toasterSrv = inject(ToasterService);
 
-  forgotForm = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-  });
+  readonly linkToken = this.route.snapshot.paramMap.get('linkToken') as string;
+
+  resetPasswordForm = this.fb.nonNullable.group(
+    {
+      password: ['', Validators.required],
+      repeatPassword: ['', Validators.required],
+    },
+    {
+      validators: passwordMatchValidator(),
+    },
+  );
   load = false;
 
-  getEmailResetPassword() {
-    if (!this.forgotForm.valid) {
-      markAsDirtyAndTouched(this.forgotForm);
+  resetPassword(): void {
+    if (!this.resetPasswordForm.valid) {
+      markAsDirtyAndTouched(this.resetPasswordForm);
       return;
     }
 
@@ -45,20 +51,15 @@ export class ForgotPasswordComponent {
     this.cd.detectChanges();
 
     this.authApiSrv
-      .sendEmailForgotPassword({
-        email: this.forgotForm.controls.email.value,
+      .resetPassword(this.linkToken, {
+        password: this.resetPasswordForm.controls.password.value,
       })
       .pipe(
-        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           this.load = false;
           this.cd.detectChanges();
-
-          this.toasterSrv.addToast({
-            eventType: TOASTER_EVENT_ENUM.SUCCESS,
-            text: 'Well done! Check your email, Bro.',
-          });
         }),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }

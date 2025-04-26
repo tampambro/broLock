@@ -11,8 +11,7 @@ import {
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { THEME_ENUM } from '@bro-src-types/enum';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faCloudMoon } from '@fortawesome/free-solid-svg-icons';
-import { faSun } from '@fortawesome/free-solid-svg-icons';
+import { faCloudMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '@services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from '@services/user.service';
@@ -36,9 +35,9 @@ export class HeaderComponent implements OnInit {
   authSrv = inject(AuthService);
 
   readonly THEME_ENUM = THEME_ENUM;
+  readonly faMoon = faCloudMoon;
+  readonly faSun = faSun;
 
-  faMoon = faCloudMoon;
-  faSun = faSun;
   userInfo: UserInfoResponseDto | null;
 
   currentTheme = input<THEME_ENUM>();

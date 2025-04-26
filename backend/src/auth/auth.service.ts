@@ -155,10 +155,11 @@ export class AuthService {
 
     const payload = { sub: user.id, email: user.email };
     const token = this.jwtSrv.sign(payload, {
+      secret: process.env.JWT_RESET_PASSWORD_KEY,
       expiresIn: this.TOKEN_RESET_PASSWORD_EXPIRATION,
     });
 
-    user.resetPasswordToken = await bcrypt.hash(token, 10);
+    user.resetPasswordToken = await encrypt(token);
     user.resetPasswordExpires = new Date(
       Date.now() + this.TOKEN_RESET_PASSWORD_EXPIRATION,
     );
@@ -168,7 +169,9 @@ export class AuthService {
   }
 
   async resetPassword(token: string, newPassword: string): Promise<void> {
-    const payload = this.jwtSrv.verify(token);
+    const payload = this.jwtSrv.verify(token, {
+      secret: process.env.JWT_RESET_PASSWORD_KEY,
+    });
     const user = await this.usersSrv.findOne(payload.sub);
 
     if (

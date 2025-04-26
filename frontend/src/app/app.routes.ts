@@ -9,12 +9,18 @@ import { NotFoundComponent } from '@modules/not-found/not-found.component';
 import { ProfileComponent } from '@modules/profile/profile.component';
 import { authGuard } from '@guards/auth.guard';
 import { ForgotPasswordComponent } from '@modules/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from '@modules/reset-password/reset-password.component';
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  {
+    path: 'reset-password/:linkToken',
+    component: ResetPasswordComponent,
+    pathMatch: 'full',
+  },
   {
     path: 'email-confirm/:linkHash',
     component: EmailConfirmComponent,
