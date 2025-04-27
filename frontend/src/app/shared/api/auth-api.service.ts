@@ -94,7 +94,7 @@ export class AuthApiService {
     params: ResetPasswordRequestDto,
   ): Observable<CommonSuccessResponceDto> {
     return this.http.post<CommonSuccessResponceDto>(
-      `${this.baseUrl}/auth/reset-password/${linkToken}`,
+      `${this.baseUrl}/auth/reset-password?linkToken=${linkToken}`,
       params,
     );
   }

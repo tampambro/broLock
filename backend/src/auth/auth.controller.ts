@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Query } from '@nestjs/common';
 import { CreateUserDto } from '@dto/create-user.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { AuthService } from './auth.service';
@@ -57,9 +57,9 @@ export class AuthController {
   }
 
   @HttpCode(200)
-  @Post('reset-password/:linkToken')
+  @Post('reset-password')
   async resetPassword(
-    @Param('linkToken') linkToken: string,
+    @Query('linkToken') linkToken: string,
     @Body() params: ResetPasswordRequestDto,
   ): Promise<CommonSuccessResponceDto> {
     await this.authSrv.resetPassword(linkToken, params.password);

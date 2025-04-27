@@ -89,10 +89,10 @@ export class EmailService {
 
   private passwordResetEmailTemplate(
     userName: string,
-    hashLink: string,
+    tokenLink: string,
   ): string {
     return `
-      <p>Hi ${userName}!</p><p>Here your link for reset password: <a href="${process.env.MAIL_RESET_PASSWORD}${hashLink}"</p><p>Keep your password strong, your spirit keep calm)))</p>
+      <p>Hi ${userName}!</p><p>Here your link for reset password: <a href="${process.env.MAIL_RESET_PASSWORD}${tokenLink}"</p><p>Keep your password strong, your spirit keep calm)))</p>
     `;
   }
 }

@@ -159,36 +159,36 @@ export class AuthService {
       expiresIn: this.TOKEN_RESET_PASSWORD_EXPIRATION,
     });
 
-    user.resetPasswordToken = await encrypt(token);
-    user.resetPasswordExpires = new Date(
-      Date.now() + this.TOKEN_RESET_PASSWORD_EXPIRATION,
-    );
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = new Date(Date.now() + 1 * 60 * 60 * 1000);
     await this.usersSrv.save(user);
 
     await this.emailSrv.sendPasswordReset(user);
   }
 
   async resetPassword(token: string, newPassword: string): Promise<void> {
-    const payload = this.jwtSrv.verify(token, {
-      secret: process.env.JWT_RESET_PASSWORD_KEY,
-    });
-    const user = await this.usersSrv.findOne(payload.sub);
+    try {
+      const payload = this.jwtSrv.verify(token, {
+        secret: process.env.JWT_RESET_PASSWORD_KEY,
+      });
 
-    if (
-      !user ||
-      !user.resetPasswordToken ||
-      new Date(user.resetPasswordExpires).getTime() < Date.now()
-    ) {
-      throw new BadRequestException('Reset password error');
+      const user = await this.usersSrv.findOne(payload.sub);
+
+      if (
+        !user ||
+        !user.resetPasswordToken ||
+        new Date(user.resetPasswordExpires).getTime() < Date.now()
+      ) {
+        throw new BadRequestException('Reset password error');
+      }
+
+      user.password = await encrypt(newPassword);
+      user.resetPasswordToken = null;
+      await this.usersSrv.save(user);
+    } catch (err) {
+      console.error(err);
+
+      return;
     }
-
-    const isValidToken = await bcrypt.compare(token, user.resetPasswordToken);
-    if (!isValidToken) {
-      throw new BadRequestException('Reset password token error');
-    }
-
-    user.password = await encrypt(newPassword);
-    user.resetPasswordToken = null;
-    await this.usersSrv.save(user);
   }
 }

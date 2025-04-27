@@ -10,6 +10,7 @@ import { ProfileComponent } from '@modules/profile/profile.component';
 import { authGuard } from '@guards/auth.guard';
 import { ForgotPasswordComponent } from '@modules/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '@modules/reset-password/reset-password.component';
+import { resetPasswordGuard } from '@guards/reset-password.guard';
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
@@ -17,8 +18,9 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   {
-    path: 'reset-password/:linkToken',
+    path: 'reset-password',
     component: ResetPasswordComponent,
+    canActivate: [resetPasswordGuard],
     pathMatch: 'full',
   },
   {
