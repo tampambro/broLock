@@ -12,6 +12,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideClientHydration } from '@angular/platform-browser';
 import { tokenInterceptor } from './shared/interceptors/token.interceptor';
 import { unauthorizedInterceptor } from './shared/interceptors/unauthorized.interceptor';
+import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,5 +28,14 @@ export const appConfig: ApplicationConfig = {
       useValue: environment.apiUrl,
     },
     provideAnimations(),
+    {
+      provide: IMAGE_LOADER,
+      useValue: (config: ImageLoaderConfig) => {
+        if (config.isPlaceholder) {
+          return '/other/placeholder.jpg';
+        }
+        return config.src;
+      },
+    },
   ],
 };

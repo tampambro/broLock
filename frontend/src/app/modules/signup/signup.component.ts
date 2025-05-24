@@ -4,11 +4,12 @@ import { AuthApiService } from '@api/auth-api.service';
 import { Router } from '@angular/router';
 import { markAsDirtyAndTouched } from '@helpers/form-helpers';
 import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'signup',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgOptimizedImage],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.sass',
   animations: [insertRemoveAnimation],

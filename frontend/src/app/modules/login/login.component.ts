@@ -8,11 +8,12 @@ import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
 import { ToasterService } from '@components/toaster/toaster.service';
 import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 import { AuthService } from '@services/auth.service';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'login',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, NgOptimizedImage],
   templateUrl: './login.component.html',
   styleUrl: './login.component.sass',
   animations: [insertRemoveAnimation],

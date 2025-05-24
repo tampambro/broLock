@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -19,7 +20,7 @@ import { finalize } from 'rxjs';
 
 @Component({
   selector: 'reset-password',
-  imports: [ReactiveFormsModule, ButtonSpinnerComponent],
+  imports: [ReactiveFormsModule, ButtonSpinnerComponent, NgOptimizedImage],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,

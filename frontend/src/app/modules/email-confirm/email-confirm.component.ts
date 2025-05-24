@@ -13,11 +13,12 @@ import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
 import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'email-confirm',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgOptimizedImage],
   templateUrl: './email-confirm.component.html',
   styleUrl: './email-confirm.component.sass',
   animations: [insertRemoveAnimation],
