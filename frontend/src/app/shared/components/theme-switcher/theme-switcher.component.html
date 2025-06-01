@@ -1,0 +1,9 @@
+  <button class="theme-btn" type="button" (click)="themeHandler()" title="switch theme">
+    @if (activeTheme === THEMES.DARK) {
+      <fa-icon [icon]="faMoon" />
+    }
+
+    @if (activeTheme === THEMES.LIGHT) {
+      <fa-icon [icon]="faSun" />
+    }
+  </button>

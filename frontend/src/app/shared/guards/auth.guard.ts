@@ -15,7 +15,6 @@ export const authGuard: CanActivateFn = () => {
   return authSrv.isLogin.pipe(
     map(isLogin => {
       if (!isLogin) {
-        debugger
         authSrv.logout();
         return false;
       } else {

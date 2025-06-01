@@ -1,16 +1,29 @@
 <nav class="header-nav">
   <a class="logo-icon" routerLink="/">
-    <img src="/logo/logo_min.jpg" alt="logo" />
+    <img ngSrc="/logo/logo_min.jpg"
+      alt="logo"
+      width="56"
+      height="56"
+      priority
+    />
   </a>
-
-  @if (userInfo) {
+  @if (platformSrv.isBrowser() && userInfo) {
     <figure class="user-info">
-      <img class="user-info__ava" [src]="userInfo.avatar ?? '/broLock_waifu/default-ava.jpg'" alt="user avatar" />
+      <a [routerLink]="['/profile']">
+        <img class="user-info__ava"
+          [ngSrc]="userInfo.avatar ?? '/broLock_waifu/default-ava.jpg'"
+          alt="user avatar"
+          width="56"
+          height="56"
+          priority
+        />
+      </a>
+
       <figcaption class="user-info__content">
-        <a class="user-info__content__name shy" href="">
+        <a class="user-info__content__name shy" [routerLink]="['/profile']">
           {{ userInfo.userName }}
         </a>
-        <a class="user-info__content__phrase shy" href="">
+        <a class="user-info__content__phrase shy" role="button" (click)="aditBroPhrase()">
           {{ userInfo.userPhrase ?? 'add your bro-phrase'}}
         </a>
       </figcaption>
@@ -32,13 +45,5 @@
     }
   </div>
 
-  <button class="theme-btn" type="button" (click)="emitTheme()" title="switch theme">
-    @if (currentTheme() === THEME_ENUM.DARK) {
-      <fa-icon [icon]="faMoon" />
-    }
-
-    @if (currentTheme() === THEME_ENUM.LIGHT) {
-      <fa-icon [icon]="faSun" />
-    }
-  </button>
+  <theme-switcher />
 </nav>

@@ -12,7 +12,6 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 export class ButtonSpinnerComponent {
   readonly faGear = faGear;
 
-  text = input<string>();
   isLoad = input<boolean>(false);
   typeBtn = input<string>('button');
 }

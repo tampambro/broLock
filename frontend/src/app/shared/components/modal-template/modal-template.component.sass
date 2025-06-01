@@ -1,0 +1,24 @@
+:host
+  display: block;
+
+.bro-modal
+  display: flex
+  flex-direction: column
+  width: 28em
+  min-height: 14em
+  background: var(--modal-background)
+  border-radius: var(--elem-border-radius)
+  padding: var(--modal-padding)
+  gap: var(--standard-gap)
+
+  .close-icon
+    align-self: end
+    background: transparent
+    padding: 0
+    color: var(--text-color)
+
+    &:hover
+      color: var(--btn-background-color-hover)
+
+    &:active
+      color: var(--btn-background-color-active)
