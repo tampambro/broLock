@@ -146,4 +146,8 @@ export class EmailConfirmService {
       throw new BadRequestException();
     }
   }
+
+  async findByEmail(email: string): Promise<EmailConfirm> {
+    return this.emailConfirmRepository.findOneBy({ email });
+  }
 }

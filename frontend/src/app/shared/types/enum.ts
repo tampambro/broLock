@@ -6,5 +6,5 @@ export enum THEME_ENUM {
 export enum TOASTER_EVENT_ENUM {
   DANGER = 'danger',
   SUCCESS = 'success',
-  WORNING = 'worning',
+  WORNING = 'warning',
 }

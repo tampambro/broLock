@@ -22,6 +22,6 @@ export class EmailConfirm {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @Column({ length: 255, unique: true })
   email: string;
 }

@@ -50,18 +50,16 @@
           width="192"
           height="224"
           priority
-          placeholder
         />
       </div>
     </div>
 
-
     <div class="bro-form__btn-wrap">
-      <button class="btn-primary" type="submit">
+      <button-spinner [isLoad]="load" typeBtn="submit">
         Login
-      </button>
+      </button-spinner>
 
-      <a class="btn btn-primary" routerLink="/forgot-password">
+      <a class="btn" routerLink="/forgot-password">
         Forgot password
       </a>
     </div>

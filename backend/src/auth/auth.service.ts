@@ -3,13 +3,16 @@ import { ForgotPasswordRequestDto } from '@dto/forgot-password-request.dto';
 import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
 import { LoginRequestDto } from '@dto/login-request.dto';
 import { LoginResponseDto } from '@dto/login-response.dto';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EmailConfirmService } from 'src/email-confirm/email-confirm.service';
 import { RedisService } from 'src/redis/redis.service';
 import { encrypt, matchPassword } from 'src/user/user-password.helper';
 import { UserService } from 'src/user/user.service';
-import * as bcrypt from 'bcrypt';
 import { EmailService } from 'src/email/email.service';
 
 interface Payload {
@@ -41,7 +44,17 @@ export class AuthService {
     }
 
     if (!user.isMailConfirm) {
-      throw new BadRequestException();
+      const emailConfirmItem = await this.emailConfirmSrv.findByEmail(
+        user.email,
+      );
+
+      try {
+        await this.emailConfirmSrv.sendNewEmailConfirm(
+          emailConfirmItem.linkHash,
+        );
+      } finally {
+        throw new ForbiddenException();
+      }
     }
 
     const payload = { sub: user.id, username: user.name };
