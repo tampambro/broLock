@@ -1,14 +1,15 @@
 import { Body, Controller, HttpCode, Post, Query } from '@nestjs/common';
-import { CreateUserDto } from '@dto/create-user.dto';
-import { LoginRequestDto } from '@dto/login-request.dto';
+import { CreateUserDto } from '@dto/auth/create-user.dto';
+import { LoginRequestDto } from '@dto/auth/login-request.dto';
 import { AuthService } from './auth.service';
-import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
-import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
-import { RefreshTokenRequestDto } from '@dto/refresh-token-request.dto';
-import { RefreshTokenResponseDto } from '@dto/refresh-token-response.dto';
-import { LogoutRequestDto } from '@dto/logout-request.dto';
-import { ForgotPasswordRequestDto } from '@dto/forgot-password-request.dto';
-import { ResetPasswordRequestDto } from '@dto/reset-password-request.dto';
+import { GenerateEmailConfirmResponseDto } from '@dto/email/generate-email-confirm-response.dto';
+import { CommonSuccessResponseDto } from '@dto/common-success-response.dto';
+import { RefreshTokenRequestDto } from '@dto/auth/refresh-token-request.dto';
+import { RefreshTokenResponseDto } from '@dto/auth/refresh-token-response.dto';
+import { LogoutRequestDto } from '@dto/auth/logout-request.dto';
+import { ForgotPasswordRequestDto } from '@dto/auth/forgot-password-request.dto';
+import { ResetPasswordRequestDto } from '@dto/auth/reset-password-request.dto';
+import { commonSuccessResponse } from '@const/common-success-response';
 
 @Controller('auth')
 export class AuthController {
@@ -32,10 +33,10 @@ export class AuthController {
   @Post('logout')
   async logout(
     @Body() params: LogoutRequestDto,
-  ): Promise<CommonSuccessResponceDto> {
+  ): Promise<CommonSuccessResponseDto> {
     await this.authSrv.logout(params.refreshToken);
 
-    return { status: 'ok' };
+    return commonSuccessResponse;
   }
 
   @HttpCode(200)
@@ -50,10 +51,10 @@ export class AuthController {
   @Post('forgot-password')
   async forgotPassword(
     @Body() params: ForgotPasswordRequestDto,
-  ): Promise<CommonSuccessResponceDto> {
+  ): Promise<CommonSuccessResponseDto> {
     this.authSrv.sendPasswordResetEmail(params);
 
-    return { status: 'ok' };
+    return commonSuccessResponse;
   }
 
   @HttpCode(200)
@@ -61,9 +62,9 @@ export class AuthController {
   async resetPassword(
     @Query('linkToken') linkToken: string,
     @Body() params: ResetPasswordRequestDto,
-  ): Promise<CommonSuccessResponceDto> {
+  ): Promise<CommonSuccessResponseDto> {
     await this.authSrv.resetPassword(linkToken, params.password);
 
-    return { status: 'ok' };
+    return commonSuccessResponse;
   }
 }

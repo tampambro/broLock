@@ -1,5 +1,5 @@
 import { inject, Injectable, OnDestroy } from '@angular/core';
-import { UserInfoResponseDto } from '@dto/user-info-response.dto';
+import { UserInfoResponseDto } from '@dto/user/user-info-response.dto';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { Observable, Subject } from 'rxjs';
 

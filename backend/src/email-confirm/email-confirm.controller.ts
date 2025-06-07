@@ -1,9 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CommonSuccessResponceDto } from '@dto/common-success-response.dto';
-import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
-import { GenerateEmailConfirmRequestDto } from '@dto/generate-email-confirm-request.dto';
-import { ValidateEmailDto } from '@dto/validate-email.dto';
+import { CommonSuccessResponseDto } from '@dto/common-success-response.dto';
+import { GenerateEmailConfirmResponseDto } from '@dto/email/generate-email-confirm-response.dto';
+import { GenerateEmailConfirmRequestDto } from '@dto/email/generate-email-confirm-request.dto';
+import { ValidateEmailDto } from '@dto/email/validate-email.dto';
 import { EmailConfirmService } from './email-confirm.service';
+import { commonSuccessResponse } from '@const/common-success-response';
 
 @Controller('email-confirm')
 export class EmailConfirmController {
@@ -12,10 +13,10 @@ export class EmailConfirmController {
   @Post()
   async checkEmailConfirmItem(
     @Body() params: GenerateEmailConfirmRequestDto,
-  ): Promise<CommonSuccessResponceDto> {
+  ): Promise<CommonSuccessResponseDto> {
     await this.emailConfirmSrv.checkEmailConfirmItem(params.linkHash);
 
-    return { status: 'ok' };
+    return commonSuccessResponse;
   }
 
   @Post('new-confirm')
@@ -32,9 +33,9 @@ export class EmailConfirmController {
   @Post('validate')
   async validateEmail(
     @Body() params: ValidateEmailDto,
-  ): Promise<CommonSuccessResponceDto> {
+  ): Promise<CommonSuccessResponseDto> {
     await this.emailConfirmSrv.validateEmail(params);
 
-    return { status: 'ok' };
+    return commonSuccessResponse;
   }
 }

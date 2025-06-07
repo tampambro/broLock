@@ -1,8 +1,8 @@
-import { CreateUserDto } from '@dto/create-user.dto';
-import { ForgotPasswordRequestDto } from '@dto/forgot-password-request.dto';
-import { GenerateEmailConfirmResponseDto } from '@dto/generate-email-confirm-response.dto';
-import { LoginRequestDto } from '@dto/login-request.dto';
-import { LoginResponseDto } from '@dto/login-response.dto';
+import { CreateUserDto } from '@dto/auth/create-user.dto';
+import { ForgotPasswordRequestDto } from '@dto/auth/forgot-password-request.dto';
+import { GenerateEmailConfirmResponseDto } from '@dto/email/generate-email-confirm-response.dto';
+import { LoginRequestDto } from '@dto/auth/login-request.dto';
+import { LoginResponseDto } from '@dto/auth/login-response.dto';
 import {
   Injectable,
   BadRequestException,

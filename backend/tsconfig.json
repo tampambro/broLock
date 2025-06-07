@@ -19,7 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@dto/*": ["../dto/*"],
-      "@helpers/*": ["./src/common/helpers/*"]
+      "@helpers/*": ["./src/common/helpers/*"],
+      "@const/*": ["./src/common/const/*"],
     }
   }
 }

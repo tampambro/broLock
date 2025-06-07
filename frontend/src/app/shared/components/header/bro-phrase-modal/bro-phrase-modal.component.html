@@ -1,12 +1,12 @@
 <modal-template>
   <h1 class="modal-header">How does it feel, bro?</h1>
 
-  <form class="modal-form">
+  <form class="modal-form" [formGroup]="form" (submit)="setBroPhrase()">
     <div class="modal-form__input-wrap">
-      ><input class="modal-form__input" />
+      ><input class="modal-form__input" formControlName="phrase" maxlength="255"/>
     </div>
 
-    <button-spinner [isLoad]="load" typeBtn="submit">
+    <button-spinner class="modal-form__action" [isLoad]="load" typeBtn="submit">
       Set bro-phrase
     </button-spinner>
   </form>

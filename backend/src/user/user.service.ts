@@ -2,11 +2,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '@dto/create-user.dto';
+import { CreateUserDto } from '@dto/auth/create-user.dto';
 import { encrypt } from './user-password.helper';
 import { EmailConfirm } from 'src/email-confirm/email-confirm.entity';
-import { UserInfoRequestDto } from '@dto/user-info-request.dto';
-import { UserInfoResponseDto } from '@dto/user-info-response.dto';
+import { UserInfoRequestDto } from '@dto/user/user-info-request.dto';
+import { UserInfoResponseDto } from '@dto/user/user-info-response.dto';
+import { SetBroPhraseRequest } from '@dto/user/set-bro-phrase-request.dto';
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,7 @@ export class UserService {
   async findOne(user: number | string): Promise<User | null> {
     const findParam = typeof user === 'number' ? { id: user } : { name: user };
 
-    return this.userRepository.findOneBy(findParam);
+    return await this.userRepository.findOneBy(findParam);
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -71,5 +72,16 @@ export class UserService {
       avatar: user.avatar,
       userPhrase: user.userPhrase,
     };
+  }
+
+  async setBroPhrase(broPhrase: SetBroPhraseRequest): Promise<void> {
+    const user = await this.findOne(broPhrase.userId);
+
+    if (!user) {
+      throw new BadRequestException();
+    }
+
+    user.userPhrase = broPhrase.phrase;
+    await this.save(user);
   }
 }

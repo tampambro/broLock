@@ -13,9 +13,8 @@ import { THEME_ENUM } from '@bro-src-types/enum';
 import { AuthService } from '@services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from '@services/user.service';
-import { UserInfoResponseDto } from '@dto/user-info-response.dto';
+import { UserInfoResponseDto } from '@dto/user/user-info-response.dto';
 import { UserApiService } from '@api/user-api.service';
-import { of, switchMap } from 'rxjs';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { Dialog } from '@angular/cdk/dialog';
 import { BroPhraseModalComponent } from './bro-phrase-modal/bro-phrase-modal.component';
@@ -53,24 +52,11 @@ export class HeaderComponent implements OnInit {
   toggleTheme = output<void>();
 
   ngOnInit(): void {
-    this.authSrv.isLogin
-      .pipe(
-        switchMap(isLogin => {
-          if (isLogin) {
-            return this.userApiSrv.getUserInfo({ userId: this.userSrv.userId });
-          } else {
-            return of(false);
-          }
-        }),
-        takeUntilDestroyed(this.destroyRef),
-      )
+    this.userSrv
+      .getUserInfo()
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(userInfo => {
-        if (typeof userInfo === 'object') {
-          this.userInfo = userInfo;
-          this.userSrv.setUserInfo(userInfo);
-        } else {
-          this.userInfo = null;
-        }
+        this.userInfo = userInfo;
         this.cd.detectChanges();
       });
   }
@@ -85,5 +71,13 @@ export class HeaderComponent implements OnInit {
 
   aditBroPhrase(): void {
     const dialog = this.dialog$.open(BroPhraseModalComponent);
+    dialog.closed.subscribe({
+      next: answer => {
+        if (typeof answer === 'string' && this.userInfo !== null) {
+          this.userInfo.userPhrase = answer;
+          this.userSrv.setUserInfo(this.userInfo);
+        }
+      },
+    });
   }
 }

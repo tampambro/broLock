@@ -1,3 +1,3 @@
-export class CommonSuccessResponceDto {
+export class CommonSuccessResponseDto {
   status: 'ok';
 }

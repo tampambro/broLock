@@ -6,7 +6,7 @@ import { generateOtp } from '@helpers/generate-otp';
 import { EmailConfirm } from './email-confirm.entity';
 import { UserService } from 'src/user/user.service';
 import { EmailService } from 'src/email/email.service';
-import { ValidateEmailDto } from '@dto/validate-email.dto';
+import { ValidateEmailDto } from '@dto/email/validate-email.dto';
 import { User } from 'src/user/user.entity';
 import { getRendomString } from '@helpers/generate-random-string';
 
