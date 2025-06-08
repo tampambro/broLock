@@ -12,14 +12,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { THEME_ENUM } from '@bro-src-types/enum';
 import { AuthService } from '@services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UserService } from '@services/user.service';
-import { UserInfoResponseDto } from '@dto/user/user-info-response.dto';
-import { UserApiService } from '@api/user-api.service';
+import { ProfileInfoResponseDto } from '@dto/profile/profile-info-response.dto';
 import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { Dialog } from '@angular/cdk/dialog';
 import { BroPhraseModalComponent } from './bro-phrase-modal/bro-phrase-modal.component';
 import { PlatformService } from '@services/platform.service';
 import { ThemeSwitcherComponent } from '@components/theme-switcher/theme-switcher.component';
+import { ProfileApiService } from '@api/profile-api.service';
+import { ProfileService } from '@services/profile.service';
 
 @Component({
   selector: 'bro-header',
@@ -37,14 +37,14 @@ import { ThemeSwitcherComponent } from '@components/theme-switcher/theme-switche
 export class HeaderComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
-  private userApiSrv = inject(UserApiService);
-  private userSrv = inject(UserService);
+  private profileApiSrv = inject(ProfileApiService);
+  private profileSrv = inject(ProfileService);
   platformSrv = inject(PlatformService);
   authSrv = inject(AuthService);
 
   private dialog$ = inject(Dialog);
 
-  userInfo: UserInfoResponseDto | null;
+  profileInfo: ProfileInfoResponseDto | null;
   themeMode: THEME_ENUM = THEME_ENUM.DARK;
 
   currentTheme = input<THEME_ENUM>();
@@ -52,11 +52,11 @@ export class HeaderComponent implements OnInit {
   toggleTheme = output<void>();
 
   ngOnInit(): void {
-    this.userSrv
-      .getUserInfo()
+    this.profileSrv
+      .getProfileInfo()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(userInfo => {
-        this.userInfo = userInfo;
+      .subscribe(profileInfo => {
+        this.profileInfo = profileInfo;
         this.cd.detectChanges();
       });
   }
@@ -73,9 +73,9 @@ export class HeaderComponent implements OnInit {
     const dialog = this.dialog$.open(BroPhraseModalComponent);
     dialog.closed.subscribe({
       next: answer => {
-        if (typeof answer === 'string' && this.userInfo !== null) {
-          this.userInfo.userPhrase = answer;
-          this.userSrv.setUserInfo(this.userInfo);
+        if (typeof answer === 'string' && this.profileInfo !== null) {
+          this.profileInfo.userPhrase = answer;
+          this.profileSrv.setProfileInfo(this.profileInfo);
         }
       },
     });

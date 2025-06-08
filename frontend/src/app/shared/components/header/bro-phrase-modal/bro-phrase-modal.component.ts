@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { ModalTemplateComponent } from '@components/modal-template/modal-template.component';
 import { ButtonSpinnerComponent } from '@components/button-spinner/button-spinner.component';
-import { UserApiService } from '@api/user-api.service';
 import { UserService } from '@services/user.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { markAsDirtyAndTouched } from '@helpers/form-helpers';
@@ -14,6 +13,7 @@ import { ToasterService } from '@components/toaster/toaster.service';
 import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 import { finalize } from 'rxjs';
 import { DialogRef } from '@angular/cdk/dialog';
+import { ProfileApiService } from '@api/profile-api.service';
 
 @Component({
   selector: 'bro-phrase-modal',
@@ -28,7 +28,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 })
 export class BroPhraseModalComponent {
   private userSrv = inject(UserService);
-  private userApiSrv = inject(UserApiService);
+  private profileApiSrv = inject(ProfileApiService);
   private fb = inject(FormBuilder);
   private toasterSrv = inject(ToasterService);
   private cd = inject(ChangeDetectorRef);
@@ -49,7 +49,7 @@ export class BroPhraseModalComponent {
 
     const broPhrase = this.form.controls.phrase.value;
 
-    this.userApiSrv
+    this.profileApiSrv
       .setBroPhrase({
         userId: this.userSrv.userId,
         phrase: broPhrase,

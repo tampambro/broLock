@@ -7,11 +7,11 @@
       priority
     />
   </a>
-  @if (platformSrv.isBrowser() && userInfo) {
+  @if (platformSrv.isBrowser() && profileInfo) {
     <figure class="user-info">
       <a [routerLink]="['/profile']">
         <img class="user-info__ava"
-          [ngSrc]="userInfo.avatar ?? '/broLock_waifu/default-ava.jpg'"
+          [ngSrc]="profileInfo.avatar ?? '/broLock_waifu/default-ava.jpg'"
           alt="user avatar"
           width="56"
           height="56"
@@ -21,10 +21,10 @@
 
       <figcaption class="user-info__content">
         <a class="user-info__content__name shy" [routerLink]="['/profile']">
-          {{ userInfo.userName }}
+          {{ profileInfo.userName }}
         </a>
         <a class="user-info__content__phrase shy" role="button" (click)="aditBroPhrase()">
-          {{ userInfo.userPhrase ?? 'add your bro-phrase'}}
+          {{ profileInfo.userPhrase ?? 'add your bro-phrase'}}
         </a>
       </figcaption>
     </figure>

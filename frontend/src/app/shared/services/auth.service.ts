@@ -8,7 +8,7 @@ import { LoginResponseDto } from '@dto/auth/login-response.dto';
 import { RefreshTokenResponseDto } from '@dto/auth/refresh-token-response.dto';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { UserService } from './user.service';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class AuthService {
   private router = inject(Router);
   private authApiSrv = inject(AuthApiService);
   private toasterSrv = inject(ToasterService);
-  private userSrv = inject(UserService);
+  private profileSrv = inject(ProfileService);
 
   private _isLogin$ = new BehaviorSubject<boolean>(this.isClientLogin);
 
@@ -64,7 +64,7 @@ export class AuthService {
     this.router.navigate(['/login']);
     this._isLogin$.next(false);
     this.cookieSrv.deleteAll();
-    this.userSrv.setUserInfo(null);
+    this.profileSrv.setProfileInfo(null);
   }
 
   refreshToken(): Observable<RefreshTokenResponseDto> {

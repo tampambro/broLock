@@ -1,4 +1,5 @@
 import { EmailConfirm } from 'src/email-confirm/email-confirm.entity';
+import { Profile } from 'src/profile/profile.entity';
 import {
   Column,
   Entity,
@@ -37,11 +38,7 @@ export class User {
   @JoinColumn()
   emailConfirm: EmailConfirm;
 
-  // @OneToOne(() => Profile)
-
-  @Column({ nullable: true })
-  avatar: string;
-
-  @Column({ nullable: true, length: 255 })
-  userPhrase: string;
+  @OneToOne(() => Profile, profile => profile.user, { cascade: true })
+  @JoinColumn()
+  profile: Profile;
 }

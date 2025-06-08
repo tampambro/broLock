@@ -8,10 +8,11 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
-import { UserApiService } from '@api/user-api.service';
+import { ProfileApiService } from '@api/profile-api.service';
 import { HeaderComponent } from '@components/header/header.component';
 import { ToasterComponent } from '@components/toaster/toaster.component';
 import { AuthService } from '@services/auth.service';
+import { ProfileService } from '@services/profile.service';
 import { UserService } from '@services/user.service';
 import { of, switchMap } from 'rxjs';
 
@@ -24,8 +25,9 @@ import { of, switchMap } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   private authSrv = inject(AuthService);
-  private userApiSrv = inject(UserApiService);
+  private profileApiSrv = inject(ProfileApiService);
   private userSrv = inject(UserService);
+  private profileSrv = inject(ProfileService);
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
 
@@ -34,15 +36,17 @@ export class AppComponent implements OnInit {
       .pipe(
         switchMap(isLogin => {
           if (isLogin) {
-            return this.userApiSrv.getUserInfo({ userId: this.userSrv.userId });
+            return this.profileApiSrv.getProfileInfo({
+              userId: this.userSrv.userId,
+            });
           } else {
             return of(null);
           }
         }),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe(userInfo => {
-        this.userSrv.setUserInfo(userInfo);
+      .subscribe(profileInfo => {
+        this.profileSrv.setProfileInfo(profileInfo);
         this.cd.detectChanges();
       });
   }

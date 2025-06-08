@@ -21,6 +21,7 @@
       "@dto/*": ["../dto/*"],
       "@helpers/*": ["./src/common/helpers/*"],
       "@const/*": ["./src/common/const/*"],
+      "@bro-types/*": ["./src/common/types/*"],
     }
   }
 }

@@ -1,4 +1,4 @@
-export class SetBroPhraseRequest {
+export class SetBroPhraseRequestDto {
   userId: number;
   phrase: string;
 }

@@ -2,13 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthController } from './auth/auth.controller';
-import { UserController } from './user/user.controller';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { EmailModule } from './email/email.module';
 import { EmailConfirmModule } from './email-confirm/email-confirm.module';
+import { ProfileController } from './profile/profile.controller';
+import { ProfileModule } from './profile/profile.module';
+import { BroLockModule } from './bro-lock/bro-lock.module';
 
 @Module({
   imports: [
@@ -29,8 +31,10 @@ import { EmailConfirmModule } from './email-confirm/email-confirm.module';
     UserModule,
     EmailModule,
     EmailConfirmModule,
+    ProfileModule,
+    BroLockModule,
   ],
-  controllers: [AppController, AuthController, UserController],
+  controllers: [AppController, AuthController, ProfileController],
   providers: [AppService],
 })
 export class AppModule {}

@@ -1,13 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '@dto/auth/create-user.dto';
 import { encrypt } from './user-password.helper';
 import { EmailConfirm } from 'src/email-confirm/email-confirm.entity';
-import { UserInfoRequestDto } from '@dto/user/user-info-request.dto';
-import { UserInfoResponseDto } from '@dto/user/user-info-response.dto';
-import { SetBroPhraseRequest } from '@dto/user/set-bro-phrase-request.dto';
+import { Profile } from 'src/profile/profile.entity';
 
 @Injectable()
 export class UserService {
@@ -40,6 +38,10 @@ export class UserService {
     user.email = createUserDto.email;
     user.password = await encrypt(createUserDto.password);
 
+    const profile = new Profile();
+    profile.userName = user.name;
+    user.profile = profile;
+
     return this.userRepository.save(user);
   }
 
@@ -58,30 +60,5 @@ export class UserService {
       user.refreshToken = null;
       await this.userRepository.save(user);
     }
-  }
-
-  async getUserInfo(params: UserInfoRequestDto): Promise<UserInfoResponseDto> {
-    const user = await this.findOne(params.userId);
-
-    if (!user) {
-      throw new BadRequestException();
-    }
-
-    return {
-      userName: user.name,
-      avatar: user.avatar,
-      userPhrase: user.userPhrase,
-    };
-  }
-
-  async setBroPhrase(broPhrase: SetBroPhraseRequest): Promise<void> {
-    const user = await this.findOne(broPhrase.userId);
-
-    if (!user) {
-      throw new BadRequestException();
-    }
-
-    user.userPhrase = broPhrase.phrase;
-    await this.save(user);
   }
 }
