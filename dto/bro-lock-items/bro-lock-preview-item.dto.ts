@@ -1,10 +1,10 @@
-export class BroLockPreviewItem {
+export class BroLockPreviewItemDto {
   id: number;
   name: string;
   auther: string;
   createDate: string;
-  locks: number;
+  lockCount: number;
   category: string;
-  img?: string;
-  genres?: string[];
+  img: string;
+  genres: string[];
 }

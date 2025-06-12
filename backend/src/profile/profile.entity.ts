@@ -1,3 +1,4 @@
+import { BroStateList } from 'src/bro-lock/entity/bro-state-list.enity';
 import { BroLock } from '../bro-lock/entity/bro-lock.entity';
 import { User } from 'src/user/user.entity';
 import {
@@ -9,6 +10,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { BroReactionList } from 'src/bro-lock/entity/bro-reaction-list.entity';
+import { BroComment } from 'src/bro-lock/entity/bro-comment.entity';
 
 @Entity()
 export class Profile {
@@ -32,9 +35,18 @@ export class Profile {
   })
   addedBroLocks: BroLock[];
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, length: 255 })
   avatar: string;
 
   @Column({ nullable: true, length: 255 })
   userPhrase: string;
+
+  @OneToMany(() => BroStateList, broStatusList => broStatusList.profile)
+  broStatusList: BroStateList[];
+
+  @OneToMany(() => BroReactionList, broReactionList => broReactionList.profile)
+  reactions: BroReactionList[];
+
+  @OneToMany(() => BroComment, broComment => broComment.profile)
+  comments: BroComment[];
 }

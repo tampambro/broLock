@@ -8,19 +8,21 @@ import { commonSuccessResponse } from '@const/common-success-response';
 import { ProfileInfoRequestDto } from '@dto/profile/profile-info-request.dto';
 import { ProfileInfoResponseDto } from '@dto/profile/profile-info-response.dto';
 import { SetBroPhraseRequestDto } from '@dto/profile/set-bro-phrase-request.dto';
+import { ProfileRequestDto } from '@dto/profile/profile-request.dto';
+import { ProfileResponseDto } from '@dto/profile/profile-response.dto';
 
 @Controller('profile')
 export class ProfileController {
   constructor(private readonly profileSrv: ProfileService) {}
 
-  // @HttpCode(200)
-  // @UseGuards(JwtAuthGuard)
-  // @Post()
-  // async getActiveBroLocks(
-  //   @Body() params: ActiveBroLocksRequest,
-  // ): Promise<ActiveBroLocksResponse> {
-  //   return await this.profileService.getActiveBroLocks(params);
-  // }
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  async getProfile(
+    @Body() params: ProfileRequestDto,
+  ): Promise<ProfileResponseDto> {
+    return await this.profileSrv.getProfile(params);
+  }
 
   @HttpCode(200)
   @UseGuards(JwtAuthGuard)
