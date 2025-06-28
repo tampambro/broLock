@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASS}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT_CONTAINER}
+  redis:
+    image: redis:8.0.2
+    environment:
+      host: ${REDIS_HOST}
+      password: ${REDIS_PASS}
+      db: ${REDIS_DB}
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}

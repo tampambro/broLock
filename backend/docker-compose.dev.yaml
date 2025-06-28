@@ -1,0 +1,6 @@
+services:
+  mailcatcher:
+    image: sj26/mailcatcher:latest
+    ports:
+      - ${MAIL_PORT}
+      - ${MAIL_PORT_OUT}

@@ -26,6 +26,8 @@ import { BroLockModule } from './bro-lock/bro-lock.module';
       database: process.env.DATABASE_NAME,
       synchronize: true,
       autoLoadEntities: true,
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      migrations: ['dist/migrations/*{.ts,.js}'],
     }),
     AuthModule,
     UserModule,

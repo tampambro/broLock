@@ -9,8 +9,8 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
     this.client = new ioRedis.Redis({
       host: process.env.REDIS_HOST,
       port: +process.env.REDIS_PORT,
-      password: '',
-      db: 0,
+      password: process.env.REDIS_PASS,
+      db: +process.env.REDIS_DB,
     });
   }
 
