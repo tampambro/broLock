@@ -11,7 +11,7 @@ import {
 import { LockItem } from './lock-item.entity';
 import { Profile } from 'src/profile/profile.entity';
 import { Genre } from './genre.entity';
-import { BroStateList } from './bro-state-list.enity';
+import { BroStateList } from './bro-state-list.entity';
 import { BroComment } from './bro-comment.entity';
 import { BroReactionList } from './bro-reaction-list.entity';
 
@@ -46,7 +46,7 @@ export class BroLock {
   addByProfiles: Profile[];
 
   @OneToMany(() => BroStateList, broStateList => broStateList.broLock)
-  broStatusList: BroStateList[];
+  broStateList: BroStateList[];
 
   @OneToMany(() => BroReactionList, broReactionList => broReactionList.broLock)
   reactions: BroLock[];

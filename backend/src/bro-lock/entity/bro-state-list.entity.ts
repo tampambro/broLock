@@ -8,10 +8,10 @@ export class BroStateList {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Profile, profile => profile.broStatusList)
+  @ManyToOne(() => Profile, profile => profile.broStateList)
   profile: Profile;
 
-  @ManyToOne(() => BroLock, broLock => broLock.broStatusList)
+  @ManyToOne(() => BroLock, broLock => broLock.broStateList)
   broLock: BroLock;
 
   @Column({ type: 'enum', enum: BRO_LIST_STATE_ENUM })

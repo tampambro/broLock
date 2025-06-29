@@ -1,4 +1,4 @@
-import { BroStateList } from 'src/bro-lock/entity/bro-state-list.enity';
+import { BroStateList } from 'src/bro-lock/entity/bro-state-list.entity';
 import { BroLock } from '../bro-lock/entity/bro-lock.entity';
 import { User } from 'src/user/user.entity';
 import {
@@ -41,8 +41,8 @@ export class Profile {
   @Column({ nullable: true, length: 255 })
   userPhrase: string;
 
-  @OneToMany(() => BroStateList, broStatusList => broStatusList.profile)
-  broStatusList: BroStateList[];
+  @OneToMany(() => BroStateList, broStateList => broStateList.profile)
+  broStateList: BroStateList[];
 
   @OneToMany(() => BroReactionList, broReactionList => broReactionList.profile)
   reactions: BroReactionList[];

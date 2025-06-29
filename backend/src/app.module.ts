@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
@@ -26,8 +24,8 @@ import { BroLockModule } from './bro-lock/bro-lock.module';
       database: process.env.DATABASE_NAME,
       synchronize: true,
       autoLoadEntities: true,
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      migrations: ['dist/migrations/*{.ts,.js}'],
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      migrations: [__dirname + '/../migration/*{.ts,.js}'],
     }),
     AuthModule,
     UserModule,
@@ -36,7 +34,7 @@ import { BroLockModule } from './bro-lock/bro-lock.module';
     ProfileModule,
     BroLockModule,
   ],
-  controllers: [AppController, AuthController, ProfileController],
-  providers: [AppService],
+  controllers: [AuthController, ProfileController],
+  providers: [],
 })
 export class AppModule {}

@@ -14,7 +14,7 @@ import { BroLock } from 'src/bro-lock/entity/bro-lock.entity';
 import { BroLockPreviewItemDto } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
 import { BroReactionList } from 'src/bro-lock/entity/bro-reaction-list.entity';
 import { BRO_REACTION_ENUM } from '@bro-types/bro-reaction.enum';
-import { BroStateList } from 'src/bro-lock/entity/bro-state-list.enity';
+import { BroStateList } from 'src/bro-lock/entity/bro-state-list.entity';
 import { BRO_LIST_STATE_ENUM } from '@bro-types/bro-state-list.enum';
 
 interface ReactionsList {
@@ -56,7 +56,7 @@ export class ProfileService {
     );
 
     const { activeLocks, closeLocks, lateLocks, trashLocks } =
-      this.getStateList(profile.broStatusList);
+      this.getStateList(profile.broStateList);
 
     return {
       userName,

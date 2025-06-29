@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BroLock } from './entity/bro-lock.entity';
 import { LockItem } from './entity/lock-item.entity';
 import { Genre } from './entity/genre.entity';
-import { BroStateList } from './entity/bro-state-list.enity';
+import { BroStateList } from './entity/bro-state-list.entity';
 import { BroReactionList } from './entity/bro-reaction-list.entity';
 import { BroComment } from './entity/bro-comment.entity';
 
