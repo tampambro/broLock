@@ -43,11 +43,11 @@ export class ProfileService {
 
     const { userName, avatar, userPhrase } = profile;
 
-    const createdBroLocks = profile.createdBroLocks.map(lock => {
+    const createdBroLocks = profile.createdBroLocks?.map(lock => {
       return this.createPreviewLock(lock);
     });
 
-    const addedBroLocks = profile.addedBroLocks.map(lock => {
+    const addedBroLocks = profile.addedBroLocks?.map(lock => {
       return this.createPreviewLock(lock);
     });
 
@@ -97,7 +97,7 @@ export class ProfileService {
       trashLocks: [],
     };
 
-    list.forEach(lock => {
+    list?.forEach(lock => {
       switch (lock.state) {
         case BRO_LIST_STATE_ENUM.ACTIVE:
           state.activeLocks.push(lock);
@@ -126,7 +126,7 @@ export class ProfileService {
       pokerFaceLocks: [],
     };
 
-    list.forEach(lock => {
+    list?.forEach(lock => {
       switch (lock.reaction) {
         case BRO_REACTION_ENUM.LIKE:
           reactions.likeLocks.push(lock);

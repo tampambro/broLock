@@ -9,7 +9,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProfileApiService } from '@api/profile-api.service';
 import { BroLockPreviewComponent } from '@components/bro-lock-preview/bro-lock-preview.component';
-import { BroLockPreviewItem } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
+import { BroLockPreviewItemDto } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
 import { UserService } from '@services/user.service';
 import { combineLatest } from 'rxjs';
 
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private cd = inject(ChangeDetectorRef);
 
-  activeBroLocks: BroLockPreviewItem[];
+  activeBroLocks: BroLockPreviewItemDto[];
 
   ngOnInit(): void {
     combineLatest([

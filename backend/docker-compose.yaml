@@ -8,9 +8,9 @@ services:
       - ${DATABASE_PORT}:${DATABASE_PORT_CONTAINER}
   redis:
     image: redis:8.0.2
+    command: ['redis-server', '--requirepass', '${REDIS_PASS}']
     environment:
       host: ${REDIS_HOST}
-      password: ${REDIS_PASS}
       db: ${REDIS_DB}
     ports:
       - ${REDIS_PORT}:${REDIS_PORT}

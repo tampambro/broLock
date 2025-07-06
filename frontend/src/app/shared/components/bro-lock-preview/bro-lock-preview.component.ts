@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProfileApiService } from '@api/profile-api.service';
-import { BroLockPreviewItem } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
+import { BroLockPreviewItemDto } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
 import { UserService } from '@services/user.service';
 import { combineLatest } from 'rxjs';
 
@@ -21,5 +21,5 @@ import { combineLatest } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BroLockPreviewComponent {
-  lockInfo = input<BroLockPreviewItem>();
+  lockInfo = input<BroLockPreviewItemDto>();
 }

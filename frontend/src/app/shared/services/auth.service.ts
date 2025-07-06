@@ -38,10 +38,7 @@ export class AuthService {
     return this.authApiSrv.login(params).pipe(
       tap(res => {
         this.cookieSetToken(res.access_token, res.refresh_token);
-        this.cookieSrv.set('userId', res.userId.toString(), {
-          secure: true,
-          sameSite: 'Strict',
-        });
+        this.cookieSrv.set('userId', res.userId.toString(), { path: '/' });
 
         this._isLogin$.next(true);
       }),
@@ -74,7 +71,7 @@ export class AuthService {
   }
 
   cookieSetToken(access_token: string, refresh_token: string): void {
-    this.cookieSrv.set('access_token', access_token);
-    this.cookieSrv.set('refresh_token', refresh_token);
+    this.cookieSrv.set('access_token', access_token, { path: '/' });
+    this.cookieSrv.set('refresh_token', refresh_token, { path: '/' });
   }
 }
