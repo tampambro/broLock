@@ -17,16 +17,19 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'],
 	rules: {
-		"prettier/prettier": [
-			"error",
+		'prettier/prettier': [
+			'error',
 			{
-        "endOfLine": "auto",
-        "arrowParens": "avoid"
+        'endOfLine': 'auto',
+        'arrowParens': 'avoid'
 			},
 		],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'no-unused-vars': 'off',
+    'no-var': 'off',
+    '@typescript-eslint/no-unused-vars': 'error'
   },
 };
