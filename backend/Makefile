@@ -10,3 +10,5 @@ migration-generate:
 migration-run:
 	npx typeorm-ts-node-commonjs migration:run -d ./data-source.ts
 
+fixture-setup:
+	npx ts-node -r tsconfig-paths/register fixture/seed.ts

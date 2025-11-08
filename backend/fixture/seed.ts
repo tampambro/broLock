@@ -11,8 +11,13 @@ import { BroLock } from 'src/bro-lock/entity/bro-lock.entity';
 import { LockItem } from 'src/bro-lock/entity/lock-item.entity';
 
 var logColor = '\x1b[44m%s\x1b[0m';
+var successLogColor = '\x1b[42m%s\x1b[0m';
+var errLogColor = '\x1b[41m%s\x1b[0m';
+var warnLogColor = '\x1b[43m%s\x1b[0m';
 
 async function run() {
+  console.warn(warnLogColor, 'Seed start');
+
   if (process.env.NODE_ENV === 'prod') {
     console.error('Refusing to run seeds in prodauction.');
     process.exit(1);
@@ -40,10 +45,10 @@ async function run() {
     await queryRunner.query('SET FOREIGN_KEY_CHECKS = 1;');
     await queryRunner.commitTransaction();
 
-    console.log(logColor, 'Truncate complete.');
+    console.log(successLogColor, 'Truncate complete.');
   } catch (err) {
     await queryRunner.rollbackTransaction();
-    console.error('Truncate faild.');
+    console.error(errLogColor, 'Truncate faild.');
     throw err;
   } finally {
     await queryRunner.release();
@@ -52,6 +57,8 @@ async function run() {
   try {
     await AppDataSource.manager.transaction(async em => {
       // Create users
+      console.log(logColor, 'Creating users');
+
       const users: User[] = [];
       const EXISTING_USERS = await em.find(User, { where: {} });
 
@@ -62,37 +69,68 @@ async function run() {
           users.push(user);
         }
 
-        console.log(logColor, 'Created 5 users.');
+        console.log(successLogColor, 'Created 5 users');
       } else {
         users.push(...EXISTING_USERS);
-        console.warn('Found existing users, skipped creating new ones.');
+        console.warn(
+          warnLogColor,
+          'Found existing users, skipped creating new ones',
+        );
       }
 
       // Create profiles for users
+      console.log(logColor, 'Creating profiles');
+
       const profiles: Profile[] = [];
 
-      for (const user of users) {
+      users.forEach(user => {
         profiles.push(profileFactory(user));
-      }
+      });
 
       await em.save(profiles);
 
-      console.log(logColor, 'Profiles created.');
+      console.log(successLogColor, 'Profiles created');
 
       // Create broLocks for profiles
+      console.log(logColor, 'Creating broLocks for profiles');
+
       const broLocks: BroLock[] = [];
 
-      for (const profile of profiles) {
+      profiles.forEach(profile => {
         for (let i = 0; i < 3; i++) {
           broLocks.push(broLocksFactory(profile));
         }
-      }
+      });
 
       await em.save(broLocks);
 
-      // Create lockItem for broLock
-    });
-  } catch (err) {
+      console.log(successLogColor, 'BroLocks created');
 
+      // Create lockItem for broLock
+      console.log(logColor, 'Creating lockItems for broLock');
+
+      const lockItems: LockItem[] = [];
+
+      broLocks.forEach(broLock => {
+        for (let i = 0; i < 5; i++) {
+          lockItems.push(lockItemsFactory(broLock, { position: i + 1 }));
+        }
+      });
+
+      await em.save(lockItems);
+
+      console.log(successLogColor, 'LockItems created');
+    });
+
+    console.log(successLogColor, 'Fixture setup successful');
+  } catch (err) {
+    console.error(errLogColor, 'Seeding failed:', err);
+  } finally {
+    await AppDataSource.destroy();
   }
 }
+
+run().catch(err => {
+  console.error(errLogColor, 'Seed runner error!', err);
+  process.exit(1);
+});

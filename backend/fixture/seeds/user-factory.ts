@@ -61,6 +61,7 @@ export function lockItemsFactory(
   const lockItem = new LockItem();
 
   lockItem.name = overrides.name ?? faker.book.title();
+  lockItem.position = overrides.position;
   lockItem.check = overrides.check ?? false;
 
   lockItem.broLock = broLock;
