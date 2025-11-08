@@ -64,7 +64,7 @@ async function run() {
 
       if (EXISTING_USERS.length < 5) {
         for (let i = 0; i < 5; i++) {
-          const user = await userFactory();
+          const user = await userFactory(i);
           await em.save(user);
           users.push(user);
         }

@@ -6,12 +6,13 @@ import { BroLock } from 'src/bro-lock/entity/bro-lock.entity';
 import { LockItem } from 'src/bro-lock/entity/lock-item.entity';
 
 export async function userFactory(
+  userNumber: number,
   overrides: Partial<User> = {},
 ): Promise<User> {
   const user = new User();
 
-  user.email = overrides.email ?? faker.internet.email().toLowerCase();
   user.name = overrides.name ?? faker.person.fullName();
+  user.email = `user${userNumber}@mail.ru`;
   user.isMailConfirm = overrides.isMailConfirm ?? true;
 
   const plainPass = overrides.password ?? '123456';
