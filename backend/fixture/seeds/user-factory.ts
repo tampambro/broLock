@@ -11,8 +11,8 @@ export async function userFactory(
 ): Promise<User> {
   const user = new User();
 
-  user.name = overrides.name ?? faker.person.fullName();
-  user.email = `user${userNumber}@mail.ru`;
+  user.name = overrides.name ?? `user${userNumber}`;
+  user.email = overrides.email ?? `user${userNumber}@mail.ru`;
   user.isMailConfirm = overrides.isMailConfirm ?? true;
 
   const plainPass = overrides.password ?? '123456';
@@ -28,8 +28,7 @@ export function profileFactory(
 ): Profile {
   const profile = new Profile();
 
-  profile.userName =
-    overrides.userName ?? faker.internet.username({ firstName: user.name });
+  profile.userName = overrides.userName ?? user.name;
   profile.userPhrase = overrides.userPhrase ?? faker.company.buzzPhrase();
   profile.user = user;
 

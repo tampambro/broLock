@@ -1,8 +1,6 @@
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { ActiveBroLocksRequest } from '@dto/profile/active-bro-locks-request.dto';
-import { ActiveBroLocksResponse } from '@dto/profile/active-bro-locks-response.dto';
 import { CommonSuccessResponseDto } from '@dto/common-success-response.dto';
 import { commonSuccessResponse } from '@const/common-success-response';
 import { ProfileInfoRequestDto } from '@dto/profile/profile-info-request.dto';

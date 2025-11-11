@@ -8,7 +8,7 @@ export class ProfileResponseDto {
   addedBroLocks: BroLockPreviewItemDto[];
   activeLocks: BroLockPreviewItemDto[];
   closeLocks: BroLockPreviewItemDto[];
-  lateLocks: BroLockPreviewItemDto[];
+  laterLocks: BroLockPreviewItemDto[];
   trashLocks: BroLockPreviewItemDto[];
   likeLocks: BroLockPreviewItemDto[];
   dislikeLocks: BroLockPreviewItemDto[];

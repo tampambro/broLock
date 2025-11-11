@@ -1,5 +1,3 @@
-import { ActiveBroLocksRequest } from '@dto/profile/active-bro-locks-request.dto';
-import { ActiveBroLocksResponse } from '@dto/profile/active-bro-locks-response.dto';
 import { SetBroPhraseRequestDto } from '@dto/profile/set-bro-phrase-request.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,7 +24,7 @@ interface ReactionsList {
 interface StateList {
   activeLocks: BroLockPreviewItemDto[];
   closeLocks: BroLockPreviewItemDto[];
-  lateLocks: BroLockPreviewItemDto[];
+  laterLocks: BroLockPreviewItemDto[];
   trashLocks: BroLockPreviewItemDto[];
 }
 
@@ -55,7 +53,7 @@ export class ProfileService {
       profile.reactions,
     );
 
-    const { activeLocks, closeLocks, lateLocks, trashLocks } =
+    const { activeLocks, closeLocks, laterLocks, trashLocks } =
       this.getStateList(profile.broStateList);
 
     return {
@@ -66,7 +64,7 @@ export class ProfileService {
       addedBroLocks,
       activeLocks,
       closeLocks,
-      lateLocks,
+      laterLocks,
       trashLocks,
       likeLocks,
       dislikeLocks,
@@ -93,7 +91,7 @@ export class ProfileService {
     const state = {
       activeLocks: [],
       closeLocks: [],
-      lateLocks: [],
+      laterLocks: [],
       trashLocks: [],
     };
 
@@ -106,7 +104,7 @@ export class ProfileService {
           state.closeLocks.push(lock);
           break;
         case BRO_LIST_STATE_ENUM.LATE:
-          state.lateLocks.push(lock);
+          state.laterLocks.push(lock);
           break;
         case BRO_LIST_STATE_ENUM.TRASH:
           state.trashLocks.push(lock);
@@ -148,6 +146,10 @@ export class ProfileService {
   async findByUser(userId: number): Promise<Profile> {
     const profile = await this.profileRepository.findOne({
       where: { user: { id: userId } },
+      relations: {
+        createdBroLocks: true,
+        addedBroLocks: true,
+      },
     });
 
     if (!profile) {

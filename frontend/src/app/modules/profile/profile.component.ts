@@ -1,15 +1,15 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   inject,
   OnInit,
+  signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProfileApiService } from '@api/profile-api.service';
 import { BroLockPreviewComponent } from '@components/bro-lock-preview/bro-lock-preview.component';
-import { BroLockPreviewItemDto } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
+import { ProfileResponseDto } from '@dto/profile/profile-response.dto';
 import { UserService } from '@services/user.service';
 import { combineLatest } from 'rxjs';
 
@@ -24,20 +24,17 @@ export class ProfileComponent implements OnInit {
   private profileApiSrv = inject(ProfileApiService);
   private userSrv = inject(UserService);
   private destroyRef = inject(DestroyRef);
-  private cd = inject(ChangeDetectorRef);
 
-  activeBroLocks: BroLockPreviewItemDto[];
+  profile = signal<ProfileResponseDto | null>(null);
 
   ngOnInit(): void {
     combineLatest([
-      this.profileApiSrv.getActiveBroLocks({ userId: this.userSrv.userId }),
+      this.profileApiSrv.getProfile({ userId: this.userSrv.userId }),
     ])
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: ([activeBroLocks]) => {
-          this.activeBroLocks = activeBroLocks.data;
-
-          this.cd.detectChanges();
+          this.profile.set(activeBroLocks);
         },
       });
   }

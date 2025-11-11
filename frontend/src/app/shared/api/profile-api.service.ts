@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_API_URL } from '@const/tokens';
 import { Observable } from 'rxjs';
-import { ActiveBroLocksRequest } from '@dto/profile/active-bro-locks-request.dto';
-import { ActiveBroLocksResponse } from '@dto/profile/active-bro-locks-response.dto';
+import { ProfileRequestDto } from '@dto/profile/profile-request.dto';
+import { ProfileResponseDto } from '@dto/profile/profile-response.dto';
 import { CommonSuccessResponseDto } from '@dto/common-success-response.dto';
 import { SetBroPhraseRequestDto } from '@dto/profile/set-bro-phrase-request.dto';
 import { ProfileInfoRequestDto } from '@dto/profile/profile-info-request.dto';
@@ -14,10 +14,8 @@ export class ProfileApiService {
   private readonly baseUrl = inject(BASE_API_URL);
   private http = inject(HttpClient);
 
-  getActiveBroLocks(
-    params: ActiveBroLocksRequest,
-  ): Observable<ActiveBroLocksResponse> {
-    return this.http.post<ActiveBroLocksResponse>(
+  getProfile(params: ProfileRequestDto): Observable<ProfileResponseDto> {
+    return this.http.post<ProfileResponseDto>(
       `${this.baseUrl}/profile`,
       params,
     );
