@@ -42,6 +42,7 @@ export function broLocksFactory(
   const broLock = new BroLock();
 
   broLock.name = overrides.name ?? faker.commerce.productName();
+  broLock.auther = profile.userName;
   broLock.category = overrides.category ?? faker.word.noun();
   broLock.genres = overrides.genres ?? [
     faker.book.genre(),

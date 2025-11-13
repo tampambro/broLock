@@ -5,7 +5,7 @@
     </h2>
 
     <div class="profile__section__content">
-      @for (lock of activeBroLocks; track lock.id) {
+      @for (lock of profile()?.activeLocks; track lock.id) {
         <bro-lock-preview [lockInfo]="lock" />
       }
     </div>

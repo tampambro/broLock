@@ -73,16 +73,16 @@ export class ProfileService {
   }
 
   private createPreviewLock(broLock: BroLock): BroLockPreviewItemDto {
-    const { id, name, category, img, genres } = broLock;
+    const { id, name, auther, category, img, genres } = broLock;
 
     return {
       id,
       name,
+      auther,
       category,
       img,
       genres,
       createDate: broLock.createDate.toDateString(),
-      auther: broLock.creator.userName,
       lockCount: broLock.lockItems.length,
     };
   }
@@ -147,8 +147,8 @@ export class ProfileService {
     const profile = await this.profileRepository.findOne({
       where: { user: { id: userId } },
       relations: {
-        createdBroLocks: true,
-        addedBroLocks: true,
+        createdBroLocks: { lockItems: true },
+        addedBroLocks: { lockItems: true },
       },
     });
 

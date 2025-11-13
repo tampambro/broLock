@@ -17,9 +17,9 @@ migration-generate:
 	node -r ts-node/register -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate migration/Init -d ./fixture/data-source.ts
 
 migration-run:
-	npx typeorm-ts-node-commonjs migration:run -d ./data-source.ts
+	node -r ts-node/register -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./fixture/data-source.ts
 
 fixture-setup:
 	npx ts-node -r tsconfig-paths/register ./fixture/seed.ts
 
-dev-DB-create: drop-DB create-DB migration-generate migration-run fixture-setup
+dev-DB-create: drop-DB create-DB migration-generate fixture-setup

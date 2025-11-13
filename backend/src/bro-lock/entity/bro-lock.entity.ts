@@ -26,6 +26,9 @@ export class BroLock {
   @Column({ length: 255 })
   name: string;
 
+  @Column({ length: 255 })
+  auther: string;
+
   @ManyToOne(() => Profile, profile => profile.createdBroLocks)
   creator: Profile;
 
