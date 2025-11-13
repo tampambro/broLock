@@ -1,8 +1,8 @@
 docker-up:
 	docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d
 
-project-build:
-	npm run build
+# project-build:
+# 	npm run build
 
 drop-DB:
 	docker compose exec mysql sh -c 'mysql -uroot -p"$$MYSQL_ROOT_PASSWORD" -e "DROP DATABASE IF EXISTS $$MYSQL_DATABASE;"'
@@ -14,13 +14,12 @@ create-DB:
 # 	npx typeorm-ts-node-commonjs migration:create migration/Init
 
 migration-generate:
-	npx typeorm-ts-node-commonjs migration:generate migration/Init -d ./data-source.ts
+	node -r ts-node/register -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate migration/Init -d ./fixture/data-source.ts
 
-# migration-run:
-# 	npx typeorm-ts-node-commonjs migration:run -d ./data-source.ts
+migration-run:
+	npx typeorm-ts-node-commonjs migration:run -d ./data-source.ts
 
 fixture-setup:
-	npx ts-node -r tsconfig-paths/register fixture/seed.ts
+	npx ts-node -r tsconfig-paths/register ./fixture/seed.ts
 
-dev-DB-create:
-	make project-build drop-DB create-DB migration-generate fixture-setup
+dev-DB-create: drop-DB create-DB migration-generate migration-run fixture-setup

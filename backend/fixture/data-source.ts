@@ -2,8 +2,8 @@ import { config } from 'dotenv';
 import { DataSource } from 'typeorm';
 import * as path from 'path';
 
-var entitiesPath = path.join(__dirname, '..', '**', '*.entity*{.ts,.js}');
-var migrationPath = path.join(__dirname, '..', 'migration', '*{.ts,.js}');
+var entitiesPath = path.join(__dirname, '..', '**', '*.entity.ts');
+var migrationPath = path.join(__dirname, '..', 'migration', '*.ts');
 
 config();
 
