@@ -44,11 +44,8 @@ export function broLocksFactory(
   broLock.name = overrides.name ?? faker.commerce.productName();
   broLock.auther = profile.userName;
   broLock.category = overrides.category ?? faker.word.noun();
-  broLock.genres = overrides.genres ?? [
-    faker.book.genre(),
-    faker.book.genre(),
-    faker.book.genre(),
-  ];
+
+  //TODO Нужно создать таблучку с жанрами
 
   broLock.creator = profile;
 

@@ -1,0 +1,11 @@
+.expand-animation
+  display: grid
+  grid-template-rows: 0fr
+  overflow: hidden
+  transition: grid-template-rows 0.2s
+
+  &__content
+    overflow: hidden
+
+.expand-animation--open
+  grid-template-rows: 1fr

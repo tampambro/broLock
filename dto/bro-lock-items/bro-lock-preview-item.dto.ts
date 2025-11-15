@@ -5,6 +5,6 @@ export class BroLockPreviewItemDto {
   createDate: string;
   lockCount: number;
   category: string;
-  img: string;
+  previewImg: string;
   genres: string[];
 }

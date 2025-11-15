@@ -7,6 +7,86 @@
     <div class="profile__section__content">
       @for (lock of profile()?.activeLocks; track lock.id) {
         <bro-lock-preview [lockInfo]="lock" />
+      } @empty {
+        <p class="profile__section__empty">
+          No active broLocks =.(
+        </p>
+      }
+    </div>
+  </div>
+
+  <div class="profile__section">
+    <h2 class="profile__section__header">
+      Created broLocks
+    </h2>
+
+    <div class="profile__section__content">
+      @for (lock of profile()?.createdBroLocks; track lock.id) {
+        <bro-lock-preview [lockInfo]="lock" />
+      } @empty {
+        <p>It's time to create awesome broLock! ね？</p>
+
+        <button>Create broLock</button>
+      }
+    </div>
+  </div>
+
+  <div class="profile__section">
+    <h2 class="profile__section__header">
+      Created broLocks
+    </h2>
+
+    <div class="profile__section__content">
+      @for (lock of profile()?.addedBroLocks; track lock.id) {
+        <bro-lock-preview [lockInfo]="lock" />
+      } @empty {
+        <p>New content is waiting you!</p>
+        <p>行きましょう!</p>
+
+        <button>Search</button>
+      }
+    </div>
+  </div>
+
+  <div class="profile__section">
+    <h2 class="profile__section__header">
+      Closed broLocks
+    </h2>
+
+    <div class="profile__section__content">
+      @for (lock of profile()?.closeLocks; track lock.id) {
+        <bro-lock-preview [lockInfo]="lock" />
+      } @empty {
+        <p>There's still more to come</p>
+      }
+    </div>
+  </div>
+
+  <div class="profile__section">
+    <h2 class="profile__section__header">
+      Deferred broLocks
+    </h2>
+
+    <div class="profile__section__content">
+      @for (lock of profile()?.laterLocks; track lock.id) {
+        <bro-lock-preview [lockInfo]="lock" />
+      } @empty {
+        <p>Welldone! Don't live later, live now!</p>
+      }
+    </div>
+  </div>
+
+  <div class="profile__section">
+    <h2 class="profile__section__header">
+      Trash
+    </h2>
+
+    <div class="profile__section__content">
+      @for (lock of profile()?.trashLocks; track lock.id) {
+        <bro-lock-preview [lockInfo]="lock" />
+      } @empty {
+        <p>Seeing something good in everything is a good habit =)</p>
+        <p>と思います・・・</p>
       }
     </div>
   </div>

@@ -73,14 +73,14 @@ export class ProfileService {
   }
 
   private createPreviewLock(broLock: BroLock): BroLockPreviewItemDto {
-    const { id, name, auther, category, img, genres } = broLock;
+    const { id, name, auther, category, previewImg, genres } = broLock;
 
     return {
       id,
       name,
       auther,
       category,
-      img,
+      previewImg,
       genres,
       createDate: broLock.createDate.toDateString(),
       lockCount: broLock.lockItems.length,

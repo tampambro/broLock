@@ -39,7 +39,10 @@ export class BroLock {
   lockItems: LockItem[];
 
   @Column({ nullable: true })
-  lockImg: string;
+  previewImg: string;
+
+  @Column({ nullable: true })
+  img: string;
 
   @ManyToMany(() => Genre)
   @JoinTable()
@@ -56,7 +59,4 @@ export class BroLock {
 
   @OneToMany(() => BroComment, broComment => broComment.broLock)
   comments: BroLock[];
-
-  @Column({ nullable: true, length: 255 })
-  img: string;
 }

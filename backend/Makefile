@@ -22,4 +22,4 @@ migration-run:
 fixture-setup:
 	npx ts-node -r tsconfig-paths/register ./fixture/seed.ts
 
-dev-DB-create: drop-DB create-DB migration-generate fixture-setup
+dev-DB-create: drop-DB create-DB migration-generate migration-run fixture-setup

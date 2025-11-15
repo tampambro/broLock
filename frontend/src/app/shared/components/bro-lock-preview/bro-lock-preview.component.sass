@@ -1,2 +1,36 @@
 :host
   display: block
+
+.bro-lock-preview
+  background: var(--bro-lock-preview-background-color)
+  border-radius: var(--elem-border-radius)
+  padding: 0.5em 0.5em 0 0.5em
+
+  &:hover
+    background: var(--bro-lock-preview-background-color-hover)
+
+  & > *:first-child
+    margin-top: 0
+
+  & > *:last-child
+    margin-bottom: 0
+
+  .more-info-action
+    display: flex
+    justify-content: space-between
+    height: auto
+    padding: 0.4em 0.9em
+    margin-left: -0.5em
+    width: calc(100% + 1em)
+
+  .more-info-action--active
+    fa-icon
+      transform: rotate(90deg)
+
+.bro-lock-preview__name
+  font-weight: 700
+  color: var(--bro-lock-preview--name-color)
+  cursor: pointer
+
+  &:hover
+    color: var(--bro-lock-preview--name-color-hover)

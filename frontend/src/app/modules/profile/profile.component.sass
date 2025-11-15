@@ -2,9 +2,16 @@
   display: block
 
 .profile
+  display: flex
+  flex-wrap: wrap
+  gap: var(--standard-gap)
   padding: 1em 0
+
   &__section
-    max-width: 20em
+    flex: 1 0 20em
     background: var(--section-background-color)
     padding: var(--elem-padding)
     border-radius: var(--elem-border-radius)
+    max-height: calc(100vh - 7em)
+    height: fit-content
+    overflow: auto
