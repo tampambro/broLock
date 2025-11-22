@@ -1,6 +1,9 @@
 :host
   display: block
 
+  &:not(:last-of-type)
+    margin-bottom: 0.4em
+
 .bro-lock-preview
   background: var(--bro-lock-preview-background-color)
   border-radius: var(--elem-border-radius)
@@ -14,6 +17,9 @@
 
   & > *:last-child
     margin-bottom: 0
+
+  &__showcase > p
+    margin: 0.8em 0
 
   .more-info-action
     display: flex
@@ -34,3 +40,6 @@
 
   &:hover
     color: var(--bro-lock-preview--name-color-hover)
+
+.bro-lock-genres
+  padding: 0
