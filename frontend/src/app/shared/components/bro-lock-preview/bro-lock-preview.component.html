@@ -11,15 +11,38 @@
     }
   </div>
 
+  <div class="bro-lock-preview__actions">
+    <button class="more-info"
+      [class.more-info--active]="isMoreInfo()"
+      title="More info"
+      (click)="toggalMoreInfo()"
+    >
+      <info-icon />
 
-  <button class="more-info-action"
-    [class.more-info-action--active]="isMoreInfo()"
-    (click)="toggalMoreInfo()"
-  >
-    More info
+      <fa-icon [icon]="anglerRight" />
+    </button>
 
-    <fa-icon [icon]="anglerRight" />
-  </button>
+    <button title="Move to active list">
+      <book-open-icon />
+    </button>
+
+    <button title="Move to close list">
+      <book-close-icon />
+    </button>
+
+    <button title="Move to deferred list">
+      <book-mark-icon />
+    </button>
+
+    <button title="Move to trash list">
+      <trash-icon />
+    </button>
+
+    <button title="Delete broLock">
+      <minus-icon />
+    </button>
+  </div>
+
   <div class="bro-lock-preview__more-info expand-animation"
     [class.expand-animation--open]="isMoreInfo()">
 

@@ -3,15 +3,15 @@ import { GripVerticalIconComponent } from '@icon-components/grip-vertical-icon/g
 import { MinusIconComponent } from '@icon-components/minus-icon/minus-icon.component';
 import { PlusIconComponent } from '@icon-components/plus-icon/plus-icon.component';
 import { BroListMock } from '@mock/bro-list.mock';
-import { BroListItemDto } from '@dto/bro-lock-items/bro-list-item.dto';
+import { BroLockItemDto } from '@dto/bro-lock-items/bro-list-item.dto';
 
 @Component({
-  selector: 'bro-list-create',
+  selector: 'bro-lock-manage',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GripVerticalIconComponent, MinusIconComponent, PlusIconComponent],
-  templateUrl: './bro-list-create.component.html',
-  styleUrl: './bro-list-create.component.sass',
+  templateUrl: './bro-lock-manage.component.html',
+  styleUrl: './bro-lock-manage.component.sass',
 })
-export class BroListCreateComponent {
-  broList: BroListItemDto[] = BroListMock;
+export class BroLockManageComponent {
+  broList: BroLockItemDto[] = BroListMock;
 }

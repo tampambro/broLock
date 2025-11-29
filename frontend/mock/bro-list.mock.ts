@@ -1,6 +1,6 @@
-import { BroListItemDto } from '@dto/bro-lock-items/bro-list-item.dto';
+import { BroLockItemDto } from '@dto/bro-lock-items/bro-list-item.dto';
 
-export const BroListMock: BroListItemDto[] = [
+export const BroListMock: BroLockItemDto[] = [
   {
     order: 1,
     name: 'ひくらしのなく頃に',

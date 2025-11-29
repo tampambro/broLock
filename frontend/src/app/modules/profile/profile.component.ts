@@ -8,14 +8,14 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProfileApiService } from '@api/profile-api.service';
-import { BroLockPreviewComponent } from '@components/bro-lock-preview/bro-lock-preview.component';
+import { ListBroLockPreviewComponent } from '@components/list-bro-lock-preview/list-bro-lock-preview.component';
 import { ProfileResponseDto } from '@dto/profile/profile-response.dto';
 import { UserService } from '@services/user.service';
 import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'profile',
-  imports: [BroLockPreviewComponent],
+  imports: [ListBroLockPreviewComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,5 +37,9 @@ export class ProfileComponent implements OnInit {
           this.profile.set(activeBroLocks);
         },
       });
+  }
+
+  goToEdit(listTitle: string): void {
+
   }
 }

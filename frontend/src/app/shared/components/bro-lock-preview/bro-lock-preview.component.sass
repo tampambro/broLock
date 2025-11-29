@@ -21,17 +21,25 @@
   &__showcase > p
     margin: 0.8em 0
 
-  .more-info-action
+  &__actions
     display: flex
     justify-content: space-between
-    height: auto
-    padding: 0.4em 0.9em
     margin-left: -0.5em
     width: calc(100% + 1em)
+    font-size: 0.95em
 
-  .more-info-action--active
-    fa-icon
-      transform: rotate(90deg)
+    .more-info
+      display: flex
+      justify-content: space-between
+      height: auto
+      padding: 0.4em 0.9em
+
+      fa-icon
+        margin-left: 0.4em
+
+    .more-info--active
+      fa-icon
+        transform: rotate(90deg)
 
 .bro-lock-preview__name
   font-weight: 700

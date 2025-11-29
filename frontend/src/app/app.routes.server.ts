@@ -11,7 +11,7 @@ export const serverRoutes: ServerRoute[] = [
     path: 'email-confirm/:linkHash',
     renderMode: RenderMode.Server,
   },
-  { path: 'bro-lock-list/create', renderMode: RenderMode.Server },
   { path: 'profile', renderMode: RenderMode.Server },
+  { path: 'profile/bro-lock/create', renderMode: RenderMode.Server },
   { path: '**', renderMode: RenderMode.Prerender },
 ];

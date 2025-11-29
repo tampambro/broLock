@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { BroListCreateComponent } from '@modules/bro-list-create/bro-list-create.component';
+import { BroLockManageComponent } from '@modules/bro-lock-manage/bro-lock-manage.component';
 import { SignupComponent } from '@modules/signup/signup.component';
 import { LoginComponent } from '@modules/login/login.component';
 import { EmailConfirmComponent } from '@modules/email-confirm/email-confirm.component';
@@ -29,7 +29,15 @@ export const routes: Routes = [
     canActivate: [emailConfirmGuard],
     pathMatch: 'full',
   },
-  { path: 'bro-lock-list/create', component: BroListCreateComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'profile/bro-lock/create',
+    component: BroLockManageComponent,
+    canActivate: [authGuard],
+  },
   { path: '**', component: NotFoundComponent },
 ];

@@ -1,0 +1,14 @@
+<h2 class="list-bro-lock-preview__header">
+  <span>{{ listTitle() }}</span>
+  <pen-icon class="list-bro-lock-preview__header__edit-btn"
+    (click)="editEvent.emit()"
+  />
+</h2>
+
+<div class="list-bro-lock-preview__content">
+  @for (lock of list(); track lock.id) {
+    <bro-lock-preview [lockInfo]="lock" />
+  } @empty {
+    <ng-content />
+  }
+</div>
