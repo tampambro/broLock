@@ -1,10 +1,10 @@
 <div class="bro-lock-preview">
   <div>
     <div class="bro-lock-preview__showcase">
-      <p class="bro-lock-preview__name">{{ lockInfo().name }}</p>
+      <p class="bro-lock-preview__name link-btn--alt">{{ lockInfo().name }}</p>
       <p class="bro-lock-preview__create-data">Created at {{ lockInfo().createDate }}</p>
-      <p class="bro-lock-preview__auther">Created by <a>{{ lockInfo().auther }}</a></p>
-      <p class="bro-lock-preview__category">Category <a>{{ lockInfo().category }}</a></p>
+      <p class="bro-lock-preview__auther">Created by <a class="shy">{{ lockInfo().auther }}</a></p>
+      <p class="bro-lock-preview__category">Category <a class="shy">{{ lockInfo().category }}</a></p>
     </div>
     @if (lockInfo().previewImg) {
       <img [ngSrc]="lockInfo().previewImg" alt="lock info preview img" />

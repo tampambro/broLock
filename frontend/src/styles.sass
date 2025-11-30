@@ -7,6 +7,7 @@
 @use "animation"
 @use "text"
 @use "scroll"
+@use "buttons"
 
 :root
   --elem-border-radius: 6px
@@ -27,6 +28,7 @@
   outline: none
 
 html, body
+  background: #111
   min-height: 100vh
   scrollbar-color: #726e71 #111111
   scrollbar-width: auto
@@ -50,18 +52,22 @@ button, .btn
   padding: .4em
   text-decoration: none
   display: block
+
   &:hover
     background: var(--btn-background-color-hover)
+
   &:active
     background: var(--btn-background-color-active)
 
 a
   cursor: pointer
   color: var(--link-text-color)
+
   &.shy
     text-decoration: none
     &:hover
       text-decoration: underline
+
     &:active
       color: var(--btn-background-color-active)
 

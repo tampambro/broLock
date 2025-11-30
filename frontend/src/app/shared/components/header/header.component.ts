@@ -20,6 +20,8 @@ import { PlatformService } from '@services/platform.service';
 import { ThemeSwitcherComponent } from '@components/theme-switcher/theme-switcher.component';
 import { ProfileApiService } from '@api/profile-api.service';
 import { ProfileService } from '@services/profile.service';
+import { FilePenIconComponent } from '@icon-components/file-pen-icon/file-pen-icon.component';
+import { FindAndAddIconComponent } from '@icon-components/find-and-add-icon/find-and-add-icon.component';
 
 @Component({
   selector: 'bro-header',
@@ -30,6 +32,8 @@ import { ProfileService } from '@services/profile.service';
     AsyncPipe,
     NgOptimizedImage,
     ThemeSwitcherComponent,
+    FilePenIconComponent,
+    FindAndAddIconComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.sass',
