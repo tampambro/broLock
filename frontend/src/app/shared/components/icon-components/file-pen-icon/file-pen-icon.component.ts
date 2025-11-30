@@ -6,7 +6,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   selector: 'file-pen-icon',
   imports: [FaIconComponent],
   templateUrl: './file-pen-icon.component.html',
-  styleUrl: './file-pen-icon.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilePenIconComponent {

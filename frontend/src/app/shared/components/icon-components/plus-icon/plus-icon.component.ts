@@ -7,7 +7,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FaIconComponent],
   templateUrl: './plus-icon.component.html',
-  styleUrl: './plus-icon.component.sass',
 })
 export class PlusIconComponent {
   readonly faPlus = faPlus;

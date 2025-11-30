@@ -6,7 +6,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   selector: 'book-open-icon',
   imports: [FaIconComponent],
   templateUrl: './book-open-icon.component.html',
-  styleUrl: './book-open-icon.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookOpenIconComponent {

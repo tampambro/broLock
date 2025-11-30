@@ -6,7 +6,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   selector: 'book-mark-icon',
   imports: [FaIconComponent],
   templateUrl: './book-mark-icon.component.html',
-  styleUrl: './book-mark-icon.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookMarkIconComponent {

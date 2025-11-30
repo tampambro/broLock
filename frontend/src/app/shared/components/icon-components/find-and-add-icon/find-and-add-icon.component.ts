@@ -6,7 +6,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   selector: 'find-and-add-icon',
   imports: [FaIconComponent],
   templateUrl: './find-and-add-icon.component.html',
-  styleUrl: './find-and-add-icon.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FindAndAddIconComponent {

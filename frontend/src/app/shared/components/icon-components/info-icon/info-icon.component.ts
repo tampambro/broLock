@@ -6,7 +6,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   selector: 'info-icon',
   imports: [FaIconComponent],
   templateUrl: './info-icon.component.html',
-  styleUrl: './info-icon.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoIconComponent {

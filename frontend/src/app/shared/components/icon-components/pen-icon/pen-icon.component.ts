@@ -6,7 +6,6 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
   selector: 'pen-icon',
   imports: [FaIconComponent],
   templateUrl: './pen-icon.component.html',
-  styleUrl: './pen-icon.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PenIconComponent {

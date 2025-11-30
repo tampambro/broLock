@@ -6,7 +6,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   selector: 'trash-icon',
   imports: [FaIconComponent],
   templateUrl: './trash-icon.component.html',
-  styleUrl: './trash-icon.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrashIconComponent {
