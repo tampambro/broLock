@@ -1,16 +1,26 @@
+@use "mixins"
+
 .bro-list-wrap
   background: var(--section-background-color)
   border-radius: var(--elem-border-radius)
   max-width: 42em
+  overflow: hidden
+
   .bro-list-header
     display: flex
     background: var(--header-elem-color)
     padding: var(--standard-padding)
+
     &__title
       font-size: 1.6em
+
       &__action-sub
+        color: var(--shy-text-color)
+        margin-left: 1em
         font-family: "RobotoLight"
+
     &__add
       margin-left: auto
+
   .bro-list-body
     padding: 1em

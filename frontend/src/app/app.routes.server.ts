@@ -12,6 +12,6 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   { path: 'profile', renderMode: RenderMode.Server },
-  { path: 'profile/bro-lock/create', renderMode: RenderMode.Server },
+  { path: 'profile/bro-lock/:mode', renderMode: RenderMode.Server },
   { path: '**', renderMode: RenderMode.Prerender },
 ];

@@ -35,7 +35,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'profile/bro-lock/create',
+    path: 'profile/bro-lock/:mode',
     component: BroLockManageComponent,
     canActivate: [authGuard],
   },

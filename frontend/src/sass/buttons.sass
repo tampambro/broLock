@@ -1,3 +1,21 @@
+button, .btn
+  height: 2em
+  min-width: 2em
+  cursor: pointer
+  background: var(--btn-background-color)
+  border: none
+  border-radius: var(--btn-border-radius)
+  color: var(--btn-color)
+  padding: .4em
+  text-decoration: none
+  display: block
+
+  &:hover
+    background: var(--btn-background-color-hover)
+
+  &:active
+    background: var(--btn-background-color-active)
+
 .link-btn
   cursor: pointer
 
@@ -16,3 +34,10 @@
 
   &:active
     color: var(--link-btn-alt-active) !important
+
+.btn-green-pass
+  &:hover
+    background: var(--link-btn-alt) !important
+
+  &:active
+    background: var(--link-btn-alt-active) !important
