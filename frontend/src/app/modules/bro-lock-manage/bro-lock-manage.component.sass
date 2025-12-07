@@ -24,3 +24,39 @@
 
   .bro-list-body
     padding: 1em
+
+    .bro-item
+      display: flex
+      min-width: 22em
+
+      &__drag-icon
+        cursor: grab
+
+        &:hover
+          color: var(--modal-background)
+
+      &__position
+        color: var(--link-btn-alt)
+
+      &__section
+
+        &__label
+          display: flex
+          align-items: center
+
+          &__text
+            margin: 0 1em 0 0
+            min-width: 5.5em
+
+          .bro-form__label__input
+            min-width: 22em
+
+        &--left
+          font-size: 1.5em
+          margin-right: 1.5em
+
+        &--mid
+          margin-right: 2em
+
+          & > *:not(:last-of-type)
+            margin-bottom: 0.5em

@@ -12,6 +12,15 @@ export class LockItem {
   @Column()
   position: number;
 
+  @Column({ nullable: true })
+  img: string;
+
+  @Column({ nullable: true })
+  counter: number;
+
+  @Column({ nullable: true })
+  currentCounter: number;
+
   @Column()
   check: boolean;
 

@@ -1,5 +1,8 @@
 export class BroLockItemDto {
-  order: number;
+  position: number;
   name: string;
+  link?: string;
+  counter?: number;
   authorComment?: string;
+  img?: string;
 }
