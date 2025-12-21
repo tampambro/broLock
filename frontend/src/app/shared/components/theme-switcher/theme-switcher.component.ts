@@ -1,5 +1,9 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  DOCUMENT,
+} from '@angular/core';
 import { THEME_ENUM } from '@bro-src-types/enum';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faCloudMoon, faSun } from '@fortawesome/free-solid-svg-icons';
