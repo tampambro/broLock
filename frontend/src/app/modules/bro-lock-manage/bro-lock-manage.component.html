@@ -1,4 +1,17 @@
 <div class=" bro-list-wrap">
+  <div class="sticky-actions">
+    <button class="bro-list-header__add btn-green-pass"
+      title="Add new item"
+      (click)="addBroLockItem()">
+      <plus-icon class="bro-list-header__add__icon" />
+    </button>
+    <button class="bro-list-header__add btn-green-pass"
+      title="Add new item"
+      (click)="addBroLockItem()">
+      <save-icon class="bro-list-header__add__icon" />
+    </button>
+  </div>
+
   <form [formGroup]="broLockForm">
     <div class="bro-list-header">
       <h1 class="bro-list-header__title">
@@ -9,70 +22,11 @@
           {{ mode() === 'create' ? 'creating' : 'editing' }}
         </sub>
       </h1>
-
-      <button class="bro-list-header__add btn-green-pass">
-        <plus-icon class="bro-list-header__add__icon"></plus-icon>
-      </button>
     </div>
 
     <div class="bro-list-body" formArrayName="items">
-      @for (item of itemControls.controls; track $index; let i = $index) {
-        <div class="bro-item" [formGroupName]="i">
-
-          <div class="bro-item__section bro-item__section--left">
-            <grip-vertical-icon class="bro-item__drag-icon"></grip-vertical-icon>
-
-            <p class="bro-item__position">
-              {{ i + 1 }}
-            </p>
-          </div>
-
-          <div class="bro-item__section bro-item__section--mid">
-            <label class="bro-item__section__label">
-              <p class="bro-item__section__label__text">Title</p>
-              <input class="bro-form__label__input"
-                formControlName="name"
-                placeholder="Title of something" />
-            </label>
-
-            <label class="bro-item__section__label">
-              <p class="bro-item__section__label__text">Link</p>
-              <input class="bro-form__label__input"
-                formControlName="link"
-                placeholder="Provide a link" />
-            </label>
-
-            <label class="bro-item__section__label">
-              <p class="bro-item__section__label__text">Counter</p>
-              <input class="bro-form__label__input"
-                formControlName="counter"
-                placeholder="Number of chapters, series and etc"
-                type="number"
-                inputmode="numeric" />
-            </label>
-
-            <label class="bro-item__section__label">
-              <p class="bro-item__section__label__text">Comment</p>
-              <textarea class="bro-form__label__input bro-form__label__input--textarea"
-                formControlName="authComment"
-                placeholder="Comment or recommendation"
-                rows="2">
-              </textarea>
-            </label>
-          </div>
-
-          <div class="bro-item__section">
-            <button class="bro-item__delete">
-              <minus-icon class="bro-item__delete__icon"></minus-icon>
-            </button>
-
-            <label class="bro-item__section__label">
-              <input type="file" class="file-upload" #imgUpload/>
-
-              <button (click)="imgUpload.click()">Add image</button>
-            </label>
-          </div>
-        </div>
+      @for (ctrl of itemControls.controls; track $index; let i = $index) {
+        <bro-lock-manage-item [formGroup]="ctrl" [formGroupIndex]="i" />
       }
     </div>
   </form>

@@ -1,0 +1,58 @@
+<div class="bro-item" [formGroup]="formGroup()">
+
+  <div class="bro-item__section bro-item__section--left">
+    <grip-vertical-icon class="bro-item__drag-icon"></grip-vertical-icon>
+
+    <p class="bro-item__position">
+      {{ formGroupIndex() + 1 }}
+    </p>
+  </div>
+
+  <div class="bro-item__section bro-item__section--mid">
+    <label class="bro-item__section__label">
+      <p class="bro-item__section__label__text">Title</p>
+      <input class="bro-form__label__input"
+        formControlName="name"
+        placeholder="Title of something" />
+    </label>
+
+    <label class="bro-item__section__label">
+      <p class="bro-item__section__label__text">Link</p>
+      <input class="bro-form__label__input"
+        formControlName="link"
+        placeholder="Provide a link" />
+    </label>
+
+    <label class="bro-item__section__label">
+      <p class="bro-item__section__label__text">Counter</p>
+      <input class="bro-form__label__input"
+        formControlName="counter"
+        placeholder="Number of chapters, series and etc"
+        type="number"
+        inputmode="numeric" />
+    </label>
+
+    <label class="bro-item__section__label">
+      <p class="bro-item__section__label__text">Comment</p>
+      <textarea class="bro-form__label__input bro-form__label__input--textarea"
+        formControlName="authComment"
+        placeholder="Comment or recommendation"
+        rows="2">
+      </textarea>
+    </label>
+  </div>
+
+  <div class="bro-item__section bro-item__section--right">
+    <button class="bro-item__delete" title="Delete item">
+      <minus-icon class="bro-item__delete__icon" />
+    </button>
+
+    <label class="bro-item__section__label">
+      <input type="file" class="file-upload" #imgUpload/>
+
+      <button (click)="imgUpload.click()" title="Add image">
+        <image-icon />
+      </button>
+    </label>
+  </div>
+</div>
