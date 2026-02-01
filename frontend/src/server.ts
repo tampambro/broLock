@@ -42,7 +42,7 @@ app.use(
 /**
  * Handle all other requests by rendering the Angular application.
  */
-app.use('/**', (req, res, next) => {
+app.use((req, res, next) => {
   angularApp
     .handle(req)
     .then(response =>
@@ -51,17 +51,6 @@ app.use('/**', (req, res, next) => {
     .catch(next);
 });
 
-// Preset for ngx-cookie-service-ssr
-app.get('*', (req, res) => {
-  res.render(indexHtml, {
-    req,
-    providers: [
-      { provide: APP_BASE_HREF, useValue: req.baseUrl },
-      { provide: 'REQUEST', useValue: req },
-      { provide: 'RESPONSE', useValue: res },
-    ],
-  });
-});
 
 /**
  * Start the server if this module is the main entry point.

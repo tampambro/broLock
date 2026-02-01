@@ -9,7 +9,11 @@ export const authGuard: CanActivateFn = () => {
   const platformId = inject(PLATFORM_ID);
 
   if (isPlatformServer(platformId)) {
-    return false;
+    // TODO: Возможно, нужно будет переделывать на Angular Universal, так как сейчас
+    // если вернуть false, то сервер начинает делать запрос на проверку логина и падает с 401.
+    // Сейчас возвращается шаблон страницы, который подразумевает авторизацию.
+    // Нужно понять, будет ли там чувствительная информация, если нет, то можно оставить так.
+    return true;
   }
 
   return authSrv.isLogin.pipe(
