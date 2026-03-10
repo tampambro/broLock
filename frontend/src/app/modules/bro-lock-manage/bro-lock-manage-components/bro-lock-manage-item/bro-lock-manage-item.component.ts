@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { GripVerticalIconComponent } from '@icon-components/grip-vertical-icon/grip-vertical-icon.component';
 import { ImageIconComponent } from '@icon-components/image-icon/image-icon.component';
@@ -19,4 +19,10 @@ import { MinusIconComponent } from '@icon-components/minus-icon/minus-icon.compo
 export class BroLockManageItemComponent {
   formGroup = input.required<FormGroup<any>>();
   formGroupIndex = input.required<number>();
+
+  removeEmit = output<number>()
+
+  removeItemEmit(): void {
+    this.removeEmit.emit(this.formGroupIndex());
+  }
 }

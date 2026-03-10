@@ -6,6 +6,11 @@
   border-radius: var(--elem-border-radius)
   max-width: 42em
 
+  .bro-list-form
+    position: relative
+    margin-top: -5em
+    margin-right: 3.1em
+
   .bro-list-header
     display: flex
     background: var(--header-elem-color)
@@ -19,7 +24,7 @@
         margin-left: 1em
         font-family: "RobotoLight"
 
-    &__add
+    &__btn
       margin-left: auto
 
   .bro-list-body
@@ -27,6 +32,8 @@
 
 .sticky-actions
   position: sticky
-  display: inline-block
+  display: flex
+  flex-direction: column
+  gap: 0.5em
   top: 20px
-  right: 0
+  padding: var(--standard-padding)

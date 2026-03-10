@@ -1,18 +1,18 @@
 <div class=" bro-list-wrap">
   <div class="sticky-actions">
-    <button class="bro-list-header__add btn-green-pass"
+    <button class="bro-list-header__btn btn-green-pass"
       title="Add new item"
       (click)="addBroLockItem()">
-      <plus-icon class="bro-list-header__add__icon" />
+      <plus-icon class="bro-list-header__add-icon" />
     </button>
-    <button class="bro-list-header__add btn-green-pass"
-      title="Add new item"
-      (click)="addBroLockItem()">
-      <save-icon class="bro-list-header__add__icon" />
+    <button class="bro-list-header__btn btn-green-pass"
+      title="Save bro list"
+      (click)="saveBroList()">
+      <save-icon class="bro-list-header__save-icon" />
     </button>
   </div>
 
-  <form [formGroup]="broLockForm">
+  <form class="bro-list-form" [formGroup]="broLockForm">
     <div class="bro-list-header">
       <h1 class="bro-list-header__title">
         <input class="bro-form__label__input"
@@ -26,7 +26,11 @@
 
     <div class="bro-list-body" formArrayName="items">
       @for (ctrl of itemControls.controls; track $index; let i = $index) {
-        <bro-lock-manage-item [formGroup]="ctrl" [formGroupIndex]="i" />
+        <bro-lock-manage-item
+          [formGroup]="ctrl"
+          [formGroupIndex]="i"
+          (removeEmit)="removeItemHandler($event)"
+        />
       }
     </div>
   </form>

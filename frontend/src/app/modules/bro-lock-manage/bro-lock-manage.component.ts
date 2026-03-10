@@ -53,14 +53,14 @@ export class BroLockManageComponent implements OnInit {
   private fb = inject(FormBuilder);
   private platformId = inject(PLATFORM_ID);
 
+  mode = signal<ModeType | null>(null);
+  pageLoad = signal(true);
+  broLock = signal<BroLockItemDto[]>([]);
+
   broLockForm = this.fb.nonNullable.group({
     broLockName: ['', Validators.required],
     items: this.fb.array<FormGroup<BroLockItemFormType>>([]),
   });
-
-  mode = signal<ModeType | null>(null);
-  pageLoad = signal(true);
-  broLock = signal<BroLockItemDto[]>([]);
 
   get itemControls(): FormArray<FormGroup<BroLockItemFormType>> {
     return this.broLockForm.get('items') as FormArray<FormGroup<BroLockItemFormType>>;
@@ -106,5 +106,14 @@ export class BroLockManageComponent implements OnInit {
         img: [''],
       }),
     );
+  }
+
+  saveBroList(): void {
+    console.log(this.broLockForm.getRawValue());
+
+  }
+
+  removeItemHandler(itemFormIndex: number): void {
+    this.broLockForm.controls.items.removeAt(itemFormIndex);
   }
 }
