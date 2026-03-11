@@ -1,4 +1,4 @@
-import { BroLockItemDto } from '@dto/bro-lock-items/bro-list-item.dto';
+import { BroLockItemDto } from '@dto/bro-lock/bro-lock-items/bro-list-item.dto';
 
 export const BroListMock: BroLockItemDto[] = [
   {

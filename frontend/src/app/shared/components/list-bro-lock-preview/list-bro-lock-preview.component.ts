@@ -5,7 +5,7 @@ import {
   output,
 } from '@angular/core';
 import { BroLockPreviewComponent } from '@components/bro-lock-preview/bro-lock-preview.component';
-import { BroLockPreviewItemDto } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
+import { BroLockPreviewItemDto } from '@dto/bro-lock/bro-lock-items/bro-lock-preview-item.dto';
 import { PenIconComponent } from '@icon-components/pen-icon/pen-icon.component';
 
 @Component({

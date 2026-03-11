@@ -9,7 +9,7 @@ import { ProfileInfoResponseDto } from '@dto/profile/profile-info-response.dto';
 import { ProfileRequestDto } from '@dto/profile/profile-request.dto';
 import { ProfileResponseDto } from '@dto/profile/profile-response.dto';
 import { BroLock } from 'src/bro-lock/entity/bro-lock.entity';
-import { BroLockPreviewItemDto } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
+import { BroLockPreviewItemDto } from '@dto/bro-lock/bro-lock-items/bro-lock-preview-item.dto';
 import { BroReactionList } from 'src/bro-lock/entity/bro-reaction-list.entity';
 import { BRO_REACTION_ENUM } from '@bro-types/bro-reaction.enum';
 import { BroStateList } from 'src/bro-lock/entity/bro-state-list.entity';

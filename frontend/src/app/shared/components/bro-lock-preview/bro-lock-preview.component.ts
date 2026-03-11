@@ -5,7 +5,7 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { BroLockPreviewItemDto } from '@dto/bro-lock-items/bro-lock-preview-item.dto';
+import { BroLockPreviewItemDto } from '@dto/bro-lock/bro-lock-items/bro-lock-preview-item.dto';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { BookCloseIconComponent } from '@icon-components/book-close-icon/book-close-icon.component';

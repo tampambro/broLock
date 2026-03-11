@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { PlusIconComponent } from '@icon-components/plus-icon/plus-icon.component';
 import { BroListMock } from '@mock/bro-list.mock';
-import { BroLockItemDto } from '@dto/bro-lock-items/bro-list-item.dto';
+import { BroLockItemDto } from '@dto/bro-lock/bro-lock-items/bro-list-item.dto';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize, of, switchMap } from 'rxjs';
@@ -24,11 +24,15 @@ import {
 import { BroLockManageItemComponent } from './bro-lock-manage-components/bro-lock-manage-item/bro-lock-manage-item.component';
 import { isPlatformBrowser } from '@angular/common';
 import { SaveIconComponent } from '@icon-components/save-icon/save-icon.component';
+import { BroLockApiService } from '@api/bro-lock-api.service';
+import { ToasterService } from '@components/toaster/toaster.service';
+import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 
 type ModeType = 'create' | 'edit';
 
 interface BroLockItemFormType {
   name: FormControl<string>;
+  position: FormControl<number>;
   link: FormControl<string>;
   counter: FormControl<number>;
   authComment: FormControl<string>;
@@ -52,6 +56,8 @@ export class BroLockManageComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private fb = inject(FormBuilder);
   private platformId = inject(PLATFORM_ID);
+  private broLockApiSrv = inject(BroLockApiService);
+  private toasterSrv = inject(ToasterService);
 
   mode = signal<ModeType | null>(null);
   pageLoad = signal(true);
@@ -97,9 +103,12 @@ export class BroLockManageComponent implements OnInit {
   }
 
   addBroLockItem(): void {
+    const initPosition = this.broLockForm.controls.items.length;
+
     this.broLockForm.controls.items.push(
       this.fb.nonNullable.group({
         name: ['', Validators.required],
+        position: [initPosition],
         link: [''],
         counter: [0],
         authComment: [''],
@@ -109,8 +118,22 @@ export class BroLockManageComponent implements OnInit {
   }
 
   saveBroList(): void {
-    console.log(this.broLockForm.getRawValue());
-
+    this.broLockApiSrv
+      .createBroLock(this.broLockForm.getRawValue())
+      .subscribe({
+        next: () => {
+          this.toasterSrv.addToast({
+            eventType: TOASTER_EVENT_ENUM.SUCCESS,
+            text: 'BroLock saved',
+          });
+        },
+        error: () => {
+          this.toasterSrv.addToast({
+            eventType: TOASTER_EVENT_ENUM.DANGER,
+            text: 'Error occurred',
+          });
+        }
+      });
   }
 
   removeItemHandler(itemFormIndex: number): void {

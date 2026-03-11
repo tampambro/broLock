@@ -12,6 +12,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { tokenInterceptor } from './shared/interceptors/token.interceptor';
 import { unauthorizedInterceptor } from './shared/interceptors/unauthorized.interceptor';
 import { provideNgxSkeletonLoader } from 'ngx-skeleton-loader';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,5 +28,6 @@ export const appConfig: ApplicationConfig = {
       useValue: environment.apiUrl,
     },
     provideNgxSkeletonLoader(),
+    provideAnimations(),
   ],
 };
