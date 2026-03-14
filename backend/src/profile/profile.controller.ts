@@ -8,6 +8,8 @@ import { ProfileInfoResponseDto } from '@dto/profile/profile-info-response.dto';
 import { SetBroPhraseRequestDto } from '@dto/profile/set-bro-phrase-request.dto';
 import { ProfileRequestDto } from '@dto/profile/profile-request.dto';
 import { ProfileResponseDto } from '@dto/profile/profile-response.dto';
+import { CurrentUser } from 'src/common/decorators/current-user.decorators';
+import { JwtPayload } from '@bro-types/jwt-payload';
 
 @Controller('profile')
 export class ProfileController {
@@ -36,8 +38,9 @@ export class ProfileController {
   @Post('phrase')
   async setBroPhrase(
     @Body() params: SetBroPhraseRequestDto,
+    @CurrentUser() currentUser: JwtPayload,
   ): Promise<CommonSuccessResponseDto> {
-    await this.profileSrv.setBroPhrase(params);
+    await this.profileSrv.setBroPhrase(params, currentUser);
     return commonSuccessResponse;
   }
 }

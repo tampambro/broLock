@@ -14,6 +14,7 @@ import { BroReactionList } from 'src/bro-lock/entity/bro-reaction-list.entity';
 import { BRO_REACTION_ENUM } from '@bro-types/bro-reaction.enum';
 import { BroStateList } from 'src/bro-lock/entity/bro-state-list.entity';
 import { BRO_LIST_STATE_ENUM } from '@bro-types/bro-state-list.enum';
+import { JwtPayload } from '@bro-types/jwt-payload';
 
 interface ReactionsList {
   likeLocks: BroLockPreviewItemDto[];
@@ -177,8 +178,8 @@ export class ProfileService {
     };
   }
 
-  async setBroPhrase(params: SetBroPhraseRequestDto): Promise<void> {
-    const profile = await this.findByUser(params.userId);
+  async setBroPhrase(params: SetBroPhraseRequestDto, currentUser: JwtPayload): Promise<void> {
+    const profile = await this.findByUser(currentUser.userId);
 
     if (!profile) {
       throw new BadRequestException();

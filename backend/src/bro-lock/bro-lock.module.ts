@@ -8,6 +8,7 @@ import { Genre } from './entity/genre.entity';
 import { BroStateList } from './entity/bro-state-list.entity';
 import { BroReactionList } from './entity/bro-reaction-list.entity';
 import { BroComment } from './entity/bro-comment.entity';
+import { ProfileModule } from 'src/profile/profile.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { BroComment } from './entity/bro-comment.entity';
       BroReactionList,
       BroComment,
     ]),
+    ProfileModule,
   ],
   controllers: [BroLockController],
   providers: [BroLockService],

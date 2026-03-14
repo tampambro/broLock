@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -14,6 +16,7 @@ import { Genre } from './genre.entity';
 import { BroStateList } from './bro-state-list.entity';
 import { BroComment } from './bro-comment.entity';
 import { BroReactionList } from './bro-reaction-list.entity';
+import { BadRequestException } from '@nestjs/common';
 
 @Entity()
 export class BroLock {
@@ -59,4 +62,15 @@ export class BroLock {
 
   @OneToMany(() => BroComment, broComment => broComment.broLock)
   comments: BroLock[];
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  trimAndValidate() {
+    this.name = this.name?.trim();
+    this.category = this.name?.trim();
+
+    if (!this.name || !this.category) {
+      throw new BadRequestException();
+    }
+  }
 }

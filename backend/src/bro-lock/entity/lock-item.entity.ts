@@ -21,7 +21,7 @@ export class LockItem {
   @Column({ nullable: true })
   currentCounter: number;
 
-  @Column()
+  @Column({ default: false })
   check: boolean;
 
   @ManyToOne(() => BroLock, broLock => broLock.lockItems)

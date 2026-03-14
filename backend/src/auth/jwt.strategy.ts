@@ -1,3 +1,4 @@
+import { JwtPayload } from '@bro-types/jwt-payload';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -13,12 +14,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any): Promise<any> {
+  async validate(payload: any): Promise<JwtPayload> {
     const refreshToken = await this.redisSrv.getUserRefreshToken(payload.sub);
 
     if (!refreshToken) {
       throw new UnauthorizedException();
     }
+
     return { userId: payload.sub, username: payload.username };
   }
 }

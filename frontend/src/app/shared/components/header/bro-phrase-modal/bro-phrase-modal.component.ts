@@ -51,7 +51,6 @@ export class BroPhraseModalComponent {
 
     this.profileApiSrv
       .setBroPhrase({
-        userId: this.userSrv.userId,
         phrase: broPhrase,
       })
       .pipe(
