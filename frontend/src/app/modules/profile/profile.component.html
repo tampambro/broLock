@@ -1,8 +1,8 @@
 <div class="profile">
   <list-bro-lock-preview class="profile__section"
-    listTitle="Active broLocks"
+    [listTitle]="BRO_LOCK_TITLE.ACTIVE"
     [list]="profile()?.activeLocks"
-    (editEvent)="goToEdit('Active broLocks')"
+    (editEvent)="goToEdit(BRO_LOCK_TITLE.ACTIVE)"
   >
     <div>
       <p class="profile__section__empty">
@@ -16,8 +16,9 @@
   </list-bro-lock-preview>
 
   <list-bro-lock-preview class="profile__section"
-    listTitle="Closed broLocks"
+    [listTitle]="BRO_LOCK_TITLE.CLOSED"
     [list]="profile()?.closeLocks"
+    (editEvent)="goToEdit(BRO_LOCK_TITLE.CLOSED)"
   >
     <div>
       <p>There's still more to come</p>
@@ -29,8 +30,9 @@
   </list-bro-lock-preview>
 
   <list-bro-lock-preview class="profile__section"
-    listTitle="Created broLocks"
+    [listTitle]="BRO_LOCK_TITLE.CREATED"
     [list]="profile()?.createdBroLocks"
+    (editEvent)="goToEdit(BRO_LOCK_TITLE.CREATED)"
   >
     <div>
       <p>It's time to create awesome broLock! ね？</p>
@@ -44,8 +46,9 @@
   </list-bro-lock-preview>
 
   <list-bro-lock-preview class="profile__section"
-    listTitle="Added broLocks"
+    [listTitle]="BRO_LOCK_TITLE.ADDED"
     [list]="profile()?.addedBroLocks"
+    (editEvent)="goToEdit(BRO_LOCK_TITLE.ADDED)"
   >
     <div>
       <p>New content is waiting you!</p>
@@ -60,8 +63,9 @@
   </list-bro-lock-preview>
 
   <list-bro-lock-preview class="profile__section"
-    listTitle="Deferred broLocks"
+    [listTitle]="BRO_LOCK_TITLE.DEFERRED"
     [list]="profile()?.laterLocks"
+    (editEvent)="goToEdit(BRO_LOCK_TITLE.DEFERRED)"
   >
     <div>
       <p>Welldone! Don't live later, live now!</p>
@@ -73,8 +77,9 @@
   </list-bro-lock-preview>
 
   <list-bro-lock-preview class="profile__section"
-    listTitle="Trash"
+    [listTitle]="BRO_LOCK_TITLE.TRASH"
     [list]="profile()?.trashLocks"
+    (editEvent)="goToEdit(BRO_LOCK_TITLE.TRASH)"
   >
     <div>
       <p>Seeing something good in everything is a good habit =)</p>

@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, UseGuards } from '@nestjs/common';
 import { BroLockService } from './bro-lock.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { BroLockCreateRequestDto } from '@dto/bro-lock/bro-lock-manage/bro-lock-create-request.dto';
@@ -6,10 +6,17 @@ import { CommonSuccessResponseDto } from '@dto/common-success-response.dto';
 import { commonSuccessResponse } from '@const/common-success-response';
 import { CurrentUser } from 'src/common/decorators/current-user.decorators';
 import { JwtPayload } from '@bro-types/jwt-payload';
+import { BroLockDto } from '@dto/bro-lock/bro-lock.dto'
 
 @Controller('bro-lock')
 export class BroLockController {
   constructor(private readonly broLockService: BroLockService) { }
+
+  @HttpCode(200)
+  @Get(':id')
+  async getBroLock(@Param('id') id: string): Promise<BroLockDto> {
+    return this.broLockService.getBroLock(+id);
+  }
 
   @HttpCode(200)
   @UseGuards(JwtAuthGuard)

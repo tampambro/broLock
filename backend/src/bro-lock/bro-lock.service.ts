@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { LockItem } from './entity/lock-item.entity';
 import { JwtPayload } from '@bro-types/jwt-payload';
 import { ProfileService } from 'src/profile/profile.service';
+import { BroLockDto } from '@dto/bro-lock/bro-lock.dto';
 
 @Injectable()
 export class BroLockService {
@@ -15,7 +16,21 @@ export class BroLockService {
     @InjectRepository(LockItem)
     private lockItemRepository: Repository<LockItem>,
     private profileSrv: ProfileService,
-  ) {}
+  ) { }
+
+  async getBroLock(id: number): Promise<BroLockDto> {
+    try {
+      const broLock = this.broLockRepository.findOneBy({ id });
+
+      if (broLock) {
+
+      } else {
+        throw 'not found';
+      }
+    } catch {
+      throw new BadRequestException();
+    }
+  }
 
   async createBroLock(
     broLockDto: BroLockCreateRequestDto,

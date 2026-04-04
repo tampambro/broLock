@@ -32,13 +32,13 @@ import { TrashIconComponent } from '@icon-components/trash-icon/trash-icon.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BroLockPreviewComponent {
+  lockInfo = input.required<BroLockPreviewItemDto>();
+
   readonly anglerRight = faAngleRight;
 
   isMoreInfo = signal(false);
 
-  lockInfo = input.required<BroLockPreviewItemDto>();
-
-  toggalMoreInfo() {
+  toggalMoreInfo(): void {
     this.isMoreInfo.set(!this.isMoreInfo());
   }
 }

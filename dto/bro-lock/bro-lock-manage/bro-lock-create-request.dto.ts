@@ -1,4 +1,4 @@
-import { BroLockItemDto } from '../bro-lock-items/bro-list-item.dto';
+import { BroLockItemDto } from '../bro-lock-items/bro-lock-item.dto';
 
 export class BroLockCreateRequestDto {
   broLockName: string;

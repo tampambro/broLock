@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProfileApiService } from '@api/profile-api.service';
+import { PROFILE_BRO_LOCK_LIST_TITLE } from '@bro-src-types/enum';
 import { ListBroLockPreviewComponent } from '@components/list-bro-lock-preview/list-bro-lock-preview.component';
 import { ProfileResponseDto } from '@dto/profile/profile-response.dto';
 import { UserService } from '@services/user.service';
@@ -25,6 +26,8 @@ export class ProfileComponent implements OnInit {
   private userSrv = inject(UserService);
   private destroyRef = inject(DestroyRef);
 
+  readonly BRO_LOCK_TITLE = PROFILE_BRO_LOCK_LIST_TITLE;
+
   profile = signal<ProfileResponseDto | null>(null);
 
   ngOnInit(): void {
@@ -39,7 +42,7 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  goToEdit(listTitle: string): void {
+  goToEdit(listTitle: PROFILE_BRO_LOCK_LIST_TITLE): void {
 
   }
 }

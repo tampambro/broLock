@@ -8,8 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { PlusIconComponent } from '@icon-components/plus-icon/plus-icon.component';
-import { BroListMock } from '@mock/bro-list.mock';
-import { BroLockItemDto } from '@dto/bro-lock/bro-lock-items/bro-list-item.dto';
+import { BroLockItemDto } from '@dto/bro-lock/bro-lock-items/bro-lock-item.dto';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize, of, switchMap } from 'rxjs';

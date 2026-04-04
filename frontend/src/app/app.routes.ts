@@ -11,6 +11,7 @@ import { authGuard } from '@guards/auth.guard';
 import { ForgotPasswordComponent } from '@modules/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '@modules/reset-password/reset-password.component';
 import { resetPasswordGuard } from '@guards/reset-password.guard';
+import { BroLockComponent } from '@modules/bro-lock/bro-lock.component';
 
 export const routes: Routes = [
   { path: '', component: WelcomePageComponent },
@@ -38,6 +39,11 @@ export const routes: Routes = [
     path: 'profile/bro-lock/:mode',
     component: BroLockManageComponent,
     canActivate: [authGuard],
+  },
+  {
+    path: 'bro-lock/:id',
+    component: BroLockComponent,
+    pathMatch: 'full',
   },
   { path: '**', component: NotFoundComponent },
 ];
