@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BroLockApiService } from '@api/bro-lock-api.service';
 import { GripVerticalIconComponent } from '@icon-components/grip-vertical-icon/grip-vertical-icon.component';
 import { MinusIconComponent } from '@icon-components/minus-icon/minus-icon.component';
 import { PlusIconComponent } from '@icon-components/plus-icon/plus-icon.component';
-import { BroListMock } from '@mock/bro-list.mock';
 
 @Component({
   selector: 'bro-lock',
@@ -11,5 +12,20 @@ import { BroListMock } from '@mock/bro-list.mock';
   templateUrl: './bro-lock.component.html',
   styleUrl: './bro-lock.component.sass',
 })
-export class BroLockComponent {
+export class BroLockComponent implements OnInit {
+  private broLockApiSrv = inject(BroLockApiService);
+  private route = inject(ActivatedRoute);
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.broLockApiSrv.getBroLock(+id).subscribe({
+        next: response => {
+          console.log(response);
+
+        }
+      })
+    }
+  }
 }

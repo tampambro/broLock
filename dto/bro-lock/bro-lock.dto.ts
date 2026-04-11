@@ -5,9 +5,8 @@ export class BroLockDto {
   name: string;
   auther: string;
   createDate: string;
-  lockCount: number;
   category: string;
   previewImg: string;
   genres: string[];
-  broLockItems: BroLockItemDto[];
+  lockItems: BroLockItemDto[];
 }

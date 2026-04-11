@@ -14,6 +14,7 @@ import { BookOpenIconComponent } from '@icon-components/book-open-icon/book-open
 import { InfoIconComponent } from '@icon-components/info-icon/info-icon.component';
 import { MinusIconComponent } from '@icon-components/minus-icon/minus-icon.component';
 import { TrashIconComponent } from '@icon-components/trash-icon/trash-icon.component';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'bro-lock-preview',
@@ -26,7 +27,8 @@ import { TrashIconComponent } from '@icon-components/trash-icon/trash-icon.compo
     BookMarkIconComponent,
     TrashIconComponent,
     MinusIconComponent,
-  ],
+    RouterLink
+],
   templateUrl: './bro-lock-preview.component.html',
   styleUrl: './bro-lock-preview.component.sass',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { BASE_API_URL } from '@const/tokens';
 import { CommonSuccessResponseDto } from '@dto/common-success-response.dto';
 import { BroLockCreateRequestDto } from '@dto/bro-lock/bro-lock-manage/bro-lock-create-request.dto';
+import { BroLockDto } from '@dto/bro-lock/bro-lock.dto';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +12,12 @@ import { Observable } from 'rxjs';
 export class BroLockApiService {
   private readonly baseUrl = inject(BASE_API_URL);
   private http = inject(HttpClient);
+
+  getBroLock(id: number): Observable<BroLockDto> {
+    return this.http.get<BroLockDto>(
+      `${this.baseUrl}/bro-lock/${id}`,
+    )
+  }
 
   createBroLock(
     params: BroLockCreateRequestDto

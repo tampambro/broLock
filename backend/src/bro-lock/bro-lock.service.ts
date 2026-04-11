@@ -20,10 +20,26 @@ export class BroLockService {
 
   async getBroLock(id: number): Promise<BroLockDto> {
     try {
-      const broLock = this.broLockRepository.findOneBy({ id });
+      console.log(id);
+
+      const broLock = await this.broLockRepository.findOne({
+        where: { id },
+        relations: ['lockItems', 'genres'],
+      });
 
       if (broLock) {
+        const { id, name, auther, createDate, category, previewImg, genres, lockItems } = broLock;
 
+        return {
+          id,
+          name,
+          auther,
+          category,
+          previewImg,
+          genres,
+          lockItems,
+          createDate: createDate.toISOString(),
+        }
       } else {
         throw 'not found';
       }
@@ -47,13 +63,12 @@ export class BroLockService {
 
       const lockItems = broLockDto.items.map(item => {
         const lock = new LockItem();
+
         lock.name = item.name;
         lock.position = item.position;
         lock.img = item.img ?? null;
         lock.counter = item.counter ?? null;
-        // TODO: Нужно сделать белый список сайтов, чтобы не кидали ссылки на трояны.
         lock.link = item.link ?? null;
-        // TODO: Коммент тоже надо проверять на ссылки и если они не из белого списка, удалять их.
         lock.comment = item.authorComment ?? null;
 
         return lock;
@@ -63,7 +78,7 @@ export class BroLockService {
 
       return await this.broLockRepository.save(broLock);
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
 
       throw new BadRequestException();
     }
