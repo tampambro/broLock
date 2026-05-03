@@ -3,8 +3,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "rootDir": "../",
+    "baseUrl": "./",
+    "rootDirs": [".", "../"],
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -34,12 +34,14 @@
       "@helpers/*": ["./src/app/shared/helpers/*"],
       "@guards/*": ["./src/app/shared/guards/*"],
       "@services/*": ["./src/app/shared/services/*"],
-    }
+    },
+    "composite": false,
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "include": ["src/**/*", "../dto/**/*.ts"]
 }

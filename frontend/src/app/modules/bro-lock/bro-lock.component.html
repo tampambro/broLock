@@ -1,1 +1,40 @@
-bib
+<div class="bro-lock-main-info">
+  <div class="bro-lock-main-info__text">
+    <h1>{{ broLockInfo()?.name }}</h1>
+
+    <p>Auther: {{ broLockInfo()?.auther }}</p>
+    <p>Create Data: {{ broLockInfo()?.createDate }}</p>
+    <p>Category: {{ broLockInfo()?.category }}</p>
+    <p>
+      Genres:
+      @for (genre of broLockInfo()?.genres; track genre) {
+        {{ genre }}
+      }
+    </p>
+  </div>
+
+  <!-- <img class="bro-lock-main-info__img" [src]="broLockInfo()?.previewImg" /> -->
+  <img class="bro-lock-main-info__img" src="/broLock_waifu/1.jpg" />
+</div>
+
+<div class="bro-lock-items-wrap">
+  @for (item of broLockInfo()?.lockItems; track item.position) {
+    <div class="bro-lock-item">
+      <div class="bro-lock-item__position">
+        {{ item.position }}
+      </div>
+
+      <div class="bro-lock-item__info">
+        <h2>{{ item.name }}</h2>
+
+        <a>{{ item.link }}</a>
+
+        <p>Counter: {{ item.counter }}</p>
+
+        <p>Auther's comment: {{ item.authorComment }}</p>
+      </div>
+
+      <img [src]="item.img" />
+    </div>
+  }
+</div>
