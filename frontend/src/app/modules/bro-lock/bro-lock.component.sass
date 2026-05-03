@@ -1,11 +1,44 @@
+:host
+  display: block
+  max-width: 72em
+
 .bro-lock-main-info
   display: flex
   gap: var(--standard-gap)
+  width: 100%
 
   &__text
     border: 1px var(--elem-border-color) solid
     border-radius: var(--elem-border-radius)
     padding: var(--elem-padding)
+    flex-basis: 100%
 
   &__img
     max-width: 21.4em
+
+.bro-lock-items-wrap
+  display: flex
+  flex-direction: column
+  gap: var(--standard-gap)
+  margin-top: var(--standard-gap)
+
+  .bro-lock-item
+    display: flex
+    gap: var(--standard-gap)
+    background: var(--section-background-color)
+    padding: var(--elem-padding)
+    border-radius: var(--elem-border-radius)
+
+    &__position
+      font-size: 2em
+      color: var(--link-btn-alt)
+
+    &__img-wrap
+      width: 8em
+      height: auto
+      margin-left: auto
+
+      &__img
+        width: 100%
+        height: 100%
+        object-fit: contain

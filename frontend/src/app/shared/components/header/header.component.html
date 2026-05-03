@@ -23,7 +23,12 @@
         <a class="user-info__content__name shy" [routerLink]="['/profile']">
           {{ profileInfo.userName }}
         </a>
-        <a class="user-info__content__phrase shy" role="button" (click)="aditBroPhrase()">
+        <a
+          class="user-info__content__phrase shy"
+          role="button"
+          [title]="profileInfo.userPhrase ?? ''"
+          (click)="aditBroPhrase()"
+        >
           {{ profileInfo.userPhrase ?? 'add your bro-phrase'}}
         </a>
       </figcaption>

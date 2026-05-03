@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BroLockApiService } from '@api/bro-lock-api.service';
@@ -9,7 +10,8 @@ import { PlusIconComponent } from '@icon-components/plus-icon/plus-icon.componen
 @Component({
   selector: 'bro-lock',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // imports: [GripVerticalIconComponent, MinusIconComponent, PlusIconComponent],
+  providers: [DatePipe],
+  imports: [GripVerticalIconComponent, MinusIconComponent, PlusIconComponent, DatePipe],
   templateUrl: './bro-lock.component.html',
   styleUrl: './bro-lock.component.sass',
 })
