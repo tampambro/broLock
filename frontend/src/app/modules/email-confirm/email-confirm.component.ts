@@ -81,7 +81,7 @@ export class EmailConfirmComponent {
           this.router.navigate(['email-confirm', response.linkHash]);
         },
         error: (err: HttpErrorResponse) => {
-          console.log(err.error);
+          console.error(err.error);
 
           if (err.error.message === 'It is not time yet') {
             this.toasterSrv.addToast({

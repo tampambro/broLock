@@ -20,8 +20,6 @@ export class BroLockService {
 
   async getBroLock(id: number): Promise<BroLockDto> {
     try {
-      console.log(id);
-
       const broLock = await this.broLockRepository.findOne({
         where: { id },
         relations: ['lockItems', 'genres'],
@@ -83,4 +81,19 @@ export class BroLockService {
       throw new BadRequestException();
     }
   }
+
+  // private createPreviewLock(broLock: BroLock): BroLockPreviewItemDto {
+  //   const { id, name, auther, category, previewImg, genres } = broLock;
+
+  //   return {
+  //     id,
+  //     name,
+  //     auther,
+  //     category,
+  //     previewImg,
+  //     genres,
+  //     createDate: broLock.createDate.toDateString(),
+  //     lockCount: broLock.lockItems.length,
+  //   };
+  // }
 }

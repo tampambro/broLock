@@ -9,6 +9,7 @@ import { EmailConfirmModule } from './email-confirm/email-confirm.module';
 import { ProfileController } from './profile/profile.controller';
 import { ProfileModule } from './profile/profile.module';
 import { BroLockModule } from './bro-lock/bro-lock.module';
+import { BroListModule } from './bro-list/bro-list.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { BroLockModule } from './bro-lock/bro-lock.module';
     EmailConfirmModule,
     ProfileModule,
     BroLockModule,
+    BroListModule,
   ],
   controllers: [AuthController, ProfileController],
   providers: [],

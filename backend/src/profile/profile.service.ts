@@ -37,56 +37,6 @@ export class ProfileService {
     private readonly profileRepository: Repository<Profile>,
   ) {}
 
-  async getProfile(params: ProfileRequestDto): Promise<ProfileResponseDto> {
-    const profile = await this.findByUser(params.userId);
-
-    const { userName, avatar, userPhrase } = profile;
-
-    const createdBroLocks = profile.createdBroLocks?.map(lock => {
-      return this.createPreviewLock(lock);
-    });
-
-    const addedBroLocks = profile.addedBroLocks?.map(lock => {
-      return this.createPreviewLock(lock);
-    });
-
-    const { likeLocks, dislikeLocks, pokerFaceLocks } = this.getReactions(
-      profile.reactions,
-    );
-
-    const { activeLocks, closeLocks, laterLocks, trashLocks } =
-      this.getStateList(profile.broStateList);
-
-    return {
-      userName,
-      avatar,
-      userPhrase,
-      createdBroLocks,
-      addedBroLocks,
-      activeLocks,
-      closeLocks,
-      laterLocks,
-      trashLocks,
-      likeLocks,
-      dislikeLocks,
-      pokerFaceLocks,
-    };
-  }
-
-  private createPreviewLock(broLock: BroLock): BroLockPreviewItemDto {
-    const { id, name, auther, category, previewImg, genres } = broLock;
-
-    return {
-      id,
-      name,
-      auther,
-      category,
-      previewImg,
-      genres,
-      createDate: broLock.createDate.toDateString(),
-      lockCount: broLock.lockItems.length,
-    };
-  }
 
   getStateList(list: BroStateList[]): StateList {
     const state = {
@@ -167,11 +117,12 @@ export class ProfileService {
   async getProfileInfo(
     params: ProfileInfoRequestDto,
   ): Promise<ProfileInfoResponseDto> {
-    const { userName, avatar, userPhrase } = await this.findByUser(
+    const { id, userName, avatar, userPhrase } = await this.findByUser(
       params.userId,
     );
 
     return {
+      id,
       userName,
       avatar,
       userPhrase,

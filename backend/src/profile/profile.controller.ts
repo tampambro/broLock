@@ -17,15 +17,6 @@ export class ProfileController {
 
   @HttpCode(200)
   @UseGuards(JwtAuthGuard)
-  @Post()
-  async getProfile(
-    @Body() params: ProfileRequestDto,
-  ): Promise<ProfileResponseDto> {
-    return await this.profileSrv.getProfile(params);
-  }
-
-  @HttpCode(200)
-  @UseGuards(JwtAuthGuard)
   @Post('info')
   async getProfileInfo(
     @Body() params: ProfileInfoRequestDto,

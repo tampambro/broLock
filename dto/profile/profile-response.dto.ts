@@ -4,13 +4,13 @@ export class ProfileResponseDto {
   userName: string;
   avatar: string;
   userPhrase: string;
-  createdBroLocks: BroLockPreviewItemDto[];
-  addedBroLocks: BroLockPreviewItemDto[];
-  activeLocks: BroLockPreviewItemDto[];
-  closeLocks: BroLockPreviewItemDto[];
-  laterLocks: BroLockPreviewItemDto[];
-  trashLocks: BroLockPreviewItemDto[];
-  likeLocks: BroLockPreviewItemDto[];
-  dislikeLocks: BroLockPreviewItemDto[];
-  pokerFaceLocks: BroLockPreviewItemDto[];
+  // createdBroLocks: BroLockPreviewItemDto[];
+  // addedBroLocks: BroLockPreviewItemDto[];
+  // activeLocks: BroLockPreviewItemDto[];
+  // closeLocks: BroLockPreviewItemDto[];
+  // laterLocks: BroLockPreviewItemDto[];
+  // trashLocks: BroLockPreviewItemDto[];
+  // likeLocks: BroLockPreviewItemDto[];
+  // dislikeLocks: BroLockPreviewItemDto[];
+  // pokerFaceLocks: BroLockPreviewItemDto[];
 }
