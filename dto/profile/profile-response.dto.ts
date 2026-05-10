@@ -1,6 +1,7 @@
 import { BroLockPreviewItemDto } from '../bro-lock/bro-lock-items/bro-lock-preview-item.dto';
 
 export class ProfileResponseDto {
+  id: number;
   userName: string;
   avatar: string;
   userPhrase: string;

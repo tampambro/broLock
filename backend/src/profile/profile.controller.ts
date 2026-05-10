@@ -13,7 +13,17 @@ import { JwtPayload } from '@bro-types/jwt-payload';
 
 @Controller('profile')
 export class ProfileController {
-  constructor(private readonly profileSrv: ProfileService) {}
+  constructor(private readonly profileSrv: ProfileService) { }
+
+  // Пока он выдаёт тоже самое что @Post('info'), но пусть пока будет. Может в будущем пригодиться.
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  async getProfile(
+    @Body() params: ProfileRequestDto,
+  ): Promise<ProfileResponseDto> {
+    return await this.profileSrv.getProfile(params);
+  }
 
   @HttpCode(200)
   @UseGuards(JwtAuthGuard)

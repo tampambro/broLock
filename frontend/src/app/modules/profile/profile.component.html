@@ -1,7 +1,7 @@
 <div class="profile">
   <list-bro-lock-preview class="profile__section"
     [listTitle]="BRO_LOCK_TITLE.ACTIVE"
-    [list]="profile()?.activeLocks"
+    [list]="activeLocks()?.data ?? []"
     (editEvent)="goToEdit(BRO_LOCK_TITLE.ACTIVE)"
   >
     <div>
@@ -17,7 +17,7 @@
 
   <list-bro-lock-preview class="profile__section"
     [listTitle]="BRO_LOCK_TITLE.CLOSED"
-    [list]="profile()?.closeLocks"
+    [list]="closeLocks()?.data ?? []"
     (editEvent)="goToEdit(BRO_LOCK_TITLE.CLOSED)"
   >
     <div>
@@ -31,7 +31,7 @@
 
   <list-bro-lock-preview class="profile__section"
     [listTitle]="BRO_LOCK_TITLE.CREATED"
-    [list]="profile()?.createdBroLocks"
+    [list]="createdBroLocks()?.data ?? []"
     (editEvent)="goToEdit(BRO_LOCK_TITLE.CREATED)"
   >
     <div>
@@ -47,7 +47,7 @@
 
   <list-bro-lock-preview class="profile__section"
     [listTitle]="BRO_LOCK_TITLE.ADDED"
-    [list]="profile()?.addedBroLocks"
+    [list]="addedBroLocks()?.data ?? []"
     (editEvent)="goToEdit(BRO_LOCK_TITLE.ADDED)"
   >
     <div>
@@ -64,7 +64,7 @@
 
   <list-bro-lock-preview class="profile__section"
     [listTitle]="BRO_LOCK_TITLE.DEFERRED"
-    [list]="profile()?.laterLocks"
+    [list]="laterLocks()?.data ?? []"
     (editEvent)="goToEdit(BRO_LOCK_TITLE.DEFERRED)"
   >
     <div>
@@ -78,7 +78,7 @@
 
   <list-bro-lock-preview class="profile__section"
     [listTitle]="BRO_LOCK_TITLE.TRASH"
-    [list]="profile()?.trashLocks"
+    [list]="trashLocks()?.data ?? []"
     (editEvent)="goToEdit(BRO_LOCK_TITLE.TRASH)"
   >
     <div>

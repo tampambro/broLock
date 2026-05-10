@@ -1,7 +1,7 @@
 import { Profile } from 'src/profile/profile.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BroLock } from './bro-lock.entity';
-import { BRO_LIST_STATE_ENUM } from '@bro-types/bro-state-list.enum';
+import { BRO_LIST_STATE_ENUM } from '@dto/types/bro-state-list.enum';
 
 @Entity()
 export class BroStateList {
