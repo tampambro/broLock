@@ -5,7 +5,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASS}
       MYSQL_DATABASE: ${DATABASE_NAME}
     ports:
-      - ${DATABASE_PORT}:${DATABASE_PORT_CONTAINER}
+      - '127.0.0.1:${DATABASE_PORT}:${DATABASE_PORT_CONTAINER}'
   redis:
     image: redis:8.0.2
     command: ['redis-server', '--requirepass', '${REDIS_PASS}']
@@ -13,4 +13,4 @@ services:
       host: ${REDIS_HOST}
       db: ${REDIS_DB}
     ports:
-      - ${REDIS_PORT}:${REDIS_PORT}
+      - '127.0.0.1:${REDIS_PORT}:${REDIS_PORT}'

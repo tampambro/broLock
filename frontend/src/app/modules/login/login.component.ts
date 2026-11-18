@@ -1,20 +1,20 @@
+import { NgOptimizedImage } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
 } from '@angular/core';
-import { SsrCookieService } from 'ngx-cookie-service-ssr';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
+import { ButtonSpinnerComponent } from '@components/button-spinner/button-spinner.component';
+import { ToasterService } from '@components/toaster/toaster.service';
 import { markAsDirtyAndTouched } from '@helpers/form-helpers';
 import { insertRemoveAnimation } from '@helpers/insert-remove-animation';
-import { ToasterService } from '@components/toaster/toaster.service';
-import { TOASTER_EVENT_ENUM } from '@bro-src-types/enum';
 import { AuthService } from '@services/auth.service';
-import { NgOptimizedImage } from '@angular/common';
-import { ButtonSpinnerComponent } from '@components/button-spinner/button-spinner.component';
+import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
 @Component({
   selector: 'login',
