@@ -1,0 +1,46 @@
+services:
+  codex:
+    build:
+      context: ..
+      dockerfile: .codex-docker/Dockerfile
+
+    container_name: codex-workspace
+
+    working_dir: /workspace
+
+    init: true
+    stdin_open: true
+    tty: true
+
+    volumes:
+      - type: bind
+        source: ..
+        target: /workspace
+
+      - type: bind
+        source: ./empty.env
+        target: /workspace/backend/.env
+        read_only: true
+
+      - type: volume
+        source: backend_node_modules
+        target: /workspace/backend/node_modules
+        volume:
+          nocopy: true
+
+      - type: volume
+        source: frontend_node_modules
+        target: /workspace/frontend/node_modules
+        volume:
+          nocopy: true
+
+      - type: volume
+        source: codex_home
+        target: /home/node/.codex
+        volume:
+          nocopy: true
+
+volumes:
+  backend_node_modules:
+  frontend_node_modules:
+  codex_home:
